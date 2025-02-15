@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atul Kumar Mishra - Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <style>
+        body{
+            background-color: rgb(0, 0, 33);
+            color: white;
+            font-family: 'poppins',sans-serif;
+        }
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        nav{
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            height: 80px ;
+            background-color: rgb(18, 18, 62);
+        }
+        nav ul{
+            display: flex;
+            justify-content: center;
+        }
+        nav ul li{
+            list-style: none;
+            margin: 0 23px;
+        }
+        li a {
+            font-size: 2.00 rem;
+            text-decoration: none;
+            color: lavender;
+        }
+        .left{
+            font-size: 2.32rem;
+        }
+        .firstsection{
+            display: flex;
+            justify-content: space-around;
+            margin: 80px 0;
+            align-items: center;
+            margin-left: 67px;
+        }
+        .firstsection >div{
+            width: 30%;
+            border-bottom: 5px white;
+        }
+        .leftsection{
+            font-size: 1.9rem;
+            align-items: center;
+        }
+        .rightsection .atulspic{
+            height: 30rem;
+            width: auto;
+            margin: right 700px;
+        }
+        .orange{
+            color: orange;
+        }
+        #element{
+            color: orange;
+        }
+        .secondsection .vertical{
+            margin: 0 100px;
+            color: lavender;
+        }
+        .secondsection h1{
+            text-decoration: none;
+            color: orange;
+            font-size: x-large;
+            
+        }
+        .secondsection .pic .atulmishra{
+            height: 270px;
+            width: 270px;
+            border: 2px white;
+            border-radius: 50%;
+            padding-top: 20px;
+        }
+        .secondsection{
+            display: flex;
+            padding-bottom: 20px;
+        }
+        .vertical .vertical-title{
+            display: flex;
+        } 
+        .aboutme{
+            padding: 30px;
+            
+        }
+        footer{
+            background-color: #0e0e1a;
+            height: 233px;
+        }
+        .popup{
+            position: absolute;
+            top: -150%;
+            left: 50%;
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(1.25);
+            width: 380px;
+            padding: 20px 30px;
+            background: orange;
+            box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.15);
+            border-radius: 10px;
+            transition: top 0ms ease-in-out 200ms;
+                        opacity: 200ms ease-in-out 0ms;
+                        transform: 200ms ease-in-out 0ms;
+        }
+        .popup .active{
+            top: 50%;
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+            transition: top 0ms ease-in-out 0ms;
+                        opacity: 200ms ease-in-out 0ms;
+                        transform: 200ms ease-in-out 0ms;
+        }
+        .popup .close-btn{
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 15px;
+            height: 15px;
+        }
+        .popup .form .form-element a{
+            display: block;
+            text-align: right;
+            font-size: 15px;
+            color: #1a79ca;
+            text-decoration: none;
+            font-weight: 600;
+            background: beige;
+            color: orange;
+            text-align: center;
+            line-height: 15px;
+            border-radius: 15px;
+            cursor: pointer;
+        }
+        .popup .form h2{
+            text-align: center;
+            color: orange;
+            margin: 10px 0 20px;
+            font-size: 25px;
+        }
+        .popup .form .form-element{
+            margin: 15px 0px;
+        }
+        .popup .form .form-element label{
+            font-size: 14px;
+            color: orange;
+        }
+        .popup .form .form-element input[type="text"],
+        .popup .form .form-element input[type="password"]{
+            margin-top: 5px;
+            display: block;
+            width: 100%;
+            padding: 10px;
+            outline: none;
+            border: 1px solid #aaa;
+            border-radius: 5px;
+        }
+        .popup .form .form-element input[type="checkbox"]{
+            margin-right: 5px;
+        }
+        .popup .form .form-element button{
+            width: 100px;
+            height: 40px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            background:#222;
+            color: #f5f5f5;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="left">Atul's Portfolio</div>
+            <div class="right">
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Projects</a></li>
+                    <li><a href="#">Contact Me</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section class="firstsection">
+            <div class="leftsection">
+                    Hi my name is <span class="orange">Atul Kumar Mishra</span>
+                <div>
+                    and I'm a Passionate
+                </div>
+                <span id="element"></span>
+                
+            </div>
+            
+            <div class="rightsection">
+                <img src="/3d-website-developer-working-on-laptop-illustration-png.webp" class="atulspic" alt="Atul Kumar Mishra">
+            </div>
+        </section>
+        <hr color="orange">
+        <section class="secondsection">
+            <div class="pic">
+                <img src="/image1.png" class="atulmishra" alt="AtulMishra">
+            </div>
+            <div class="box">
+                <div class="vertical">
+                    <img src="" class="image-top" alt="">
+                    <div class="vertical-title">
+                        <ul>
+                            <h1 >Academic Experience</h1>
+                            <li>HTML,CSS Developer</li>
+                            <li>C++ (Software Development)</li>
+                            <li>Competative programming</li>
+                            <li>Javascript Developer</li>
+                            <li>ReactJs</li>
+                        </ul>
+                        <p class="aboutme">
+                            Undergraduate student at Acharya Narendra Deva University of Agriculture and Technology
+                            pursuing Bachelors in Technology (Btech) in Mechanical engineering with career interest 
+                            in Tech, sports and Music.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+    <div class="center">
+        <button id="show-login"  style="margin-left: 46%;cursor: pointer; padding: 10px;padding-left:19px;padding-right: 19px ;margin-bottom: 9px; border: 0; background-color: orange; color: white;border-radius: 4px;">
+            Contact me!
+        </button>
+    </div>
+    <hr color="orange">
+    <footer style="display: flex; justify-content: space-around; padding-top: 1%; padding-bottom: 1%;">
+        
+        <div class="thank-you">
+            <h2 style="margin-top: 5px; margin-left: 5px;"><span>ATUL MISHRA</span></h2>
+            <p style="color: orange; margin-left: 5px;">THANK YOU FOR VISITING MY WEBSITE.</p>
+            <p style="margin-left: 5px; color: orange;">HOPE TO SEE YOU AGAIN SOON!</p>
+        </div>
+        <hr style="background:orange;">
+        <div class="map" style="margin-left: 14px;padding-bottom: 3px; margin-top: 5px;">
+            <h3 style=" color: orange; margin-top: 5px; align-items:top;display: inline; ">LOCATION</h3>
+        <br>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3571.8933414157373!2d82.49057987615164!3d26.459166779433033!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399093cbf6ffffff%3A0xe886e928b8f0a1e7!2sMahamaya%20College%20of%20Agricultural%20Engineering%20And%20Technology!5e0!3m2!1sen!2sin!4v1739541546497!5m2!1sen!2sin" width="auto" height="auto" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <hr style="background: orange;">
+        <div class="contact-information">
+            <h3 style="color: orange;">Contact Information</h3>
+            <br>
+            <p>Phone: (+91) 74588 44711</p>
+            <p>Email: atulllmishra1@gmail.com</p>
+        </div>
+       
+    </footer>
+    <hr style="background: orange;">
+        <p style="text-align: center;padding-top: 2%;padding-bottom: 0.5%; font-size: small;">&copy Copyright ATUL MISHRA 2025</p>
+        <p style="text-align: center; font-size: x-small; padding-bottom: 2px;">LAST UPDATED: 15-02-2025</p>
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+    <script>
+        var typed = new Typed('#element', {
+          strings: ['Web Designer.', 'Software Developer.', 'Web Developer...'],
+          typeSpeed: 40,
+        });
+    </script>
+    <div class="popup">
+        <div class="close-btn">&times;</div>
+        <div class="form">
+            <h2>Get in touch</h2>
+            <div class="form-element">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="example@gmail.com" required>
+            </div>
+            <div class="form-element">
+                <label for="password">Enter you 10 digit mobile number</label>
+                <input type="number" id="password" placeholder="Enter your Number" required>
+            </div>
+            <div class="form-element">
+                <input type="checkbox" id="remember-me">
+                <label for="remember-me">Always remember me</label>
+            </div>
+            <div class="form-element">
+                <button>Submit</button>
+            </div>
+            <div class="form-element">
+                <a href="#">Forgot Password</a>
+            </div>
+        </div>
+    </div>
+    <style src=first.js></style>
+   
+</body>
+</html>
