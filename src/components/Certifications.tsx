@@ -1,6 +1,6 @@
 "use client";
 
-import { Award, Trophy, ExternalLink } from "lucide-react";
+import { Award, Trophy, ExternalLink, GraduationCap } from "lucide-react";
 
 interface AchievementItem {
   title: string;
@@ -39,16 +39,16 @@ const achievementsList: AchievementItem[] = [
 
 export default function Certifications() {
   return (
-    <section id="certifications" className="py-24 relative bg-[#0a0e17] border-t border-[#1e293b]">
+    <section id="certifications" className="py-24 relative bg-[#0b0f19] border-t border-[#1e293b]">
       <div className="max-w-6xl mx-auto px-6">
         
         {/* Header */}
         <div className="max-w-3xl mb-14 space-y-3">
           <span className="text-xs font-mono text-blue-400 uppercase tracking-widest block font-semibold">
-            04 / Achievements & Milestones
+            Honors & Recognitions
           </span>
           <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-            Achievements & <span className="gradient-text-codehelp">Credentials</span>
+            Achievements & <span className="gradient-text-academic">Credentials</span>
           </h2>
           <p className="text-slate-400 text-base">
             Hackathon recognitions, deployed AI systems, and competitive programming accomplishments.
@@ -60,14 +60,14 @@ export default function Certifications() {
           {achievementsList.map((item, idx) => (
             <div
               key={idx}
-              className="codehelp-card p-6 flex flex-col justify-between space-y-5"
+              className="academic-card p-6 flex flex-col justify-between space-y-5"
             >
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] font-mono text-blue-400 uppercase font-semibold">
                     {item.category}
                   </span>
-                  <Trophy className="w-4 h-4 text-blue-400" />
+                  <Trophy className="w-4 h-4 text-amber-400" />
                 </div>
 
                 <h3 className="text-lg font-bold text-white tracking-tight">
@@ -87,7 +87,7 @@ export default function Certifications() {
                   {item.tags.map((t) => (
                     <span
                       key={t}
-                      className="px-2 py-0.5 rounded text-[11px] font-mono bg-[#0a0e17] text-slate-300 border border-[#1e293b]"
+                      className="px-2 py-0.5 rounded text-[11px] font-mono bg-[#0b0f19] text-slate-300 border border-[#1e293b]"
                     >
                       #{t}
                     </span>
@@ -101,7 +101,7 @@ export default function Certifications() {
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1 text-xs font-mono text-blue-400 hover:underline pt-1"
                   >
-                    <span>View Project</span>
+                    <span>View Recognition</span>
                     <ExternalLink className="w-3 h-3" />
                   </a>
                 )}

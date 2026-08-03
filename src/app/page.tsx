@@ -1,6 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import About from "@/components/About";
+import Timeline from "@/components/Timeline";
 import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
 import Certifications from "@/components/Certifications";
@@ -10,12 +10,12 @@ import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#0b0f19] text-slate-100 selection:bg-emerald-500 selection:text-slate-950">
+    <main className="min-h-screen bg-[#0b0f19] text-slate-100 selection:bg-blue-500 selection:text-white transition-colors duration-200">
       <Navbar />
       <Hero />
-      <About />
-      <Skills />
+      <Timeline />
       <Projects />
+      <Skills />
       <Certifications />
       <AIChatbotWidget />
       <Contact />

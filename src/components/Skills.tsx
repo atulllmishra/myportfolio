@@ -94,25 +94,25 @@ export default function Skills() {
   );
 
   return (
-    <section id="skills" className="py-24 relative bg-[#0a0e17] border-t border-[#1e293b]">
+    <section id="skills" className="py-24 relative bg-[#0b0f19] border-t border-[#1e293b]">
       <div className="max-w-6xl mx-auto px-6">
         
         {/* Header */}
         <div className="max-w-3xl mb-12 space-y-3">
           <span className="text-xs font-mono text-blue-400 uppercase tracking-widest block font-semibold">
-            02 / Technical Skills
+            Technical Competencies & Expertise
           </span>
           <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-            Skills & <span className="gradient-text-codehelp">Capabilities</span>
+            Skills & <span className="gradient-text-academic font-extrabold">Capabilities</span>
           </h2>
           <p className="text-slate-400 text-base">
-            Technical competencies across Generative AI, Full-Stack Web Development, and CSE Core Fundamentals.
+            Proficiencies across Generative AI, Full-Stack Web Development, and CSE Core Fundamentals.
           </p>
         </div>
 
         {/* Filter Tabs */}
-        <div className="flex mb-10">
-          <div className="inline-flex p-1.5 rounded-lg bg-[#131c2e] border border-[#1e293b]">
+        <div className="flex mb-10 overflow-x-auto pb-2">
+          <div className="inline-flex p-1.5 rounded-xl bg-[#131c2e] border border-[#1e293b]">
             {[
               { id: "all", label: "All Skills", icon: Layers },
               { id: "ai", label: "Generative AI", icon: Bot },
@@ -125,7 +125,7 @@ export default function Skills() {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id as SkillCategory)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-md text-xs font-semibold transition-all ${
+                  className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold transition-all ${
                     isActive
                       ? "bg-blue-600 text-white shadow-md shadow-blue-500/20"
                       : "text-slate-400 hover:text-white"
@@ -144,7 +144,7 @@ export default function Skills() {
           {filteredSkills.map((skill) => (
             <div
               key={skill.name}
-              className="codehelp-card p-6 flex flex-col justify-between space-y-4"
+              className="academic-card p-6 flex flex-col justify-between space-y-4"
             >
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
@@ -170,7 +170,7 @@ export default function Skills() {
 
               <div className="space-y-3 pt-2 border-t border-[#1e293b]">
                 {/* Progress Bar */}
-                <div className="w-full h-1.5 rounded-full bg-[#0a0e17] overflow-hidden">
+                <div className="w-full h-1.5 rounded-full bg-[#0b0f19] overflow-hidden">
                   <div
                     className="h-full bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full transition-all duration-500"
                     style={{ width: `${skill.level}%` }}
@@ -181,7 +181,7 @@ export default function Skills() {
                   {skill.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-2 py-0.5 rounded text-[11px] font-mono bg-[#0a0e17] text-slate-300 border border-[#1e293b]"
+                      className="px-2 py-0.5 rounded text-[11px] font-mono bg-[#0b0f19] text-slate-300 border border-[#1e293b]"
                     >
                       #{tag}
                     </span>

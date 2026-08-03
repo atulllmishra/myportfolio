@@ -2,58 +2,87 @@
 
 @layer base {
   :root {
-    --background: #0a0e17;
-    --foreground: #f8fafc;
-    --card-bg: #131c2e;
-    --card-border: #1e293b;
-    --brand-blue: #3b82f6;
-    --brand-indigo: #6366f1;
+    --bg-main: #0b0f19;
+    --bg-card: #131c2e;
+    --border-card: #1e293b;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --accent-blue: #3b82f6;
+    --accent-indigo: #6366f1;
+  }
+
+  html.light {
+    --bg-main: #f8fafc;
+    --bg-card: #ffffff;
+    --border-card: #e2e8f0;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --accent-blue: #2563eb;
+    --accent-indigo: #4f46e5;
   }
 
   body {
-    background-color: var(--background);
-    color: var(--foreground);
+    background-color: var(--bg-main);
+    color: var(--text-primary);
     font-family: var(--font-sans), "Inter", system-ui, -apple-system, sans-serif;
     overflow-x: hidden;
     letter-spacing: -0.01em;
     -webkit-font-smoothing: antialiased;
+    transition: background-color 0.25s ease, color 0.25s ease;
   }
 
-  /* CodeHelp Style Custom Scrollbar */
+  /* Academic Custom Scrollbar */
   ::-webkit-scrollbar {
     width: 8px;
   }
   ::-webkit-scrollbar-track {
-    background: #0a0e17;
+    background: var(--bg-main);
   }
   ::-webkit-scrollbar-thumb {
-    background: #1e293b;
+    background: var(--border-card);
     border-radius: 4px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #3b82f6;
+    background: var(--accent-blue);
   }
 }
 
-/* CodeHelp Style Card Utility */
-.codehelp-card {
-  background-color: #131c2e;
-  border: 1px solid #1e293b;
-  border-radius: 12px;
-  transition: all 0.2s ease-in-out;
+/* Hugo Blox Academic Card Utility */
+.academic-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: 14px;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.codehelp-card:hover {
-  border-color: #3b82f6;
+.academic-card:hover {
+  border-color: rgba(59, 130, 246, 0.4);
   transform: translateY(-2px);
-  box-shadow: 0 12px 30px -10px rgba(59, 130, 246, 0.2);
+  box-shadow: 0 16px 32px -12px rgba(59, 130, 246, 0.15);
 }
 
-.gradient-text-codehelp {
-  background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
+.gradient-text-academic {
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+html.light .gradient-text-academic {
+  background: linear-gradient(135deg, #1d4ed8 0%, #6d28d9 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Light mode theme refinements */
+html.light body {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+html.light section {
+  border-color: #e2e8f0 !important;
 }
 
 /* Smooth Scroll */

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import "./globals.css";
 
 const inter = Inter({
@@ -14,11 +15,13 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Atul Kumar Mishra | CSE Student, Web Developer & AI Engineer",
+  title: "Atul Kumar Mishra | Academic CV & Portfolio",
   description:
-    "Portfolio of Atul Kumar Mishra - B.Tech Computer Science & Engineering (CSE) student at MCAET ANDUAT. Full-Stack Web Developer & Generative AI Specialist. IIT Guwahati ImpactHack 2025 Finalist. Creator of ProcureHub, Smart Agri, E-Commerce Store, and MCAET Custom AI College Chatbot.",
+    "Academic Portfolio & CV of Atul Kumar Mishra - B.Tech Computer Science & Engineering (CSE) student at MCAET ANDUAT. Full-Stack Web Developer & Generative AI Specialist. IIT Guwahati ImpactHack 2025 Finalist.",
   keywords: [
     "Atul Kumar Mishra",
+    "Academic CV",
+    "Hugo Blox Theme",
     "Computer Science Student",
     "CSE MCAET",
     "MCAET ANDUAT",
@@ -36,9 +39,9 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Atul Kumar Mishra" }],
   openGraph: {
-    title: "Atul Kumar Mishra - CSE Student, Web Developer & AI Engineer",
+    title: "Atul Kumar Mishra - Academic CV & Portfolio",
     description:
-      "Explore projects (ProcureHub, Smart Agri, E-Commerce Store, MCAET AI Chatbot) and interactive AI assistant of Atul Kumar Mishra.",
+      "Explore academic background, research interests, projects (Smart Agri, MCAET AI Chatbot, ProcureHub), and interactive AI assistant of Atul Kumar Mishra.",
     type: "website",
   },
 };
@@ -49,9 +52,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable} scroll-smooth`}>
-      <body className="bg-[#080a0f] text-slate-100 antialiased font-sans flex flex-col min-h-screen">
-        {children}
+    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable} scroll-smooth dark`}>
+      <body className="bg-[#0b0f19] text-slate-100 antialiased font-sans flex flex-col min-h-screen transition-colors duration-200">
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
