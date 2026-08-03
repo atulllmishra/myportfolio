@@ -24,9 +24,9 @@ export async function POST(request: Request) {
 
     const fullPhone = phone ? `${countryCode || "+91"} ${phone}` : "Not provided";
 
-    const user = process.env.GMAIL_USER || process.env.EMAIL_USER;
-    const pass = process.env.GMAIL_APP_PASSWORD || process.env.EMAIL_PASS;
-    const targetEmail = process.env.CONTACT_RECEIVER_EMAIL || "atulllmishra1@gmail.com";
+    const user = (process.env.GMAIL_USER || process.env.EMAIL_USER || "").trim();
+    const pass = (process.env.GMAIL_APP_PASSWORD || process.env.EMAIL_PASS || "").replace(/\s+/g, "").trim();
+    const targetEmail = (process.env.CONTACT_RECEIVER_EMAIL || "atulllmishra1@gmail.com").trim();
 
     // If credentials are not yet configured in environment variables
     if (!user || !pass) {
