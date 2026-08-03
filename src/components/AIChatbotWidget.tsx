@@ -13,15 +13,15 @@ interface ChatMessage {
 const initialBotMessage: ChatMessage = {
   id: "welcome-1",
   sender: "bot",
-  text: "Hello! I am Atul's AI Assistant. Ask me anything about Atul's B.Tech CSE degree at MCAET ANDUAT, ProcureHub (B2B Procurement SaaS), Smart Agri (IIT Guwahati ImpactHack Finalist), MCAET AI Chatbot, or his technical skills!",
+  text: "Hello! I am Atul's AI Assistant. Ask me anything about Atul's B.Tech CSE degree (2024–Present), heyBuddy (Ongoing AI EdTech Video Platform), ProcureHub (Oct 2024–Sep 2025), Smart Agri (March 2025), MCAET AI Chatbot (July 2026–Present), E-Commerce Store (Aug 2026–Present), or his technical skills!",
   timestamp: "System",
 };
 
 const suggestedPrompts = [
-  "Tell me about ProcureHub and how it works",
-  "What is Smart Agri (IIT Guwahati ImpactHack)?",
+  "Tell me about heyBuddy (AI EdTech Video platform)",
+  "Tell me about ProcureHub (Oct 2024 - Sep 2025)",
+  "What is Smart Agri (IIT Guwahati ImpactHack March 2025)?",
   "What AI projects has Atul built?",
-  "What are Atul's core technical skills?",
   "How can I contact Atul or get his resume?",
 ];
 
@@ -62,9 +62,18 @@ export default function AIChatbotWidget() {
       let botResponse = "";
       const lower = text.toLowerCase();
 
+      // heyBuddy queries
+      if (lower.includes("heybuddy") || lower.includes("hey buddy") || lower.includes("edtech") || lower.includes("lecture") || lower.includes("video solution")) {
+        botResponse = `heyBuddy (Ongoing Project • August 2026 — Present) is an online AI EdTech video platform created by Atul.
+
+Key Features & Capabilities:
+• Multilingual AI Video Solutions: Automatically generates video & voice answers to user questions in multiple languages.
+• Lecture Difficulty Transformation: Converts lecture content dynamically into beginner, intermediate, or advanced levels tailored to learner needs.
+• Adaptive Learning Engine: Powered by Generative AI, Next.js, and LLMs for personalized education.`;
+      }
       // ProcureHub queries
-      if (lower.includes("procurehub") || lower.includes("b2b") || lower.includes("bribery") || lower.includes("bid") || lower.includes("procurement")) {
-        botResponse = `ProcureHub (procurehub.vercel.app) is a transparent, bribeless B2B IT Procurement & Bid Management SaaS platform created by Atul.
+      else if (lower.includes("procurehub") || lower.includes("b2b") || lower.includes("bribery") || lower.includes("bid") || lower.includes("procurement")) {
+        botResponse = `ProcureHub (procurehub.vercel.app | Timeline: Oct 1, 2024 — Sept 24, 2025) is a transparent, bribeless B2B IT Procurement & Bid Management SaaS platform created by Atul.
 
 Key Features & Insights:
 • Eliminates corruption & bribery in IT maintenance contracts in India.
@@ -76,7 +85,7 @@ Key Features & Insights:
       }
       // Smart Agri queries
       else if (lower.includes("smart agri") || lower.includes("hackathon") || lower.includes("iit") || lower.includes("guwahati") || lower.includes("impacthack") || lower.includes("farmer") || lower.includes("crop")) {
-        botResponse = `Smart Agri (smart-agri.vercel.app) was named Finalist at IIT Guwahati ImpactHack Hackathon 2025!
+        botResponse = `Smart Agri (smart-agri.vercel.app | Timeline: March 2025) was named Finalist at IIT Guwahati ImpactHack Hackathon 2025!
 
 What it does:
 • Intelligent precision farming platform for agricultural decision support.
@@ -86,7 +95,7 @@ What it does:
       }
       // MCAET Chatbot queries
       else if (lower.includes("mcaet") || lower.includes("college bot") || lower.includes("render") || lower.includes("portal")) {
-        botResponse = `MCAET Generative AI Chatbot (mcaetchatbot-2.onrender.com) is a custom conversational AI bot engineered by Atul for Mahamaya College of Agricultural Engineering and Technology (MCAET, ANDUAT).
+        botResponse = `MCAET Generative AI Chatbot (mcaetchatbot-2.onrender.com | Timeline: July 2026 — Present) is a custom conversational AI bot engineered by Atul for Mahamaya College of Agricultural Engineering and Technology (MCAET, ANDUAT).
 
 Highlights:
 • Deployed live on Render & integrated directly into official college web portal (mcaet.vercel.app).
@@ -95,24 +104,25 @@ Highlights:
       }
       // E-Commerce queries
       else if (lower.includes("ecommerce") || lower.includes("e-commerce") || lower.includes("store") || lower.includes("shop")) {
-        botResponse = `E-Commerce Storefront (ecommerce-store-ivory-sigma.vercel.app) is a full-stack web application featuring:
+        botResponse = `E-Commerce Storefront (ecommerce-store-ivory-sigma.vercel.app | Timeline: August 2026 — Present) is a full-stack web application featuring:
 • Responsive product catalog navigation & category filtering.
 • Integrated AI Helpcenter chatbot for customer query resolution.
 • Cart state management & checkout workflow built with React, TypeScript & Tailwind CSS.`;
       }
       // All Projects Overview
       else if (lower.includes("project") || lower.includes("work") || lower.includes("portfolio") || lower.includes("built")) {
-        botResponse = `Here are Atul's 4 major production projects:
+        botResponse = `Here are Atul's 5 major projects with timelines:
 
-1. ProcureHub (procurehub.vercel.app) - B2B Transparent Procurement & Bribeless Bid SaaS.
-2. Smart Agri (smart-agri.vercel.app) - IIT Guwahati ImpactHack 2025 Finalist Agritech Platform.
-3. MCAET AI Chatbot (mcaetchatbot-2.onrender.com) - Live AI college bot on mcaet.vercel.app.
-4. E-Commerce Store (ecommerce-store-ivory-sigma.vercel.app) - Storefront with AI Helpcenter.`;
+1. heyBuddy (August 2026 — Present, Ongoing) - AI Multilingual EdTech Video & Lecture Platform.
+2. E-Commerce Store (August 2026 — Present) - Storefront with AI Helpcenter (ecommerce-store-ivory-sigma.vercel.app).
+3. MCAET AI Chatbot (July 2026 — Present) - Live AI college bot on mcaet.vercel.app (mcaetchatbot-2.onrender.com).
+4. Smart Agri (March 2025) - IIT Guwahati ImpactHack 2025 Finalist Agritech Platform (smart-agri.vercel.app).
+5. ProcureHub (Oct 1, 2024 — Sept 24, 2025) - B2B Transparent Procurement & Bribeless Bid SaaS (procurehub.vercel.app).`;
       }
       // Education & Degree
       else if (lower.includes("education") || lower.includes("college") || lower.includes("degree") || lower.includes("university") || lower.includes("anduat") || lower.includes("cse")) {
         botResponse = `Atul's Academic Profile:
-• Degree: B.Tech in Computer Science & Engineering (CSE).
+• Degree: B.Tech in Computer Science & Engineering (CSE) (2024 — Present).
 • Institution: Mahamaya College of Agricultural Engineering and Technology (MCAET), ANDUAT University, Ayodhya / UP, India.
 • Coursework: Data Structures & Algorithms, C++ OOP, DBMS & SQL, Operating Systems, Web Technologies.`;
       }
@@ -121,7 +131,7 @@ Highlights:
         botResponse = `Atul's Core Technical Skills:
 • Languages: C++ (OOP, STL, Memory Management), JavaScript (ES6+), TypeScript, HTML5/CSS3.
 • Web Frameworks: React.js, Next.js (App Router), Tailwind CSS, Node.js, Express.
-• AI & LLMs: Gemini API, Prompt Engineering, RAG Systems, Conversational Bot Architecture.
+• AI & LLMs: Gemini API, Multilingual Video Synthesis, Prompt Engineering, RAG Systems, Conversational Bot Architecture.
 • CSE Fundamentals: Data Structures & Algorithms, DBMS, Operating Systems, REST APIs.`;
       }
       // Contact & Links
@@ -136,9 +146,7 @@ Highlights:
       }
       // Default Response
       else {
-        botResponse = `Atul Kumar Mishra is a B.Tech CSE student at MCAET ANDUAT, IIT Guwahati ImpactHack 2025 Finalist, and Full-Stack / AI Engineer.
-
-He built ProcureHub, Smart Agri, MCAET AI Chatbot, and E-Commerce Store. Ask me about any specific project, his technical skills, or contact info!`;
+        botResponse = `Atul Kumar Mishra is a B.Tech CSE student (2024 — Present) at MCAET ANDUAT, developer of heyBuddy (AI EdTech Platform), IIT Guwahati ImpactHack 2025 Finalist, and Full-Stack / AI Engineer.`;
       }
 
       const botMsg: ChatMessage = {
