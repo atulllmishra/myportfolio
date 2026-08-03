@@ -74,8 +74,9 @@ export default function Contact() {
 
       setSubmitted(true);
       setFormData({ name: "", email: "", countryCode: "+91", phone: "", subject: "", message: "" });
-    } catch (err: any) {
-      setError(err?.message || "An unexpected error occurred. Please try again.");
+    } catch (err: unknown) {
+      const errorObj = err as Error;
+      setError(errorObj?.message || "An unexpected error occurred. Please try again.");
     } finally {
       setIsSubmitting(false);
     }

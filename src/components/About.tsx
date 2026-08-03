@@ -65,7 +65,7 @@ export default function About() {
             <div className="codehelp-card p-6 space-y-3">
               <div className="flex items-center gap-2 text-blue-400">
                 <Trophy className="w-4 h-4" />
-                <span className="text-xs font-mono font-bold uppercase">IIT Guwahati ImpactHack '25</span>
+                <span className="text-xs font-mono font-bold uppercase">IIT Guwahati ImpactHack &apos;25</span>
               </div>
               <h4 className="text-base font-bold text-white">Hackathon Finalist</h4>
               <p className="text-xs text-slate-300 leading-relaxed">

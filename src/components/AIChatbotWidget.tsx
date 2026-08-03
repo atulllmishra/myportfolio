@@ -48,7 +48,7 @@ export default function AIChatbotWidget() {
     if (!text) return;
 
     const userMsg: ChatMessage = {
-      id: Date.now().toString(),
+      id: crypto.randomUUID(),
       sender: "user",
       text,
       timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),

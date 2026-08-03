@@ -13,7 +13,15 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>("dark");
+  const [theme, setThemeState] = useState<Theme>(() => {
+    if (typeof window !== "undefined") {
+      const savedTheme = localStorage.getItem("hugo-academic-theme") as Theme | null;
+      if (savedTheme && (savedTheme === "dark" || savedTheme === "light")) {
+        return savedTheme;
+      }
+    }
+    return "dark";
+  });
   const [mounted, setMounted] = useState(false);
 
   const applyTheme = (targetTheme: Theme) => {
@@ -40,12 +48,12 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   };
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem("hugo-academic-theme") as Theme | null;
-    const initialTheme = savedTheme && (savedTheme === "dark" || savedTheme === "light") ? savedTheme : "dark";
-    setThemeState(initialTheme);
-    applyTheme(initialTheme);
-    setMounted(true);
-  }, []);
+    applyTheme(theme);
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 0);
+    return () => clearTimeout(timer);
+  }, [theme]);
 
   const setTheme = (newTheme: Theme) => {
     setThemeState(newTheme);

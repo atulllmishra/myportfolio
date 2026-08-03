@@ -42,6 +42,7 @@ export default function Navbar() {
         
         {/* Brand */}
         <a href="#" className="flex items-center gap-2.5 group">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={profilePicUrl}
             alt="Atul Mishra"

@@ -52,6 +52,7 @@ export default function Hero() {
               {/* Profile Image & Details */}
               <div className="flex flex-col items-center text-center pb-5 border-b border-[#1e2638] space-y-3">
                 <div className="relative">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={profilePicUrl}
                     alt="Atul Kumar Mishra Profile"
@@ -156,7 +157,7 @@ export default function Hero() {
                 </div>
                 <div className="flex items-center gap-2 text-xs text-slate-300">
                   <Award className="w-4 h-4 text-slate-400 shrink-0" />
-                  <span>IIT Guwahati ImpactHack '25 Finalist</span>
+                  <span>IIT Guwahati ImpactHack &apos;25 Finalist</span>
                 </div>
               </div>
 
@@ -199,7 +200,7 @@ export default function Hero() {
               <div className="academic-card p-4 space-y-1.5">
                 <div className="flex items-center gap-2 text-slate-300 font-mono text-xs font-semibold">
                   <Award className="w-4 h-4 text-slate-400" />
-                  <span>ImpactHack '25 Finalist</span>
+                  <span>ImpactHack &apos;25 Finalist</span>
                 </div>
                 <h2 className="text-sm font-bold text-white">Smart Agri Platform</h2>
                 <p className="text-xs text-slate-400 leading-relaxed">

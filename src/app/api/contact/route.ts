@@ -111,12 +111,13 @@ export async function POST(request: Request) {
       success: true,
       message: "Message sent successfully!",
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const err = error as Error;
     console.error("❌ Error sending email via /api/contact:", error);
     return NextResponse.json(
       {
         success: false,
-        error: error?.message || "Failed to send message. Please try again later.",
+        error: err?.message || "Failed to send message. Please try again later.",
       },
       { status: 500 }
     );

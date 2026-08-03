@@ -1,6 +1,6 @@
 "use client";
 
-import { Award, Trophy, ExternalLink } from "lucide-react";
+import { Trophy, ExternalLink } from "lucide-react";
 
 interface AchievementItem {
   title: string;

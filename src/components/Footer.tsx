@@ -1,17 +1,22 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ArrowUp, MapPin, Mail, Download, Clock, Calendar, Heart, Sparkles } from "lucide-react";
+import { ArrowUp, MapPin, Mail, Download, Clock, Calendar, Heart } from "lucide-react";
 
 export default function Footer() {
   const [time, setTime] = useState<Date | null>(null);
 
   useEffect(() => {
-    setTime(new Date());
     const timer = setInterval(() => {
       setTime(new Date());
     }, 1000);
-    return () => clearInterval(timer);
+    const timeout = setTimeout(() => {
+      setTime(new Date());
+    }, 0);
+    return () => {
+      clearInterval(timer);
+      clearTimeout(timeout);
+    };
   }, []);
 
   const scrollToTop = () => {
