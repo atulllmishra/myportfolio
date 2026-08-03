@@ -1,21 +1,67 @@
 "use client";
 
-import { ArrowUp, MapPin, Mail, Download } from "lucide-react";
+import { useState, useEffect } from "react";
+import { ArrowUp, MapPin, Mail, Download, Clock, Calendar, Heart, Sparkles } from "lucide-react";
 
 export default function Footer() {
+  const [time, setTime] = useState<Date | null>(null);
+
+  useEffect(() => {
+    setTime(new Date());
+    const timer = setInterval(() => {
+      setTime(new Date());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const formattedDay = time ? time.toLocaleDateString("en-US", { weekday: "long" }) : "";
+  const formattedDate = time ? time.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : "";
+  const formattedTime = time ? time.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: true }) : "";
+
   return (
-    <footer className="bg-[#0b0f17] border-t border-[#1e2638] pt-14 pb-10 relative overflow-hidden">
+    <footer className="bg-[#0b0f17] border-t border-[#1e2638] pt-14 pb-8 relative overflow-hidden">
       <div className="max-w-6xl mx-auto px-6 relative z-10">
+
+        {/* Top Sweet Gesture & Live Time (Left Accent Bar Visual) */}
+        <div className="mb-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-8 border-b border-[#1e2638]">
+          
+          {/* Sweet Gesture Message with Left Accent Line */}
+          <div className="pl-4 border-l-2 border-blue-500/80 space-y-1 max-w-xl">
+            <h4 className="text-xs font-bold text-white flex items-center gap-1.5 font-mono">
+              <span>Thank you for visiting!</span>
+              <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500 inline" />
+            </h4>
+            <p className="text-xs text-slate-400 leading-relaxed">
+              Wishing you a productive and wonderful day ahead. Feel free to reach out for collaborations or a quick chat anytime!
+            </p>
+          </div>
+
+          {/* Live Date, Day & Time Data */}
+          <div className="flex items-center gap-3 font-mono text-xs text-slate-300 shrink-0">
+            <div className="flex items-center gap-2">
+              <Clock className="w-3.5 h-3.5 text-blue-400 animate-pulse" />
+              <span className="font-bold text-white font-mono tracking-wide">{formattedTime || "--:--:--"}</span>
+            </div>
+            <span className="text-slate-700">/</span>
+            <div className="flex items-center gap-1.5 text-slate-400">
+              <Calendar className="w-3.5 h-3.5 text-slate-500" />
+              <span>{formattedDay ? `${formattedDay}, ${formattedDate}` : "Loading..."}</span>
+            </div>
+          </div>
+
+        </div>
+        
+        {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pb-10 border-b border-[#1e2638]">
           
           {/* Brand Column */}
           <div className="md:col-span-5 space-y-3">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-full bg-slate-800 text-white font-mono font-bold text-xs flex items-center justify-center">
+              <div className="w-8 h-8 rounded-full bg-slate-800 text-white font-mono font-bold text-xs flex items-center justify-center border border-slate-700">
                 AM
               </div>
               <div className="flex flex-col">
@@ -40,7 +86,7 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Social Links */}
+          {/* Quick Links */}
           <div className="md:col-span-3 space-y-2.5">
             <h4 className="text-xs font-mono text-slate-400 uppercase tracking-wider font-semibold">
               Links
@@ -96,15 +142,21 @@ export default function Footer() {
 
         </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-mono text-slate-500">
-          <p>© {new Date().getFullYear()} Atul Kumar Mishra</p>
+        {/* Bottom Bar: All Rights Reserved & Developed By */}
+        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-mono text-slate-500 text-center sm:text-left">
+          <div>
+            <p>© {new Date().getFullYear()}. All Rights Reserved.</p>
+          </div>
+
           <div className="flex items-center gap-4">
-            <span>Built with Next.js & Tailwind</span>
+            <span className="flex items-center gap-1 text-slate-400">
+              Designed & Developed with <Heart className="w-3 h-3 text-rose-500 fill-rose-500 inline" /> by <span className="text-white font-bold">Atul Kumar Mishra</span>
+            </span>
             <button
               onClick={scrollToTop}
               className="p-1.5 rounded bg-[#121824] border border-[#1e2638] text-slate-400 hover:text-white transition-colors"
               aria-label="Back to top"
+              title="Back to top"
             >
               <ArrowUp className="w-3.5 h-3.5" />
             </button>

@@ -3,6 +3,22 @@
 import { useState } from "react";
 import { Mail, Phone, MapPin, Send, Copy, Check, ArrowUpRight, Download } from "lucide-react";
 
+const COUNTRY_CODES = [
+  { code: "+91", label: "🇮🇳 +91 (India)" },
+  { code: "+1", label: "🇺🇸 +1 (USA/Canada)" },
+  { code: "+44", label: "🇬🇧 +44 (UK)" },
+  { code: "+61", label: "🇦🇺 +61 (Australia)" },
+  { code: "+971", label: "🇦🇪 +971 (UAE)" },
+  { code: "+49", label: "🇩🇪 +49 (Germany)" },
+  { code: "+33", label: "🇫🇷 +33 (France)" },
+  { code: "+81", label: "🇯🇵 +81 (Japan)" },
+  { code: "+86", label: "🇨🇳 +86 (China)" },
+  { code: "+65", label: "🇸🇬 +65 (Singapore)" },
+  { code: "+966", label: "🇸🇦 +966 (Saudi Arabia)" },
+  { code: "+7", label: "🇷🇺 +7 (Russia)" },
+  { code: "+55", label: "🇧🇷 +55 (Brazil)" },
+];
+
 export default function Contact() {
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedPhone, setCopiedPhone] = useState(false);
@@ -10,12 +26,15 @@ export default function Contact() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    countryCode: "+91",
+    phone: "",
     subject: "",
     message: "",
   });
 
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const copyToClipboard = (text: string, type: "email" | "phone") => {
     navigator.clipboard.writeText(text);
@@ -28,16 +47,38 @@ export default function Contact() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.email || !formData.message) return;
+    if (!formData.name || !formData.email || !formData.message) {
+      setError("Please fill in all required fields.");
+      return;
+    }
 
     setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
+    setError(null);
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.error || "Failed to send message.");
+      }
+
       setSubmitted(true);
-      setFormData({ name: "", email: "", subject: "", message: "" });
-    }, 1000);
+      setFormData({ name: "", email: "", countryCode: "+91", phone: "", subject: "", message: "" });
+    } catch (err: any) {
+      setError(err?.message || "An unexpected error occurred. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -204,6 +245,18 @@ export default function Contact() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-3.5">
+                {error && (
+                  <div className="p-3 rounded bg-red-950/50 border border-red-800 text-red-300 text-xs flex items-center justify-between">
+                    <span>{error}</span>
+                    <button
+                      type="button"
+                      onClick={() => setError(null)}
+                      className="text-red-400 hover:text-white font-bold ml-2"
+                    >
+                      ×
+                    </button>
+                  </div>
+                )}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                   <div className="space-y-1">
                     <label className="text-xs font-mono text-slate-300">Name *</label>
@@ -226,6 +279,31 @@ export default function Contact() {
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       placeholder="email@example.com"
                       className="w-full bg-[#0b0f17] border border-[#1e2638] rounded px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-slate-500 transition-colors"
+                    />
+                  </div>
+                </div>
+
+                {/* Phone Number with Country Code */}
+                <div className="space-y-1">
+                  <label className="text-xs font-mono text-slate-300">Mobile / Phone Number</label>
+                  <div className="flex gap-2">
+                    <select
+                      value={formData.countryCode}
+                      onChange={(e) => setFormData({ ...formData, countryCode: e.target.value })}
+                      className="bg-[#0b0f17] border border-[#1e2638] rounded px-2.5 py-2 text-xs text-white focus:outline-none focus:border-slate-500 transition-colors font-mono cursor-pointer"
+                    >
+                      {COUNTRY_CODES.map((item) => (
+                        <option key={item.code} value={item.code} className="bg-[#0b0f17] text-white">
+                          {item.label}
+                        </option>
+                      ))}
+                    </select>
+                    <input
+                      type="tel"
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      placeholder="e.g. 98765 43210"
+                      className="flex-1 bg-[#0b0f17] border border-[#1e2638] rounded px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-slate-500 transition-colors font-mono"
                     />
                   </div>
                 </div>
