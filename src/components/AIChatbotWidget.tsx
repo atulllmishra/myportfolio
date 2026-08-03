@@ -29,14 +29,18 @@ export default function AIChatbotWidget() {
   const [messages, setMessages] = useState<ChatMessage[]>([initialBotMessage]);
   const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
   };
 
   useEffect(() => {
-    scrollToBottom();
+    if (messages.length > 1 || isTyping) {
+      scrollToBottom();
+    }
   }, [messages, isTyping]);
 
   const handleSend = (textToSend?: string) => {
@@ -195,7 +199,7 @@ He built ProcureHub, Smart Agri, MCAET AI Chatbot, and E-Commerce Store. Ask me 
           </div>
 
           {/* Messages Container */}
-          <div className="flex-1 p-5 overflow-y-auto space-y-3.5 bg-[#0b0f17]">
+          <div ref={chatContainerRef} className="flex-1 p-5 overflow-y-auto space-y-3.5 bg-[#0b0f17]">
             {messages.map((msg) => (
               <div
                 key={msg.id}
@@ -227,8 +231,6 @@ He built ProcureHub, Smart Agri, MCAET AI Chatbot, and E-Commerce Store. Ask me 
                 </div>
               </div>
             )}
-
-            <div ref={messagesEndRef} />
           </div>
 
           {/* Suggested Prompt Chips */}
