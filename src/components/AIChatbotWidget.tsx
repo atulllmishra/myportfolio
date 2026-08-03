@@ -13,15 +13,16 @@ interface ChatMessage {
 const initialBotMessage: ChatMessage = {
   id: "welcome-1",
   sender: "bot",
-  text: "Hello! I am Atul's AI Portfolio Assistant. Ask me anything about Atul's CSE degree at MCAET ANDUAT, his IIT Guwahati ImpactHack 2025 Finalist project (Smart Agri), MCAET AI Chatbot, ProcureHub, or social links!",
+  text: "Hello! I am Atul's AI Assistant. Ask me anything about Atul's B.Tech CSE degree at MCAET ANDUAT, ProcureHub (B2B Procurement SaaS), Smart Agri (IIT Guwahati ImpactHack Finalist), MCAET AI Chatbot, or his technical skills!",
   timestamp: "System",
 };
 
 const suggestedPrompts = [
-  "Tell me about the IIT Guwahati ImpactHack project",
-  "What is Smart Agri?",
-  "What are Atul's social media links?",
-  "What is Atul's education background?",
+  "Tell me about ProcureHub and how it works",
+  "What is Smart Agri (IIT Guwahati ImpactHack)?",
+  "What AI projects has Atul built?",
+  "What are Atul's core technical skills?",
+  "How can I contact Atul or get his resume?",
 ];
 
 export default function AIChatbotWidget() {
@@ -57,16 +58,83 @@ export default function AIChatbotWidget() {
       let botResponse = "";
       const lower = text.toLowerCase();
 
-      if (lower.includes("smart agri") || lower.includes("hackathon") || lower.includes("iit") || lower.includes("guwahati") || lower.includes("impacthack")) {
-        botResponse = "Atul & his teammates were Finalists at IIT Guwahati's ImpactHack Hackathon 2025! They built Smart Agri (smart-agri.vercel.app) — a precision agritech platform helping farmers predict live city temperatures and crop market prices accurately.";
-      } else if (lower.includes("project") || lower.includes("procurehub") || lower.includes("e-commerce")) {
-        botResponse = "Atul's key deployed projects:\n1. Smart Agri (smart-agri.vercel.app) - IIT Guwahati ImpactHack '25 Finalist\n2. MCAET AI Chatbot (mcaetchatbot-2.onrender.com) - Live AI college chatbot integrated on mcaet.vercel.app\n3. ProcureHub (procurehub.vercel.app) - B2B Procurement SaaS\n4. E-Commerce Store (ecommerce-store-ivory-sigma.vercel.app) - Storefront with Helpcenter.";
-      } else if (lower.includes("social") || lower.includes("link") || lower.includes("linkedin") || lower.includes("github") || lower.includes("instagram")) {
-        botResponse = "Connect with Atul:\n- LinkedIn: linkedin.com/in/atul-kumar-mishra-3b3939363\n- GitHub: github.com/atulllmishra/\n- Instagram: instagram.com/atulllmishra/\n- Email: atulllmishra1@gmail.com";
-      } else if (lower.includes("mcaet") || lower.includes("college") || lower.includes("education") || lower.includes("cse")) {
-        botResponse = "Atul is a B.Tech Computer Science & Engineering (CSE) student at Mahamaya College of Agricultural Engineering and Technology (MCAET), ANDUAT. Core skills: Data Structures & Algorithms (C++), Web Development (React / Next.js / TS), and Generative AI.";
-      } else {
-        botResponse = "Atul is a CSE student at MCAET ANDUAT, IIT Guwahati ImpactHack 2025 Finalist, and Web/AI Developer. Visit GitHub (github.com/atulllmishra/) or email atulllmishra1@gmail.com!";
+      // ProcureHub queries
+      if (lower.includes("procurehub") || lower.includes("b2b") || lower.includes("bribery") || lower.includes("bid") || lower.includes("procurement")) {
+        botResponse = `ProcureHub (procurehub.vercel.app) is a transparent, bribeless B2B IT Procurement & Bid Management SaaS platform created by Atul.
+
+Key Features & Insights:
+• Eliminates corruption & bribery in IT maintenance contracts in India.
+• Equal Opportunity Bidding: Enables small contractors to compete fairly with enterprises based on technical merit.
+• Smart Contracts: Blockchain-backed execution for audit trails & compliance.
+• Real-time Analytics: Insights into bids, contract status, and contractor ratings.
+• Verified Contractors Protocol: Automated vetting of contractor credentials & quality ratings.
+• 3-Step Workflow: Post Requirement → Open Bidding → Fair Selection.`;
+      }
+      // Smart Agri queries
+      else if (lower.includes("smart agri") || lower.includes("hackathon") || lower.includes("iit") || lower.includes("guwahati") || lower.includes("impacthack") || lower.includes("farmer") || lower.includes("crop")) {
+        botResponse = `Smart Agri (smart-agri.vercel.app) was named Finalist at IIT Guwahati ImpactHack Hackathon 2025!
+
+What it does:
+• Intelligent precision farming platform for agricultural decision support.
+• Real-time city temperature & weather condition forecasting for farmers.
+• Predictive analytics engine for live crop market prices & yield insights.
+• Built with React, JavaScript, and Agritech UI algorithms.`;
+      }
+      // MCAET Chatbot queries
+      else if (lower.includes("mcaet") || lower.includes("college bot") || lower.includes("render") || lower.includes("portal")) {
+        botResponse = `MCAET Generative AI Chatbot (mcaetchatbot-2.onrender.com) is a custom conversational AI bot engineered by Atul for Mahamaya College of Agricultural Engineering and Technology (MCAET, ANDUAT).
+
+Highlights:
+• Deployed live on Render & integrated directly into official college web portal (mcaet.vercel.app).
+• Automated query handling for admissions, student services, and campus info.
+• Built with Node.js, LLMs, REST APIs, and contextual prompt engineering.`;
+      }
+      // E-Commerce queries
+      else if (lower.includes("ecommerce") || lower.includes("e-commerce") || lower.includes("store") || lower.includes("shop")) {
+        botResponse = `E-Commerce Storefront (ecommerce-store-ivory-sigma.vercel.app) is a full-stack web application featuring:
+• Responsive product catalog navigation & category filtering.
+• Integrated AI Helpcenter chatbot for customer query resolution.
+• Cart state management & checkout workflow built with React, TypeScript & Tailwind CSS.`;
+      }
+      // All Projects Overview
+      else if (lower.includes("project") || lower.includes("work") || lower.includes("portfolio") || lower.includes("built")) {
+        botResponse = `Here are Atul's 4 major production projects:
+
+1. ProcureHub (procurehub.vercel.app) - B2B Transparent Procurement & Bribeless Bid SaaS.
+2. Smart Agri (smart-agri.vercel.app) - IIT Guwahati ImpactHack 2025 Finalist Agritech Platform.
+3. MCAET AI Chatbot (mcaetchatbot-2.onrender.com) - Live AI college bot on mcaet.vercel.app.
+4. E-Commerce Store (ecommerce-store-ivory-sigma.vercel.app) - Storefront with AI Helpcenter.`;
+      }
+      // Education & Degree
+      else if (lower.includes("education") || lower.includes("college") || lower.includes("degree") || lower.includes("university") || lower.includes("anduat") || lower.includes("cse")) {
+        botResponse = `Atul's Academic Profile:
+• Degree: B.Tech in Computer Science & Engineering (CSE).
+• Institution: Mahamaya College of Agricultural Engineering and Technology (MCAET), ANDUAT University, Ayodhya / UP, India.
+• Coursework: Data Structures & Algorithms, C++ OOP, DBMS & SQL, Operating Systems, Web Technologies.`;
+      }
+      // Technical Skills & DSA
+      else if (lower.includes("skill") || lower.includes("c++") || lower.includes("dsa") || lower.includes("stack") || lower.includes("react") || lower.includes("next")) {
+        botResponse = `Atul's Core Technical Skills:
+• Languages: C++ (OOP, STL, Memory Management), JavaScript (ES6+), TypeScript, HTML5/CSS3.
+• Web Frameworks: React.js, Next.js (App Router), Tailwind CSS, Node.js, Express.
+• AI & LLMs: Gemini API, Prompt Engineering, RAG Systems, Conversational Bot Architecture.
+• CSE Fundamentals: Data Structures & Algorithms, DBMS, Operating Systems, REST APIs.`;
+      }
+      // Contact & Links
+      else if (lower.includes("contact") || lower.includes("email") || lower.includes("phone") || lower.includes("social") || lower.includes("linkedin") || lower.includes("github") || lower.includes("resume")) {
+        botResponse = `Connect with Atul:
+• Email: atulllmishra1@gmail.com
+• Phone: (+91) 74588 44711
+• GitHub: github.com/atulllmishra/
+• LinkedIn: linkedin.com/in/atul-kumar-mishra-3b3939363
+• Instagram: instagram.com/atulllmishra/
+• Resume: Download PDF directly from the top navigation bar!`;
+      }
+      // Default Response
+      else {
+        botResponse = `Atul Kumar Mishra is a B.Tech CSE student at MCAET ANDUAT, IIT Guwahati ImpactHack 2025 Finalist, and Full-Stack / AI Engineer.
+
+He built ProcureHub, Smart Agri, MCAET AI Chatbot, and E-Commerce Store. Ask me about any specific project, his technical skills, or contact info!`;
       }
 
       const botMsg: ChatMessage = {
@@ -78,56 +146,56 @@ export default function AIChatbotWidget() {
 
       setMessages((prev) => [...prev, botMsg]);
       setIsTyping(false);
-    }, 800);
+    }, 600);
   };
 
   return (
-    <section id="ai-assistant" className="py-24 relative bg-[#0a0e17] border-t border-[#1e293b]">
+    <section id="ai-assistant" className="py-20 relative bg-[#0b0f17] border-t border-[#1e2638]">
       <div className="max-w-4xl mx-auto px-6">
         
         {/* Header */}
-        <div className="max-w-2xl mb-10 space-y-3">
-          <span className="text-xs font-mono text-blue-400 uppercase tracking-widest block font-semibold">
-            05 / Interactive AI Assistant
+        <div className="max-w-2xl mb-8 space-y-2">
+          <span className="text-xs font-mono text-slate-400 uppercase tracking-wider block font-semibold">
+            AI Assistant
           </span>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-            Talk with <span className="gradient-text-codehelp">Atul&apos;s AI Agent</span>
+          <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+            Talk with Atul&apos;s Portfolio Agent
           </h2>
           <p className="text-slate-400 text-sm">
-            An embedded conversational agent trained on Atul&apos;s IIT Guwahati ImpactHack milestone, CSE degree, and projects.
+            Trained on ProcureHub, Smart Agri, MCAET AI Chatbot, education, and technical background.
           </p>
         </div>
 
         {/* Chat Window */}
-        <div className="codehelp-card overflow-hidden flex flex-col h-[520px]">
+        <div className="academic-card overflow-hidden flex flex-col h-[500px] border border-[#1e2638]">
           
           {/* Header Bar */}
-          <div className="px-6 py-4 bg-[#0a0e17] border-b border-[#1e293b] flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-blue-600/20 border border-blue-500/30 text-blue-400">
+          <div className="px-5 py-3.5 bg-[#0b0f17] border-b border-[#1e2638] flex items-center justify-between">
+            <div className="flex items-center gap-2.5">
+              <div className="p-1.5 rounded bg-[#121824] border border-[#1e2638] text-slate-300">
                 <Bot className="w-4 h-4" />
               </div>
               <div>
-                <h3 className="text-xs font-mono font-bold text-white flex items-center gap-2">
+                <h3 className="text-xs font-mono font-bold text-white flex items-center gap-1.5">
                   atul_ai_agent
-                  <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
+                  <span className="w-2 h-2 rounded-full bg-emerald-500" />
                 </h3>
-                <span className="text-[11px] font-mono text-slate-400">CSE & AI Portfolio Twin</span>
+                <span className="text-[10px] font-mono text-slate-400">CSE & AI Portfolio Twin</span>
               </div>
             </div>
 
             <button
               onClick={() => setMessages([initialBotMessage])}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0a0e17] hover:bg-[#1e293b] text-xs font-mono text-slate-300 hover:text-white transition-colors border border-[#1e293b]"
+              className="flex items-center gap-1 px-2.5 py-1 rounded bg-[#121824] hover:bg-[#1e2638] text-xs font-mono text-slate-300 hover:text-white transition-colors border border-[#1e2638]"
               title="Reset Chat"
             >
-              <RefreshCw className="w-3.5 h-3.5" />
+              <RefreshCw className="w-3 h-3" />
               <span>Reset</span>
             </button>
           </div>
 
-          {/* Messages */}
-          <div className="flex-1 p-6 overflow-y-auto space-y-4 bg-[#0a0e17]/80">
+          {/* Messages Container */}
+          <div className="flex-1 p-5 overflow-y-auto space-y-3.5 bg-[#0b0f17]">
             {messages.map((msg) => (
               <div
                 key={msg.id}
@@ -140,10 +208,10 @@ export default function AIChatbotWidget() {
                 </span>
 
                 <div
-                  className={`max-w-[85%] rounded-xl px-4 py-3 text-xs leading-relaxed ${
+                  className={`max-w-[88%] rounded-lg px-3.5 py-2.5 text-xs leading-relaxed ${
                     msg.sender === "user"
-                      ? "bg-blue-600 text-white font-semibold shadow-md shadow-blue-500/20"
-                      : "bg-[#131c2e] border border-[#1e293b] text-slate-200 whitespace-pre-line"
+                      ? "bg-blue-600 text-white font-medium"
+                      : "bg-[#121824] border border-[#1e2638] text-slate-200 whitespace-pre-line"
                   }`}
                 >
                   {msg.text}
@@ -154,8 +222,8 @@ export default function AIChatbotWidget() {
             {isTyping && (
               <div className="flex flex-col items-start space-y-1">
                 <span className="text-[10px] font-mono text-slate-500">AI Agent</span>
-                <div className="px-4 py-3 rounded-xl bg-[#131c2e] border border-[#1e293b] text-blue-400 text-xs font-mono">
-                  Thinking...
+                <div className="px-3.5 py-2 rounded-lg bg-[#121824] border border-[#1e2638] text-slate-400 text-xs font-mono">
+                  Searching knowledge base...
                 </div>
               </div>
             )}
@@ -163,17 +231,17 @@ export default function AIChatbotWidget() {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Chips */}
-          <div className="px-4 py-2.5 bg-[#0a0e17] border-t border-[#1e293b] overflow-x-auto flex items-center gap-2">
-            <span className="text-[11px] font-mono text-slate-500 shrink-0">Prompts:</span>
+          {/* Suggested Prompt Chips */}
+          <div className="px-3.5 py-2 bg-[#0b0f17] border-t border-[#1e2638] overflow-x-auto flex items-center gap-1.5">
+            <span className="text-[10px] font-mono text-slate-500 shrink-0">Suggestions:</span>
             {suggestedPrompts.map((prompt) => (
               <button
                 key={prompt}
                 onClick={() => handleSend(prompt)}
-                className="shrink-0 text-xs font-mono px-3 py-1 rounded-lg bg-[#131c2e] hover:bg-[#1e293b] text-slate-300 hover:text-white border border-[#1e293b] transition-colors flex items-center gap-1"
+                className="shrink-0 text-[11px] font-mono px-2.5 py-1 rounded bg-[#121824] hover:bg-[#1e2638] text-slate-300 hover:text-white border border-[#1e2638] transition-colors flex items-center gap-1"
               >
                 <span>{prompt}</span>
-                <ChevronRight className="w-3 h-3 text-blue-400" />
+                <ChevronRight className="w-3 h-3 text-slate-400" />
               </button>
             ))}
           </div>
@@ -184,19 +252,19 @@ export default function AIChatbotWidget() {
               e.preventDefault();
               handleSend();
             }}
-            className="p-4 bg-[#0a0e17] border-t border-[#1e293b] flex items-center gap-3"
+            className="p-3 bg-[#0b0f17] border-t border-[#1e2638] flex items-center gap-2"
           >
             <input
               type="text"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              placeholder="Ask a question about Smart Agri, IIT Guwahati hackathon, or projects..."
-              className="flex-1 bg-[#131c2e] border border-[#1e293b] rounded-lg px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500/60 transition-colors"
+              placeholder="Ask about ProcureHub, Smart Agri, MCAET AI Chatbot, CSE degree..."
+              className="flex-1 bg-[#121824] border border-[#1e2638] rounded px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-slate-500 transition-colors"
             />
             <button
               type="submit"
               disabled={!inputValue.trim() || isTyping}
-              className="px-4 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-500 disabled:opacity-40 text-white font-bold text-xs flex items-center gap-2 transition-all"
+              className="px-3.5 py-2 rounded bg-blue-600 hover:bg-blue-500 disabled:opacity-40 text-white font-medium text-xs flex items-center gap-1.5 transition-all"
             >
               <span>Send</span>
               <Send className="w-3.5 h-3.5" />

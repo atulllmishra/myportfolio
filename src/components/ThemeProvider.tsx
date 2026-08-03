@@ -16,25 +16,41 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setThemeState] = useState<Theme>("dark");
   const [mounted, setMounted] = useState(false);
 
+  const applyTheme = (targetTheme: Theme) => {
+    const root = document.documentElement;
+    const body = document.body;
+    
+    if (targetTheme === "light") {
+      root.classList.remove("dark");
+      root.classList.add("light");
+      if (body) {
+        body.classList.remove("dark");
+        body.classList.add("light");
+      }
+      root.setAttribute("data-theme", "light");
+    } else {
+      root.classList.remove("light");
+      root.classList.add("dark");
+      if (body) {
+        body.classList.remove("light");
+        body.classList.add("dark");
+      }
+      root.setAttribute("data-theme", "dark");
+    }
+  };
+
   useEffect(() => {
     const savedTheme = localStorage.getItem("hugo-academic-theme") as Theme | null;
-    if (savedTheme && (savedTheme === "dark" || savedTheme === "light")) {
-      setThemeState(savedTheme);
-      document.documentElement.classList.toggle("dark", savedTheme === "dark");
-      document.documentElement.classList.toggle("light", savedTheme === "light");
-    } else {
-      // Default to dark mode for academic portfolio aesthetic
-      setThemeState("dark");
-      document.documentElement.classList.add("dark");
-    }
+    const initialTheme = savedTheme && (savedTheme === "dark" || savedTheme === "light") ? savedTheme : "dark";
+    setThemeState(initialTheme);
+    applyTheme(initialTheme);
     setMounted(true);
   }, []);
 
   const setTheme = (newTheme: Theme) => {
     setThemeState(newTheme);
     localStorage.setItem("hugo-academic-theme", newTheme);
-    document.documentElement.classList.toggle("dark", newTheme === "dark");
-    document.documentElement.classList.toggle("light", newTheme === "light");
+    applyTheme(newTheme);
   };
 
   const toggleTheme = () => {

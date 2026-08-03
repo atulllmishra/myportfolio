@@ -94,25 +94,25 @@ export default function Skills() {
   );
 
   return (
-    <section id="skills" className="py-24 relative bg-[#0b0f19] border-t border-[#1e293b]">
+    <section id="skills" className="py-20 relative bg-[#0b0f17] border-t border-[#1e2638]">
       <div className="max-w-6xl mx-auto px-6">
         
         {/* Header */}
-        <div className="max-w-3xl mb-12 space-y-3">
-          <span className="text-xs font-mono text-blue-400 uppercase tracking-widest block font-semibold">
-            Technical Competencies & Expertise
+        <div className="max-w-3xl mb-10 space-y-2">
+          <span className="text-xs font-mono text-slate-400 uppercase tracking-wider block font-semibold">
+            Capabilities
           </span>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-            Skills & <span className="gradient-text-academic font-extrabold">Capabilities</span>
+          <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+            Technical Skills
           </h2>
-          <p className="text-slate-400 text-base">
-            Proficiencies across Generative AI, Full-Stack Web Development, and CSE Core Fundamentals.
+          <p className="text-slate-400 text-sm">
+            Generative AI, Full-Stack Web Development, and CSE Core Fundamentals.
           </p>
         </div>
 
         {/* Filter Tabs */}
-        <div className="flex mb-10 overflow-x-auto pb-2">
-          <div className="inline-flex p-1.5 rounded-xl bg-[#131c2e] border border-[#1e293b]">
+        <div className="flex mb-8 overflow-x-auto pb-1">
+          <div className="inline-flex p-1 rounded-lg bg-[#121824] border border-[#1e2638] text-xs font-medium">
             {[
               { id: "all", label: "All Skills", icon: Layers },
               { id: "ai", label: "Generative AI", icon: Bot },
@@ -125,9 +125,9 @@ export default function Skills() {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id as SkillCategory)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold transition-all ${
+                  className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded transition-all ${
                     isActive
-                      ? "bg-blue-600 text-white shadow-md shadow-blue-500/20"
+                      ? "bg-[#1e2638] text-white font-semibold"
                       : "text-slate-400 hover:text-white"
                   }`}
                 >
@@ -140,15 +140,15 @@ export default function Skills() {
         </div>
 
         {/* Skills Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {filteredSkills.map((skill) => (
             <div
               key={skill.name}
-              className="academic-card p-6 flex flex-col justify-between space-y-4"
+              className="academic-card p-5 flex flex-col justify-between space-y-3"
             >
-              <div className="space-y-3">
+              <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-[11px] font-mono text-blue-400 uppercase font-semibold">
+                  <span className="text-[11px] font-mono text-slate-400 uppercase font-semibold">
                     {skill.category === "ai"
                       ? "Generative AI"
                       : skill.category === "web"
@@ -160,7 +160,7 @@ export default function Skills() {
                   </span>
                 </div>
 
-                <h3 className="text-base font-bold text-white tracking-tight">
+                <h3 className="text-sm font-bold text-white tracking-tight">
                   {skill.name}
                 </h3>
                 <p className="text-xs text-slate-400 leading-relaxed font-normal">
@@ -168,20 +168,20 @@ export default function Skills() {
                 </p>
               </div>
 
-              <div className="space-y-3 pt-2 border-t border-[#1e293b]">
+              <div className="space-y-2.5 pt-2 border-t border-[#1e2638]">
                 {/* Progress Bar */}
-                <div className="w-full h-1.5 rounded-full bg-[#0b0f19] overflow-hidden">
+                <div className="w-full h-1.5 rounded-full bg-[#0b0f17] overflow-hidden">
                   <div
-                    className="h-full bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full transition-all duration-500"
+                    className="h-full bg-slate-300 rounded-full transition-all duration-300"
                     style={{ width: `${skill.level}%` }}
                   />
                 </div>
 
-                <div className="flex flex-wrap gap-1.5 pt-1">
+                <div className="flex flex-wrap gap-1 pt-0.5">
                   {skill.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-2 py-0.5 rounded text-[11px] font-mono bg-[#0b0f19] text-slate-300 border border-[#1e293b]"
+                      className="px-2 py-0.5 rounded text-[10px] font-mono bg-[#0b0f17] text-slate-400 border border-[#1e2638]"
                     >
                       #{tag}
                     </span>

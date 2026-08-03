@@ -2,87 +2,237 @@
 
 @layer base {
   :root {
-    --bg-main: #0b0f19;
-    --bg-card: #131c2e;
-    --border-card: #1e293b;
+    --bg-main: #0b0f17;
+    --bg-card: #121824;
+    --border-card: #1e2638;
     --text-primary: #f8fafc;
     --text-secondary: #94a3b8;
-    --accent-blue: #3b82f6;
-    --accent-indigo: #6366f1;
+    --accent-primary: #2563eb;
+    --font-poppins: 'Poppins', sans-serif;
   }
 
-  html.light {
-    --bg-main: #f8fafc;
+  html.light, [data-theme="light"] {
+    --bg-main: #ffffff;
     --bg-card: #ffffff;
     --border-card: #e2e8f0;
     --text-primary: #0f172a;
     --text-secondary: #475569;
-    --accent-blue: #2563eb;
-    --accent-indigo: #4f46e5;
+    --accent-primary: #2563eb;
   }
 
   body {
     background-color: var(--bg-main);
     color: var(--text-primary);
-    font-family: var(--font-sans), "Inter", system-ui, -apple-system, sans-serif;
+    font-family: var(--font-poppins), "Poppins", system-ui, -apple-system, sans-serif;
     overflow-x: hidden;
     letter-spacing: -0.01em;
     -webkit-font-smoothing: antialiased;
-    transition: background-color 0.25s ease, color 0.25s ease;
+    transition: background-color 0.2s ease, color 0.2s ease;
   }
 
-  /* Academic Custom Scrollbar */
+  /* Custom Scrollbar */
   ::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
   }
   ::-webkit-scrollbar-track {
     background: var(--bg-main);
   }
   ::-webkit-scrollbar-thumb {
     background: var(--border-card);
-    border-radius: 4px;
+    border-radius: 3px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--accent-blue);
+    background: #2563eb;
   }
 }
 
-/* Hugo Blox Academic Card Utility */
+/* Minimal Academic Card Utility */
 .academic-card {
   background-color: var(--bg-card);
   border: 1px solid var(--border-card);
-  border-radius: 14px;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 12px;
+  transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .academic-card:hover {
-  border-color: rgba(59, 130, 246, 0.4);
-  transform: translateY(-2px);
-  box-shadow: 0 16px 32px -12px rgba(59, 130, 246, 0.15);
+  border-color: #2563eb;
 }
 
-.gradient-text-academic {
-  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+/* =========================================================
+   PREMIUM LIGHT THEME SYSTEM
+   ========================================================= */
+html.light body,
+[data-theme="light"] body {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
 }
 
-html.light .gradient-text-academic {
-  background: linear-gradient(135deg, #1d4ed8 0%, #6d28d9 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Light mode theme refinements */
-html.light body {
-  background-color: #f8fafc;
-  color: #0f172a;
-}
-
-html.light section {
+html.light main,
+html.light section,
+html.light footer,
+[data-theme="light"] main,
+[data-theme="light"] section,
+[data-theme="light"] footer {
+  background-color: #ffffff !important;
   border-color: #e2e8f0 !important;
+}
+
+/* Glassmorphic Navbar in Light Mode */
+html.light header,
+[data-theme="light"] header {
+  background-color: rgba(255, 255, 255, 0.92) !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+}
+
+html.light nav a,
+[data-theme="light"] nav a {
+  color: #334155 !important;
+}
+
+html.light nav a:hover,
+[data-theme="light"] nav a:hover {
+  color: #2563eb !important;
+}
+
+/* Academic Card in Light Mode */
+html.light .academic-card,
+html.light .bg-\[\#121824\],
+html.light .bg-\[\#131c2e\],
+[data-theme="light"] .academic-card,
+[data-theme="light"] .bg-\[\#121824\],
+[data-theme="light"] .bg-\[\#131c2e\] {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02) !important;
+}
+
+html.light .academic-card:hover,
+[data-theme="light"] .academic-card:hover {
+  border-color: #2563eb !important;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08) !important;
+}
+
+/* Sub-element & Badge Backgrounds */
+html.light .bg-\[\#0b0f17\],
+html.light .bg-\[\#0a0e17\],
+html.light .bg-\[\#080a0f\],
+[data-theme="light"] .bg-\[\#0b0f17\],
+[data-theme="light"] .bg-\[\#0a0e17\],
+[data-theme="light"] .bg-\[\#080a0f\] {
+  background-color: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+}
+
+/* Timeline Vertical Line & Icon Container */
+html.light .border-l,
+[data-theme="light"] .border-l {
+  border-color: #cbd5e1 !important;
+}
+
+/* Borders */
+html.light .border-\[\#1e2638\],
+html.light .border-\[\#1e293b\],
+[data-theme="light"] .border-\[\#1e2638\],
+[data-theme="light"] .border-\[\#1e293b\] {
+  border-color: #e2e8f0 !important;
+}
+
+/* Typography in Light Mode */
+html.light h1, html.light h2, html.light h3, html.light h4, html.light h5, html.light h6,
+[data-theme="light"] h1, [data-theme="light"] h2, [data-theme="light"] h3, [data-theme="light"] h4, [data-theme="light"] h5, [data-theme="light"] h6 {
+  color: #0f172a !important;
+}
+
+html.light .text-white,
+html.light .text-slate-100,
+html.light .text-slate-200,
+[data-theme="light"] .text-white,
+[data-theme="light"] .text-slate-100,
+[data-theme="light"] .text-slate-200 {
+  color: #0f172a !important;
+}
+
+html.light .text-slate-300,
+[data-theme="light"] .text-slate-300 {
+  color: #334155 !important;
+}
+
+html.light .text-slate-400,
+[data-theme="light"] .text-slate-400 {
+  color: #64748b !important;
+}
+
+html.light .text-slate-500,
+[data-theme="light"] .text-slate-500 {
+  color: #94a3b8 !important;
+}
+
+/* Chatbot Bubbles & Widget in Light Mode */
+html.light #ai-assistant .bg-\[\#0b0f17\],
+[data-theme="light"] #ai-assistant .bg-\[\#0b0f17\] {
+  background-color: #f8fafc !important;
+}
+
+html.light #ai-assistant .bg-\[\#121824\],
+[data-theme="light"] #ai-assistant .bg-\[\#121824\] {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #e2e8f0 !important;
+}
+
+/* Modals & Popups in Light Mode */
+html.light .fixed.inset-0,
+[data-theme="light"] .fixed.inset-0 {
+  background-color: rgba(15, 23, 42, 0.4) !important;
+}
+
+html.light .fixed .bg-\[\#121824\],
+html.light .fixed .bg-\[\#0b0f17\],
+[data-theme="light"] .fixed .bg-\[\#121824\],
+[data-theme="light"] .fixed .bg-\[\#0b0f17\] {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+}
+
+/* Code Pre Blocks in Light Mode */
+html.light pre,
+[data-theme="light"] pre {
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+
+/* Inputs & Form Fields in Light Mode */
+html.light input,
+html.light textarea,
+[data-theme="light"] input,
+[data-theme="light"] textarea {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+
+html.light input::placeholder,
+html.light textarea::placeholder,
+[data-theme="light"] input::placeholder,
+[data-theme="light"] textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Primary Action Buttons */
+html.light .bg-blue-600,
+[data-theme="light"] .bg-blue-600 {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+}
+
+html.light .bg-blue-600 span,
+html.light .bg-blue-600 svg,
+[data-theme="light"] .bg-blue-600 span,
+[data-theme="light"] .bg-blue-600 svg {
+  color: #ffffff !important;
 }
 
 /* Smooth Scroll */
