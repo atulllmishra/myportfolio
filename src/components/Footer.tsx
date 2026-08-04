@@ -80,7 +80,7 @@ export default function Footer() {
             </div>
 
             <p className="text-slate-400 text-xs leading-relaxed max-w-sm">
-              Computer Science & Engineering (CSE) student at Mahamaya College of Agricultural Engineering and Technology (MCAET, ANDUAT). Developer of Smart Agri, ProcureHub, E-Commerce Store, and MCAET AI Chatbot.
+              Computer Science & Engineering (CSE) student at Mahamaya College of Agricultural Engineering and Technology (MCAET, ANDUAT)
             </p>
 
             <div className="flex items-center gap-4 text-xs font-mono text-slate-300 pt-0.5">

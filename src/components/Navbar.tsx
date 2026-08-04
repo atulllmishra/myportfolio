@@ -52,9 +52,9 @@ export default function Navbar() {
             <span className="font-bold text-sm text-white tracking-tight group-hover:text-slate-300 transition-colors">
               Atul Kumar Mishra
             </span>
-            <span className="text-[10px] text-slate-400 font-mono">
+            {/* <span className="text-[10px] text-slate-400 font-mono">
               B.Tech CSE Student
-            </span>
+            </span> */}
           </div>
         </a>
 
