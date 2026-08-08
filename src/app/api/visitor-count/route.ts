@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 
 const DATA_FILE_PATH = path.join(process.cwd(), "data", "visitor_count.json");
-const INITIAL_COUNT = 1248;
+const INITIAL_COUNT = 0;
 
 let inMemoryCount = INITIAL_COUNT;
 
@@ -45,9 +45,21 @@ export async function GET() {
   return NextResponse.json({ count });
 }
 
-export async function POST() {
+export async function POST(request: Request) {
+  let clientCount = 0;
+  try {
+    const body = await request.json();
+    if (body && typeof body.clientCount === "number" && !isNaN(body.clientCount)) {
+      clientCount = body.clientCount;
+    }
+  } catch {
+    // Ignore JSON parsing errors if body is empty
+  }
+
   const currentCount = getStoredCount();
-  const newCount = currentCount + 1;
+  const baseCount = Math.max(currentCount, clientCount);
+  const newCount = baseCount + 1;
   saveStoredCount(newCount);
+
   return NextResponse.json({ count: newCount });
 }

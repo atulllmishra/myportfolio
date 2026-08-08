@@ -15,20 +15,43 @@ export default function Footer() {
       setTime(new Date());
     }, 0);
 
-    // Visitor Count Logic
+    // Visitor Count Logic (starts from 0, persistent across server reboots)
     const handleVisitorCount = async () => {
+      const LOCAL_KEY = "portfolio_visitor_count_val";
+      let localVal = 0;
       try {
-        const hasVisited = sessionStorage.getItem("portfolio_visited");
+        localVal = parseInt(localStorage.getItem(LOCAL_KEY) || "0", 10);
+        if (isNaN(localVal)) localVal = 0;
+      } catch {
+        localVal = 0;
+      }
+
+      try {
+        const hasVisited = sessionStorage.getItem("portfolio_session_visited");
         const method = hasVisited ? "GET" : "POST";
 
-        const res = await fetch("/api/visitor-count", { method });
+        let res: Response;
+        if (method === "POST") {
+          res = await fetch("/api/visitor-count", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ clientCount: localVal }),
+          });
+        } else {
+          res = await fetch("/api/visitor-count");
+        }
+
         if (res.ok) {
           const data = await res.json();
           if (data && typeof data.count === "number") {
-            setVisitorCount(data.count);
+            const finalCount = Math.max(data.count, localVal);
+            setVisitorCount(finalCount);
             if (!hasVisited) {
-              sessionStorage.setItem("portfolio_visited", "true");
+              sessionStorage.setItem("portfolio_session_visited", "true");
             }
+            try {
+              localStorage.setItem(LOCAL_KEY, finalCount.toString());
+            } catch {}
             return;
           }
         }
@@ -37,20 +60,16 @@ export default function Footer() {
       }
 
       // Fallback to local storage counter if server API is unavailable
-      try {
-        const localKey = "portfolio_local_visitor_count";
-        const currentLocal = parseInt(localStorage.getItem(localKey) || "1248", 10);
-        const hasVisitedLocal = sessionStorage.getItem("portfolio_visited");
-        let newCount = currentLocal;
-        if (!hasVisitedLocal) {
-          newCount = currentLocal + 1;
-          localStorage.setItem(localKey, newCount.toString());
-          sessionStorage.setItem("portfolio_visited", "true");
-        }
-        setVisitorCount(newCount);
-      } catch {
-        setVisitorCount(1248);
+      const hasVisitedLocal = sessionStorage.getItem("portfolio_session_visited");
+      let fallbackCount = localVal;
+      if (!hasVisitedLocal) {
+        fallbackCount = localVal + 1;
+        sessionStorage.setItem("portfolio_session_visited", "true");
       }
+      setVisitorCount(fallbackCount);
+      try {
+        localStorage.setItem(LOCAL_KEY, fallbackCount.toString());
+      } catch {}
     };
 
     handleVisitorCount();
