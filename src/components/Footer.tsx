@@ -5,6 +5,7 @@ import { ArrowUp, MapPin, Mail, Download, Clock, Calendar, Heart } from "lucide-
 
 export default function Footer() {
   const [time, setTime] = useState<Date | null>(null);
+  const [visitorCount, setVisitorCount] = useState<number | null>(null);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -13,6 +14,47 @@ export default function Footer() {
     const timeout = setTimeout(() => {
       setTime(new Date());
     }, 0);
+
+    // Visitor Count Logic
+    const handleVisitorCount = async () => {
+      try {
+        const hasVisited = sessionStorage.getItem("portfolio_visited");
+        const method = hasVisited ? "GET" : "POST";
+
+        const res = await fetch("/api/visitor-count", { method });
+        if (res.ok) {
+          const data = await res.json();
+          if (data && typeof data.count === "number") {
+            setVisitorCount(data.count);
+            if (!hasVisited) {
+              sessionStorage.setItem("portfolio_visited", "true");
+            }
+            return;
+          }
+        }
+      } catch (err) {
+        console.warn("Failed to fetch server visitor count, using local fallback:", err);
+      }
+
+      // Fallback to local storage counter if server API is unavailable
+      try {
+        const localKey = "portfolio_local_visitor_count";
+        const currentLocal = parseInt(localStorage.getItem(localKey) || "1248", 10);
+        const hasVisitedLocal = sessionStorage.getItem("portfolio_visited");
+        let newCount = currentLocal;
+        if (!hasVisitedLocal) {
+          newCount = currentLocal + 1;
+          localStorage.setItem(localKey, newCount.toString());
+          sessionStorage.setItem("portfolio_visited", "true");
+        }
+        setVisitorCount(newCount);
+      } catch {
+        setVisitorCount(1248);
+      }
+    };
+
+    handleVisitorCount();
+
     return () => {
       clearInterval(timer);
       clearTimeout(timeout);
@@ -147,10 +189,18 @@ export default function Footer() {
 
         </div>
 
-        {/* Bottom Bar: All Rights Reserved & Developed By */}
+        {/* Bottom Bar: All Rights Reserved & Visitor Count & Developed By */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-mono text-slate-500 text-center sm:text-left">
-          <div>
+          <div className="flex items-center gap-3">
             <p>© {new Date().getFullYear()}. All Rights Reserved.</p>
+            <span className="text-slate-700">•</span>
+            <div
+              title="Visitor Count"
+              className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#121824] border border-[#1e2638] text-xs font-mono font-semibold text-emerald-400 transition-all hover:border-emerald-500/40"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              <span>{visitorCount !== null ? visitorCount.toLocaleString() : "..."}</span>
+            </div>
           </div>
 
           <div className="flex items-center gap-4">
@@ -172,3 +222,4 @@ export default function Footer() {
     </footer>
   );
 }
+
