@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import { addContactSubmission } from "@/lib/db";
 
 export async function POST(request: Request) {
   try {
@@ -23,6 +24,22 @@ export async function POST(request: Request) {
     }
 
     const fullPhone = phone ? `${countryCode || "+91"} ${phone}` : "Not provided";
+    const userAgent = request.headers.get("user-agent") || undefined;
+    const ip =
+      request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+      request.headers.get("x-real-ip") ||
+      undefined;
+
+    // Persist contact message to database
+    const savedRecord = addContactSubmission({
+      name,
+      email,
+      phone: fullPhone,
+      subject: subject || "General Inquiry",
+      message,
+      ip,
+      userAgent,
+    });
 
     const user = (process.env.GMAIL_USER || process.env.EMAIL_USER || "").trim();
     const pass = (process.env.GMAIL_APP_PASSWORD || process.env.EMAIL_PASS || "").replace(/\s+/g, "").trim();
@@ -33,24 +50,14 @@ export async function POST(request: Request) {
       console.warn(
         "⚠️ [API /api/contact]: GMAIL_USER or GMAIL_APP_PASSWORD environment variables are not defined in .env.local!"
       );
-      
-      // In development mode, return mock success with warning instructions
-      if (process.env.NODE_ENV !== "production") {
-        console.log("Mock Contact Form Submission Received:", { name, email, phone: fullPhone, subject, message });
-        return NextResponse.json({
-          success: true,
-          mock: true,
-          message: "Form received in demo/dev mode. Set GMAIL_USER and GMAIL_APP_PASSWORD in .env.local to send real emails.",
-        });
-      }
 
-      return NextResponse.json(
-        {
-          success: false,
-          error: "Server email service is not configured. Please set GMAIL_USER and GMAIL_APP_PASSWORD in .env.local.",
-        },
-        { status: 500 }
-      );
+      return NextResponse.json({
+        success: true,
+        savedToDatabase: true,
+        recordId: savedRecord.id,
+        mockEmail: true,
+        message: "Your message has been saved into the database! Configure GMAIL_USER & GMAIL_APP_PASSWORD in .env.local to enable email forwarding.",
+      });
     }
 
     // Configure Nodemailer Transporter for Gmail
@@ -89,8 +96,8 @@ export async function POST(request: Request) {
               <td style="padding: 8px 0; color: #ffffff;">${subject || "No Subject"}</td>
             </tr>
             <tr>
-              <td style="padding: 8px 0; color: #94a3b8; font-weight: bold;">Date:</td>
-              <td style="padding: 8px 0; color: #ffffff;">${new Date().toLocaleString()}</td>
+              <td style="padding: 8px 0; color: #94a3b8; font-weight: bold;">Database ID:</td>
+              <td style="padding: 8px 0; color: #a7f3d0; font-family: monospace;">${savedRecord.id}</td>
             </tr>
           </table>
           <div style="background-color: #161e2e; padding: 15px; border-radius: 6px; border-left: 4px solid #3b82f6;">
@@ -99,7 +106,7 @@ export async function POST(request: Request) {
           </div>
           <hr style="border: none; border-top: 1px solid #1e2638; margin: 20px 0;" />
           <p style="font-size: 11px; color: #64748b; text-align: center;">
-            This email was sent automatically from your Portfolio contact form. You can directly reply to this email to reach <strong>${email}</strong>.
+            This message was saved into your database and sent automatically from your Portfolio contact form.
           </p>
         </div>
       `,
@@ -109,15 +116,17 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       success: true,
-      message: "Message sent successfully!",
+      savedToDatabase: true,
+      recordId: savedRecord.id,
+      message: "Message saved and email dispatched successfully!",
     });
   } catch (error: unknown) {
     const err = error as Error;
-    console.error("❌ Error sending email via /api/contact:", error);
+    console.error("❌ Error processing /api/contact:", error);
     return NextResponse.json(
       {
         success: false,
-        error: err?.message || "Failed to send message. Please try again later.",
+        error: err?.message || "Failed to process message.",
       },
       { status: 500 }
     );
