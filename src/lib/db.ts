@@ -181,7 +181,7 @@ export function addContactSubmission(data: {
 }
 
 /**
- * Utility to hash IP addresses for user privacy.
+ * Utility to hash IP addresses for user  privacy.
  */
 function simpleHash(str: string): string {
   let hash = 0;
