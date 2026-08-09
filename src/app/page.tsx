@@ -2,14 +2,17 @@
 
 import { useEffect } from "react";
 import Navbar from "@/components/Navbar";
-import Hero from "@/components/Hero";
-import Timeline from "@/components/Timeline";
-import Skills from "@/components/Skills";
-import Projects from "@/components/Projects";
-import Certifications from "@/components/Certifications";
-import AIChatbotWidget from "@/components/AIChatbotWidget";
-import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import ScrollToTop from "@/components/ScrollToTop";
+
+import Hero from "@/sections/Hero";
+import About from "@/sections/About";
+import Timeline from "@/sections/Timeline";
+import Projects from "@/sections/Projects";
+import Skills from "@/sections/Skills";
+import Certifications from "@/sections/Certifications";
+import AIChatbotWidget from "@/sections/AIChatbotWidget";
+import Contact from "@/sections/Contact";
 
 export default function Home() {
   useEffect(() => {
@@ -23,6 +26,7 @@ export default function Home() {
     <main className="min-h-screen bg-[#0b0f19] text-slate-100 selection:bg-blue-500 selection:text-white transition-colors duration-200">
       <Navbar />
       <Hero />
+      <About />
       <Timeline />
       <Projects />
       <Skills />
@@ -30,6 +34,7 @@ export default function Home() {
       <AIChatbotWidget />
       <Contact />
       <Footer />
+      <ScrollToTop />
     </main>
   );
 }

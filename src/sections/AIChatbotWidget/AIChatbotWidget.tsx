@@ -162,7 +162,7 @@ Highlights:
   };
 
   return (
-    <section id="ai-assistant" className="py-20 relative bg-[#0b0f17] border-t border-[#1e2638]">
+    <section id="ai-assistant" className="py-20 relative bg-[#0b0f17] border-t border-[#1e2638] scroll-mt-24">
       <div className="max-w-4xl mx-auto px-6">
         
         {/* Header */}

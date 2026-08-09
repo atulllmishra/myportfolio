@@ -41,7 +41,7 @@ export default function Hero() {
   }, [displayText, isDeleting, roleIndex]);
 
   return (
-    <section id="about" className="relative pt-28 pb-16 md:pt-36 md:pb-20 bg-[#0b0f17]">
+    <section id="hero" className="relative pt-28 pb-16 md:pt-36 md:pb-20 bg-[#0b0f17] scroll-mt-24">
       <div className="max-w-6xl mx-auto px-6 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           

@@ -4,7 +4,7 @@ import { GraduationCap, Code2, Award, Trophy } from "lucide-react";
 
 export default function About() {
   return (
-    <section id="about" className="py-24 relative bg-[#0a0e17] border-t border-[#1e293b]">
+    <section id="about" className="py-24 relative bg-[#0a0e17] border-t border-[#1e293b] scroll-mt-24">
       <div className="max-w-6xl mx-auto px-6">
         
         {/* Section Header */}
