@@ -55,7 +55,7 @@ const projectsList: ProjectItem[] = [
     title: "heyBuddy - AI Multilingual EdTech Video & Lecture Platform",
     category: "ai",
     categoryLabel: "AI EdTech Platform (Ongoing)",
-    url: "https://heybuddy-ai.vercel.app",
+    url: "https://heybuddyai.vercel.app",
     badge: "Ongoing Work • AI EdTech",
     timeline: "August 2026 — Present (Ongoing)",
     description: "An online edtech platform that automatically generates AI video & voice solutions for user questions in multiple languages and allows students to dynamically transform lecture complexity into custom difficulty levels (Beginner to Advanced).",
@@ -71,7 +71,7 @@ const projectsList: ProjectItem[] = [
   author={Mishra, Atul Kumar},
   year={2026},
   note={Ongoing Work (August 2026 -- Present)},
-  url={https://heybuddy-ai.vercel.app}
+  url={https://heybuddyai.vercel.app}
 }`
   },
   {
