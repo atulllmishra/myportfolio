@@ -8,6 +8,7 @@ export async function GET() {
     success: true,
     stats: {
       totalVisitors: db.visitorCount,
+      totalPageViews: db.pageViews || db.visitorCount,
       totalContacts: db.contacts.length,
       totalVisitorLogs: db.visitorLogs.length,
       lastUpdated: db.updatedAt,

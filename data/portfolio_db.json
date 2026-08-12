@@ -1,8 +1,17 @@
 {
-  "visitorCount": 4,
-  "updatedAt": "2026-08-09T15:20:31.186Z",
+  "visitorCount": 5,
+  "pageViews": 5,
+  "updatedAt": "2026-08-12T05:44:19.448Z",
   "contacts": [],
   "visitorLogs": [
+    {
+      "id": "v_1786513459448_i9cs0",
+      "timestamp": "2026-08-12T05:44:19.448Z",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:153.0) Gecko/20100101 Firefox/153.0",
+      "referrer": "http://localhost:3000/",
+      "page": "/",
+      "ipHash": "ip_u2dry5"
+    },
     {
       "id": "v_1786288831186_pff1p",
       "timestamp": "2026-08-09T15:20:31.186Z",
@@ -35,5 +44,8 @@
       "page": "/",
       "ipHash": "ip_u2dry5"
     }
-  ]
+  ],
+  "recentVisits": {
+    "vh_ms76ee": "2026-08-12T05:44:19.448Z"
+  }
 }

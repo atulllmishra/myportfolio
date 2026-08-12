@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { ArrowUp, MapPin, Mail, Download, Clock, Calendar, Heart } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { ArrowUp, MapPin, Mail, Download, Clock, Calendar, Heart, Users } from "lucide-react";
 
 export default function Footer() {
   const [time, setTime] = useState<Date | null>(null);
   const [visitorCount, setVisitorCount] = useState<number | null>(null);
+  const hasTrackedRef = useRef<boolean>(false);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -15,8 +16,13 @@ export default function Footer() {
       setTime(new Date());
     }, 0);
 
-    // Visitor Count Logic (starts from 0, persistent across server reboots)
+    let isMounted = true;
+
+    // Visitor Count Logic (Precise unique deduplicated visitor count)
     const handleVisitorCount = async () => {
+      if (hasTrackedRef.current) return;
+      hasTrackedRef.current = true;
+
       const LOCAL_KEY = "portfolio_visitor_count_val";
       let localVal = 0;
       try {
@@ -26,16 +32,22 @@ export default function Footer() {
         localVal = 0;
       }
 
-      try {
-        const hasVisited = sessionStorage.getItem("portfolio_session_visited");
-        const method = hasVisited ? "GET" : "POST";
+      const hasVisited = typeof window !== "undefined" && sessionStorage.getItem("portfolio_session_visited") === "true";
+      const method = hasVisited ? "GET" : "POST";
 
+      if (!hasVisited && typeof window !== "undefined") {
+        try {
+          sessionStorage.setItem("portfolio_session_visited", "true");
+        } catch {}
+      }
+
+      try {
         let res: Response;
         if (method === "POST") {
           res = await fetch("/api/visitor-count", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ clientCount: localVal }),
+            body: JSON.stringify({ page: window.location.pathname }),
           });
         } else {
           res = await fetch("/api/visitor-count");
@@ -44,13 +56,9 @@ export default function Footer() {
         if (res.ok) {
           const data = await res.json();
           if (data && typeof data.count === "number") {
-            const finalCount = Math.max(data.count, localVal);
-            setVisitorCount(finalCount);
-            if (!hasVisited) {
-              sessionStorage.setItem("portfolio_session_visited", "true");
-            }
+            if (isMounted) setVisitorCount(data.count);
             try {
-              localStorage.setItem(LOCAL_KEY, finalCount.toString());
+              localStorage.setItem(LOCAL_KEY, data.count.toString());
             } catch {}
             return;
           }
@@ -59,22 +67,15 @@ export default function Footer() {
         console.warn("Failed to fetch server visitor count, using local fallback:", err);
       }
 
-      // Fallback to local storage counter if server API is unavailable
-      const hasVisitedLocal = sessionStorage.getItem("portfolio_session_visited");
-      let fallbackCount = localVal;
-      if (!hasVisitedLocal) {
-        fallbackCount = localVal + 1;
-        sessionStorage.setItem("portfolio_session_visited", "true");
+      if (isMounted && localVal > 0) {
+        setVisitorCount(localVal);
       }
-      setVisitorCount(fallbackCount);
-      try {
-        localStorage.setItem(LOCAL_KEY, fallbackCount.toString());
-      } catch {}
     };
 
     handleVisitorCount();
 
     return () => {
+      isMounted = false;
       clearInterval(timer);
       clearTimeout(timeout);
     };
@@ -214,11 +215,12 @@ export default function Footer() {
             <p>© {new Date().getFullYear()}. All Rights Reserved.</p>
             <span className="text-slate-700">•</span>
             <div
-              title="Visitor Count"
+              title="Unique Visitor Count"
               className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#121824] border border-[#1e2638] text-xs font-mono font-semibold text-emerald-400 transition-all hover:border-emerald-500/40"
             >
+              <Users className="w-3 h-3 text-emerald-400" />
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-              <span>{visitorCount !== null ? visitorCount.toLocaleString() : "..."}</span>
+              <span>{visitorCount !== null ? `${visitorCount.toLocaleString()} Visitors` : "Loading..."}</span>
             </div>
           </div>
 
