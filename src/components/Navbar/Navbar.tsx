@@ -7,13 +7,14 @@ import { useTheme } from "@/components/ThemeProvider";
 const navLinks = [
   { name: "Home", href: "#hero", id: "hero" },
   { name: "About", href: "#about", id: "about" },
-  { name: "Timeline", href: "#timeline", id: "timeline" },
+  { name: "Journey", href: "#timeline", id: "timeline" },
   { name: "Projects", href: "#projects", id: "projects" },
   { name: "Skills", href: "#skills", id: "skills" },
   { name: "Recognitions", href: "#certifications", id: "certifications" },
-  { name: "AI Assistant", href: "#ai-assistant", id: "ai-assistant" },
+  { name: "AI Twin", href: "#ai-assistant", id: "ai-assistant" },
   { name: "Contact", href: "#contact", id: "contact" },
 ];
+
 
 const profilePicUrl =
   "https://media.licdn.com/dms/image/v2/D4D03AQEZbzxHR0Z45Q/profile-displayphoto-crop_800_800/B4DZh7FG4QHwAI-/0/1754411595531?e=1787184000&v=beta&t=nSeMFlyp1Tf3p3940JcRZyBd7cJG_Bfp97VrVGZnz-o";

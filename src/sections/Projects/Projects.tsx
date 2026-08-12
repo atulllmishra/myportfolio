@@ -40,8 +40,6 @@ export default function Projects() {
   const [activeTab, setActiveTab] = useState<string>("all");
   const [activePreviewProject, setActivePreviewProject] = useState<ProjectItem | null>(null);
   const [previewViewMode, setPreviewViewMode] = useState<"interactive" | "iframe">("interactive");
-  const [citeProject, setCiteProject] = useState<ProjectItem | null>(null);
-  const [copiedCite, setCopiedCite] = useState(false);
 
   // Architecture Details Modal States
   const [showProcureHubDetails, setShowProcureHubDetails] = useState(false);
@@ -69,12 +67,6 @@ export default function Projects() {
 
   const closePreviewModal = () => {
     setActivePreviewProject(null);
-  };
-
-  const copyBibTeX = (bibtexText: string) => {
-    navigator.clipboard.writeText(bibtexText);
-    setCopiedCite(true);
-    setTimeout(() => setCopiedCite(false), 2000);
   };
 
   // Mock Smart Agri City Weather Data
@@ -105,10 +97,10 @@ export default function Projects() {
             Projects
           </span>
           <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-            Featured Works
+            Featured Work
           </h2>
           <p className="text-slate-400 text-sm">
-            Web platforms, hackathon projects, and Generative AI systems.
+            Web applications, AI systems, and SaaS platforms built with modern tech stacks.
           </p>
         </div>
 
@@ -145,12 +137,12 @@ export default function Projects() {
           {filteredProjects.map((project) => (
             <div
               key={project.id}
-              className="academic-card p-6 flex flex-col justify-between space-y-5 relative"
+              className="academic-card p-6 flex flex-col justify-between space-y-5 relative bg-[#121824] border border-[#1e2638] rounded-xl shadow-lg"
             >
               <div className="space-y-3">
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <div className="flex items-center gap-1.5 font-mono text-xs">
-                    <span className="text-slate-400 uppercase font-semibold">
+                    <span className="text-blue-400 uppercase font-semibold">
                       {project.categoryLabel}
                     </span>
                     <span className="text-slate-500">•</span>
@@ -161,7 +153,7 @@ export default function Projects() {
 
                   {project.badge && (
                     <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded bg-[#0b0f17] border border-[#1e2638] text-slate-300 text-[11px] font-mono">
-                      <Award className="w-3 h-3 text-slate-400" />
+                      <Award className="w-3 h-3 text-amber-400" />
                       {project.badge}
                     </span>
                   )}
@@ -178,7 +170,7 @@ export default function Projects() {
                 <div className="space-y-1.5 pt-1">
                   {project.highlights.map((highlight, idx) => (
                     <div key={idx} className="flex items-start gap-2 text-xs text-slate-400">
-                      <span className="text-slate-400 font-bold">•</span>
+                      <span className="text-blue-400 font-bold">•</span>
                       <span>{highlight}</span>
                     </div>
                   ))}
@@ -236,7 +228,7 @@ export default function Projects() {
                         href={project.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex-1 inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded font-medium text-xs text-white bg-blue-600 hover:bg-blue-500 transition-colors"
+                        className="flex-1 inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded font-medium text-xs text-white bg-blue-600 hover:bg-blue-500 transition-colors shadow-sm"
                       >
                         <span>Visit App</span>
                         <ArrowUpRight className="w-3.5 h-3.5" />
@@ -244,10 +236,10 @@ export default function Projects() {
 
                       <button
                         onClick={() => openPreviewModal(project)}
-                        className="inline-flex items-center gap-1.5 px-3 py-2 rounded text-xs font-medium text-slate-300 bg-[#0b0f17] border border-[#1e2638] hover:text-white transition-colors"
+                        className="inline-flex items-center gap-1.5 px-4 py-2 rounded text-xs font-medium text-slate-300 bg-[#0b0f17] border border-[#1e2638] hover:text-white transition-colors"
                       >
                         <Eye className="w-3.5 h-3.5 text-slate-400" />
-                        <span>Preview</span>
+                        <span>Live Preview</span>
                       </button>
                     </>
                   ) : (
@@ -256,14 +248,6 @@ export default function Projects() {
                       <span>In Active Development</span>
                     </div>
                   )}
-
-                  <button
-                    onClick={() => setCiteProject(project)}
-                    className="inline-flex items-center gap-1.5 px-3 py-2 rounded text-xs font-medium text-slate-300 bg-[#0b0f17] border border-[#1e2638] hover:text-white transition-colors font-mono"
-                  >
-                    <Quote className="w-3.5 h-3.5 text-slate-400" />
-                    <span>Cite</span>
-                  </button>
                 </div>
               </div>
 
@@ -272,6 +256,7 @@ export default function Projects() {
         </div>
 
       </div>
+
 
       {/* ProcureHub System Architecture Modal */}
       {showProcureHubDetails && (
@@ -707,47 +692,6 @@ export default function Projects() {
                   Close
                 </button>
               </div>
-            </div>
-
-          </div>
-        </div>
-      )}
-
-      {/* BibTeX Citation Modal */}
-      {citeProject && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0b0f17]/90 backdrop-blur-md">
-          <div className="relative w-full max-w-xl bg-[#121824] border border-[#1e2638] rounded-xl p-6 shadow-2xl space-y-4">
-            
-            <div className="flex items-center justify-between border-b border-[#1e2638] pb-3">
-              <div className="flex items-center gap-2">
-                <Quote className="w-4 h-4 text-slate-300" />
-                <h3 className="text-sm font-bold text-white">BibTeX Citation</h3>
-              </div>
-              <button
-                onClick={() => setCiteProject(null)}
-                className="p-1 rounded bg-[#0b0f17] text-slate-400 hover:text-white"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-
-            <p className="text-xs text-slate-300">
-              BibTeX format for <strong className="text-white">{citeProject.title}</strong>:
-            </p>
-
-            <div className="relative bg-[#0b0f17] border border-[#1e2638] rounded-lg p-3.5 font-mono text-xs text-slate-300 overflow-x-auto">
-              <pre className="whitespace-pre-wrap">{citeProject.bibtex}</pre>
-            </div>
-
-            <div className="flex items-center justify-between pt-1">
-              <span className="text-[11px] font-mono text-slate-500">BibTeX Format</span>
-              <button
-                onClick={() => copyBibTeX(citeProject.bibtex)}
-                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded bg-blue-600 text-white font-medium text-xs hover:bg-blue-500 transition-colors"
-              >
-                {copiedCite ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-                <span>{copiedCite ? "Copied!" : "Copy BibTeX"}</span>
-              </button>
             </div>
 
           </div>

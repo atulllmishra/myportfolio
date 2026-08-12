@@ -1,6 +1,6 @@
 "use client";
 
-import { GraduationCap, Code2, Award, Trophy } from "lucide-react";
+import { Code2, Heart, Lightbulb, Compass, Cpu, Layers } from "lucide-react";
 
 export default function About() {
   return (
@@ -8,90 +8,90 @@ export default function About() {
       <div className="max-w-6xl mx-auto px-6">
         
         {/* Section Header */}
-        <div className="max-w-3xl mb-14 space-y-3">
+        <div className="max-w-3xl mb-12 space-y-3">
           <span className="text-xs font-mono text-blue-400 uppercase tracking-widest block font-semibold">
-            01 / Background & Academic Journey
+            Background & Philosophy
           </span>
           <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-            About <span className="gradient-text-codehelp">Atul Kumar Mishra</span>
+            About <span className="text-blue-400">Atul Kumar Mishra</span>
           </h2>
           <p className="text-slate-400 text-base">
-            Computer Science & Engineering student, web developer, and Generative AI practitioner.
+            Computer Science undergraduate, web engineer, and AI builder.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Main Story Box */}
-          <div className="lg:col-span-7 codehelp-card p-8 space-y-6">
-            <div className="flex items-center gap-3 pb-4 border-b border-[#1e293b]">
+          <div className="lg:col-span-7 academic-card p-8 space-y-6 bg-[#121824] border border-[#1e2638] rounded-xl shadow-xl">
+            <div className="flex items-center gap-3 pb-4 border-b border-[#1e2638]">
               <Code2 className="w-5 h-5 text-blue-400" />
-              <h3 className="text-lg font-bold text-white">Computer Science Foundation</h3>
+              <h3 className="text-lg font-bold text-white">Engineering Journey</h3>
             </div>
 
             <div className="space-y-4 text-slate-300 text-sm leading-relaxed font-normal">
               <p>
-                I am an undergraduate student pursuing my Bachelor of Technology (B.Tech) in <strong className="text-white">Computer Science & Engineering (CSE)</strong> at <strong className="text-blue-400 font-medium">Mahamaya College of Agricultural Engineering and Technology (MCAET)</strong>, affiliated with <strong className="text-white font-medium">Acharya Narendra Deva University of Agriculture and Technology (ANDUAT)</strong>.
+                My journey into software engineering began with a curiosity for how complex computer systems translate lines of code into impactful human experiences. Currently pursuing my <strong className="text-white">B.Tech in Computer Science & Engineering</strong> at MCAET, ANDUAT University, I balance academic rigors with hands-on product creation.
               </p>
 
               <p>
-                My technical focus spans <strong className="text-white font-medium">Data Structures & Algorithms (C++)</strong>, <strong className="text-white font-medium">Full-Stack Web Development (React / Next.js / TypeScript)</strong>, and <strong className="text-white font-medium">Generative AI / LLM Systems</strong>.
+                I am deeply enthusiastic about the intersection of <strong className="text-white font-medium">Full-Stack Web Engineering</strong> and <strong className="text-blue-400 font-medium">Generative AI</strong>. Whether designing accessible user interfaces in React/Next.js or configuring custom LLM pipelines, I enjoy building software that solves genuine user pain points.
               </p>
 
               <p>
-                Notable achievements include being named a <strong className="text-blue-400 font-semibold">Finalist at IIT Guwahati ImpactHack Hackathon 2025</strong> for developing Smart Agri (<a href="https://smart-agri.vercel.app" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline font-mono">smart-agri.vercel.app</a>) and building the official <strong className="text-purple-400 font-semibold">MCAET AI College Chatbot</strong> (<a href="https://mcaetchatbot-2.onrender.com" target="_blank" rel="noopener noreferrer" className="text-purple-400 hover:underline font-mono">mcaetchatbot-2.onrender.com</a>) integrated into <a href="https://mcaet.vercel.app" target="_blank" rel="noopener noreferrer" className="text-purple-400 hover:underline font-mono">mcaet.vercel.app</a>.
+                When I&apos;m not writing code for web applications, I spend my time sharpening algorithmic problem-solving skills in <strong className="text-white font-medium">C++ Data Structures & Algorithms</strong> and learning about emerging AI models.
               </p>
             </div>
 
-            {/* Core Coursework Pills */}
-            <div className="pt-4 border-t border-[#1e293b]">
+            {/* Core Competencies Pills */}
+            <div className="pt-4 border-t border-[#1e2638]">
               <span className="text-xs font-mono text-slate-400 uppercase tracking-wider block mb-3 font-semibold">
-                CSE Core Subjects & Expertise:
+                Engineering Foundations:
               </span>
               <div className="flex flex-wrap gap-2 text-xs font-mono text-slate-300">
-                <span className="px-3 py-1 rounded bg-[#0a0e17] border border-[#1e293b]">Data Structures & Algorithms</span>
-                <span className="px-3 py-1 rounded bg-[#0a0e17] border border-[#1e293b]">OOP with C++</span>
-                <span className="px-3 py-1 rounded bg-[#0a0e17] border border-[#1e293b]">Generative AI & LLMs</span>
-                <span className="px-3 py-1 rounded bg-[#0a0e17] border border-[#1e293b]">Full-Stack Web Dev</span>
-                <span className="px-3 py-1 rounded bg-[#0a0e17] border border-[#1e293b]">DBMS & SQL</span>
+                <span className="px-3 py-1 rounded bg-[#0b0f17] border border-[#1e2638]">Data Structures & Algorithms</span>
+                <span className="px-3 py-1 rounded bg-[#0b0f17] border border-[#1e2638]">C++ OOP & STL</span>
+                <span className="px-3 py-1 rounded bg-[#0b0f17] border border-[#1e2638]">Generative AI & Prompt Engineering</span>
+                <span className="px-3 py-1 rounded bg-[#0b0f17] border border-[#1e2638]">Next.js & TypeScript</span>
+                <span className="px-3 py-1 rounded bg-[#0b0f17] border border-[#1e2638]">DBMS & SQL</span>
               </div>
             </div>
 
           </div>
 
-          {/* Academic Timeline & Highlights Card */}
+          {/* Personal Values & Quick Facts Column */}
           <div className="lg:col-span-5 space-y-4">
             
-            <div className="codehelp-card p-6 space-y-3">
+            <div className="academic-card p-6 space-y-3 bg-[#121824] border border-[#1e2638] rounded-xl">
               <div className="flex items-center gap-2 text-blue-400">
-                <Trophy className="w-4 h-4" />
-                <span className="text-xs font-mono font-bold uppercase">IIT Guwahati ImpactHack &apos;25</span>
+                <Lightbulb className="w-4 h-4 text-blue-400" />
+                <span className="text-xs font-mono font-bold uppercase">Problem-Solving Mindset</span>
               </div>
-              <h4 className="text-base font-bold text-white">Hackathon Finalist</h4>
+              <h4 className="text-base font-bold text-white">First-Principles Thinking</h4>
               <p className="text-xs text-slate-300 leading-relaxed">
-                Built Smart Agri platform providing live city temperature forecasting and AI crop market price prediction for farmers.
+                Deconstructing complex software requirements into clean, modular, and maintainable architectural components.
               </p>
             </div>
 
-            <div className="codehelp-card p-6 space-y-3">
+            <div className="academic-card p-6 space-y-3 bg-[#121824] border border-[#1e2638] rounded-xl">
               <div className="flex items-center gap-2 text-purple-400">
-                <GraduationCap className="w-4 h-4" />
-                <span className="text-xs font-mono font-bold uppercase">Academic Degree</span>
+                <Compass className="w-4 h-4 text-purple-400" />
+                <span className="text-xs font-mono font-bold uppercase">Continuous Learning</span>
               </div>
-              <h4 className="text-base font-bold text-white">B.Tech Computer Science & Engineering</h4>
+              <h4 className="text-base font-bold text-white">Adapting to Modern Tech</h4>
               <p className="text-xs text-slate-300 leading-relaxed">
-                Mahamaya College of Agricultural Engineering and Technology (MCAET, ANDUAT).
+                Exploring AI video synthesis, LLM agent workflows, vector embeddings, and modern frontend frameworks.
               </p>
             </div>
 
-            <div className="codehelp-card p-6 space-y-3">
-              <div className="flex items-center gap-2 text-indigo-400">
-                <Award className="w-4 h-4" />
-                <span className="text-xs font-mono font-bold uppercase">Campus Integration Lead</span>
+            <div className="academic-card p-6 space-y-3 bg-[#121824] border border-[#1e2638] rounded-xl">
+              <div className="flex items-center gap-2 text-emerald-400">
+                <Heart className="w-4 h-4 text-emerald-400" />
+                <span className="text-xs font-mono font-bold uppercase">Beyond the Code</span>
               </div>
-              <h4 className="text-base font-bold text-white">MCAET Generative AI Chatbot</h4>
+              <h4 className="text-base font-bold text-white">Community & Collaborations</h4>
               <p className="text-xs text-slate-300 leading-relaxed">
-                Engineered custom conversational AI bot integrated directly into official college web portal.
+                Enthusiastic about open-source collaboration, hackathon innovation, and sharing technical knowledge with peers.
               </p>
             </div>
 
@@ -102,3 +102,4 @@ export default function About() {
     </section>
   );
 }
+

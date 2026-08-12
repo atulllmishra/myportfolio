@@ -9,26 +9,27 @@ export interface AchievementItem {
 
 export const achievementsList: AchievementItem[] = [
   {
-    title: "Finalist - IIT Guwahati ImpactHack Hackathon 2025",
-    category: "National Hackathon Finalist",
+    title: "IIT Guwahati ImpactHack 2025 National Finalist",
+    category: "National Honor",
     issuer: "IIT Guwahati",
-    description: "Built Smart Agri (smart-agri.vercel.app) with teammates at IIT Guwahati ImpactHack 2025. Developed a precision agritech platform offering real-time city temperature tracking and live crop market price predictions for farmers.",
-    tags: ["IIT Guwahati", "ImpactHack 2025", "Smart Agri", "Agritech AI"],
+    description: "Awarded National Finalist status for engineering Smart Agri, an AI-driven agricultural decision-support platform.",
+    tags: ["IIT Guwahati", "ImpactHack 2025", "Agritech"],
     link: "https://smart-agri.vercel.app"
   },
   {
-    title: "Generative AI College Chatbot Deployment",
-    category: "Campus AI Integration",
-    issuer: "MCAET College (ANDUAT)",
-    description: "Designed, engineered, and deployed a live Generative AI chatbot (mcaetchatbot-2.onrender.com) for automated student queries, integrated directly into official college website mcaet.vercel.app.",
-    tags: ["LLMs", "Generative AI", "Render", "Vercel"],
-    link: "https://mcaetchatbot-2.onrender.com"
+    title: "Official Campus Generative AI Integration",
+    category: "Institutional Recognition",
+    issuer: "MCAET ANDUAT University",
+    description: "Successfully built and integrated a production LLM chatbot system onto the official university web portal.",
+    tags: ["Generative AI", "Production AI", "Campus Integration"],
+    link: "https://mcaet.vercel.app"
   },
   {
-    title: "C++ Data Structures & Algorithms Problem Solving",
-    category: "Competitive Programming",
-    issuer: "LeetCode & CodeChef",
-    description: "Strong foundation in C++ memory management, STL, object-oriented programming, and algorithmic problem-solving for SDE technical interviews.",
-    tags: ["C++", "DSA", "Algorithms", "Problem Solving"],
+    title: "C++ & Algorithmic Problem Solving Mastery",
+    category: "Technical Credential",
+    issuer: "LeetCode & Competitive Programming",
+    description: "Extensive problem solving in C++ covering arrays, trees, dynamic programming, and algorithm optimization.",
+    tags: ["C++ STL", "DSA", "Algorithms", "SDE Core"],
   },
 ];
+

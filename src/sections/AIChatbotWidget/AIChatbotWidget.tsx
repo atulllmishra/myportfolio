@@ -13,17 +13,18 @@ interface ChatMessage {
 const initialBotMessage: ChatMessage = {
   id: "welcome-1",
   sender: "bot",
-  text: "Hello! I am Atul's AI Assistant. Ask me anything about Atul's B.Tech CSE degree (2024–Present), heyBuddy (Ongoing AI EdTech Video Platform), ProcureHub (Oct 2024–Sep 2025), Smart Agri (March 2025), MCAET AI Chatbot (July 2026–Present), E-Commerce Store (Aug 2026–Present), or his technical skills!",
+  text: "Hello! I am Atul's AI Assistant. Feel free to ask me anything about Atul's background in Computer Science, featured projects (like heyBuddy, ProcureHub, or Smart Agri), core technical skills, or how to get in touch!",
   timestamp: "System",
 };
 
 const suggestedPrompts = [
-  "Tell me about heyBuddy (AI EdTech Video platform)",
-  "Tell me about ProcureHub (Oct 2024 - Sep 2025)",
-  "What is Smart Agri (IIT Guwahati ImpactHack March 2025)?",
-  "What AI projects has Atul built?",
-  "How can I contact Atul or get his resume?",
+  "What projects has Atul built?",
+  "Tell me about heyBuddy (AI EdTech)",
+  "Tell me about ProcureHub B2B SaaS",
+  "What is Atul's tech stack & DSA skills?",
+  "How can I contact Atul?",
 ];
+
 
 export default function AIChatbotWidget() {
   const [messages, setMessages] = useState<ChatMessage[]>([initialBotMessage]);
@@ -164,7 +165,7 @@ Highlights:
   return (
     <section id="ai-assistant" className="py-20 relative bg-[#0b0f17] border-t border-[#1e2638] scroll-mt-24">
       <div className="max-w-4xl mx-auto px-6">
-        
+
         {/* Header */}
         <div className="max-w-2xl mb-8 space-y-2">
           <span className="text-xs font-mono text-slate-400 uppercase tracking-wider block font-semibold">
@@ -180,7 +181,7 @@ Highlights:
 
         {/* Chat Window */}
         <div className="academic-card overflow-hidden flex flex-col h-[500px] border border-[#1e2638]">
-          
+
           {/* Header Bar */}
           <div className="px-5 py-3.5 bg-[#0b0f17] border-b border-[#1e2638] flex items-center justify-between">
             <div className="flex items-center gap-2.5">
@@ -211,20 +212,18 @@ Highlights:
             {messages.map((msg) => (
               <div
                 key={msg.id}
-                className={`flex flex-col ${
-                  msg.sender === "user" ? "items-end" : "items-start"
-                }`}
+                className={`flex flex-col ${msg.sender === "user" ? "items-end" : "items-start"
+                  }`}
               >
                 <span className="text-[10px] font-mono text-slate-500 mb-1">
                   {msg.sender === "user" ? "You" : "AI Agent"} • {msg.timestamp}
                 </span>
 
                 <div
-                  className={`max-w-[88%] rounded-lg px-3.5 py-2.5 text-xs leading-relaxed ${
-                    msg.sender === "user"
+                  className={`max-w-[88%] rounded-lg px-3.5 py-2.5 text-xs leading-relaxed ${msg.sender === "user"
                       ? "bg-blue-600 text-white font-medium"
                       : "bg-[#121824] border border-[#1e2638] text-slate-200 whitespace-pre-line"
-                  }`}
+                    }`}
                 >
                   {msg.text}
                 </div>
