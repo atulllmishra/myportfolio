@@ -34,6 +34,7 @@ import {
   AlertTriangle
 } from "lucide-react";
 
+import SpotlightCard from "@/components/ReactBits/SpotlightCard";
 import { projectsList, ProjectItem } from "@/data/projectsData";
 
 export default function Projects() {
@@ -135,10 +136,11 @@ export default function Projects() {
         {/* Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {filteredProjects.map((project) => (
-            <div
+            <SpotlightCard
               key={project.id}
-              className="academic-card p-6 flex flex-col justify-between space-y-5 relative bg-[#121824] border border-[#1e2638] rounded-xl shadow-lg"
+              className="flex flex-col justify-between space-y-5 relative bg-[#121824]/90 border border-[#1e2638] rounded-2xl shadow-xl"
             >
+
               <div className="space-y-3">
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <div className="flex items-center gap-1.5 font-mono text-xs">
@@ -251,8 +253,9 @@ export default function Projects() {
                 </div>
               </div>
 
-            </div>
+            </SpotlightCard>
           ))}
+
         </div>
 
       </div>

@@ -18,32 +18,21 @@ export default function Footer() {
 
     let isMounted = true;
 
-    // Visitor Count Logic (Precise unique deduplicated visitor count)
+    // Visitor Count Logic (Deduplicated unique visitor session tracking)
     const handleVisitorCount = async () => {
       if (hasTrackedRef.current) return;
       hasTrackedRef.current = true;
 
-      const LOCAL_KEY = "portfolio_visitor_count_val";
-      let localVal = 0;
-      try {
-        localVal = parseInt(localStorage.getItem(LOCAL_KEY) || "0", 10);
-        if (isNaN(localVal)) localVal = 0;
-      } catch {
-        localVal = 0;
-      }
-
-      const hasVisited = typeof window !== "undefined" && sessionStorage.getItem("portfolio_session_visited") === "true";
-      const method = hasVisited ? "GET" : "POST";
-
-      if (!hasVisited && typeof window !== "undefined") {
-        try {
-          sessionStorage.setItem("portfolio_session_visited", "true");
-        } catch {}
-      }
+      const sessionKey = "portfolio_session_visited_v1";
+      const hasVisited = typeof window !== "undefined" && sessionStorage.getItem(sessionKey) === "true";
 
       try {
         let res: Response;
-        if (method === "POST") {
+        if (!hasVisited) {
+          try {
+            sessionStorage.setItem(sessionKey, "true");
+          } catch {}
+
           res = await fetch("/api/visitor-count", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -57,20 +46,14 @@ export default function Footer() {
           const data = await res.json();
           if (data && typeof data.count === "number") {
             if (isMounted) setVisitorCount(data.count);
-            try {
-              localStorage.setItem(LOCAL_KEY, data.count.toString());
-            } catch {}
             return;
           }
         }
       } catch (err) {
-        console.warn("Failed to fetch server visitor count, using local fallback:", err);
-      }
-
-      if (isMounted && localVal > 0) {
-        setVisitorCount(localVal);
+        console.warn("Failed to fetch visitor count:", err);
       }
     };
+
 
     handleVisitorCount();
 

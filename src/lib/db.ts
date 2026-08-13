@@ -31,11 +31,11 @@ export interface PortfolioDatabase {
 }
 
 const DB_FILE_PATH = path.join(process.cwd(), "data", "portfolio_db.json");
-const OLD_VISITOR_FILE = path.join(process.cwd(), "data", "visitor_count.json");
+const TMP_DB_FILE_PATH = path.join("/tmp", "portfolio_db.json");
 
 // Default initial state
 const DEFAULT_DB: PortfolioDatabase = {
-  visitorCount: 0,
+  visitorCount: 10,
   updatedAt: new Date().toISOString(),
   contacts: [],
   visitorLogs: [],
@@ -59,33 +59,23 @@ export function getDatabase(): PortfolioDatabase {
     return memoryDb;
   }
 
-  try {
-    if (fs.existsSync(DB_FILE_PATH)) {
-      const content = fs.readFileSync(DB_FILE_PATH, "utf8");
-      const parsed = JSON.parse(content);
-      memoryDb = {
-        visitorCount: typeof parsed.visitorCount === "number" ? parsed.visitorCount : 0,
-        updatedAt: parsed.updatedAt || new Date().toISOString(),
-        contacts: Array.isArray(parsed.contacts) ? parsed.contacts : [],
-        visitorLogs: Array.isArray(parsed.visitorLogs) ? parsed.visitorLogs : [],
-      };
-      return memoryDb;
-    }
-
-    // Migration from old single-field visitor_count.json if present
-    if (fs.existsSync(OLD_VISITOR_FILE)) {
-      try {
-        const oldContent = fs.readFileSync(OLD_VISITOR_FILE, "utf8");
-        const oldParsed = JSON.parse(oldContent);
-        if (typeof oldParsed.count === "number") {
-          DEFAULT_DB.visitorCount = oldParsed.count;
-        }
-      } catch (err) {
-        console.warn("Failed to parse legacy visitor_count.json:", err);
+  const filesToTry = [TMP_DB_FILE_PATH, DB_FILE_PATH];
+  for (const targetPath of filesToTry) {
+    try {
+      if (fs.existsSync(targetPath)) {
+        const content = fs.readFileSync(targetPath, "utf8");
+        const parsed = JSON.parse(content);
+        memoryDb = {
+          visitorCount: typeof parsed.visitorCount === "number" ? parsed.visitorCount : 0,
+          updatedAt: parsed.updatedAt || new Date().toISOString(),
+          contacts: Array.isArray(parsed.contacts) ? parsed.contacts : [],
+          visitorLogs: Array.isArray(parsed.visitorLogs) ? parsed.visitorLogs : [],
+        };
+        return memoryDb;
       }
+    } catch (err) {
+      console.warn(`Error reading database from ${targetPath}:`, err);
     }
-  } catch (err) {
-    console.error("Error reading database file:", err);
   }
 
   memoryDb = { ...DEFAULT_DB };
@@ -94,25 +84,35 @@ export function getDatabase(): PortfolioDatabase {
 }
 
 /**
- * Persists database updates to disk.
+ * Persists database updates to disk (supports both local filesystem and serverless /tmp).
  */
 export function saveDatabase(db: PortfolioDatabase): boolean {
   memoryDb = db;
+  let saved = false;
+
   try {
     ensureDirExists(DB_FILE_PATH);
     fs.writeFileSync(DB_FILE_PATH, JSON.stringify(db, null, 2), "utf8");
-    return true;
-  } catch (err) {
-    console.error("Error saving database file:", err);
-    return false;
+    saved = true;
+  } catch {
+    // Primary DB directory may be read-only in serverless deployments like Vercel
   }
+
+  try {
+    ensureDirExists(TMP_DB_FILE_PATH);
+    fs.writeFileSync(TMP_DB_FILE_PATH, JSON.stringify(db, null, 2), "utf8");
+    saved = true;
+  } catch {
+    // Ignore /tmp write errors
+  }
+
+  return saved;
 }
 
 /**
  * Collects a new visitor log & updates the total visitor count.
  */
 export function recordVisitor(metadata: {
-  clientCount?: number;
   userAgent?: string;
   referrer?: string;
   page?: string;
@@ -120,9 +120,7 @@ export function recordVisitor(metadata: {
 }): { count: number; log: VisitorLog } {
   const db = getDatabase();
 
-  const clientCount = metadata.clientCount || 0;
-  const baseCount = Math.max(db.visitorCount, clientCount);
-  const newCount = baseCount + 1;
+  const newCount = db.visitorCount + 1;
 
   const log: VisitorLog = {
     id: `v_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
@@ -145,6 +143,7 @@ export function recordVisitor(metadata: {
   saveDatabase(db);
   return { count: newCount, log };
 }
+
 
 /**
  * Adds a new contact form message submission to the database.

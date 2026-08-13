@@ -13,8 +13,12 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import MagneticButton from "@/components/ReactBits/MagneticButton";
+
+
 
 const COUNTRY_CODES = [
+
   { code: "+91", label: "🇮🇳 +91 (India)" },
   { code: "+1", label: "🇺🇸 +1 (USA/Canada)" },
   { code: "+44", label: "🇬🇧 +44 (UK)" },
@@ -473,20 +477,23 @@ export default function Contact() {
                 </div>
 
                 {/* Submit button */}
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full py-3 sm:py-2.5 rounded-lg font-medium text-xs sm:text-sm text-white bg-blue-600 hover:bg-blue-500 active:scale-[0.99] flex items-center justify-center gap-2 transition-all shadow-md shadow-blue-600/10 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {isSubmitting ? (
-                    <span>Sending message...</span>
-                  ) : (
-                    <>
-                      <span>Send Message</span>
-                      <Send className="w-4 h-4" />
-                    </>
-                  )}
-                </button>
+                <MagneticButton className="w-full">
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full py-3.5 sm:py-3 rounded-full font-medium text-xs sm:text-sm text-white bg-blue-600 hover:bg-blue-500 active:scale-[0.99] flex items-center justify-center gap-2 transition-all shadow-[0_0_25px_rgba(37,99,235,0.4)] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isSubmitting ? (
+                      <span>Sending message...</span>
+                    ) : (
+                      <>
+                        <span>Send Message →</span>
+                        <Send className="w-4 h-4" />
+                      </>
+                    )}
+                  </button>
+                </MagneticButton>
+
               </form>
             )}
 

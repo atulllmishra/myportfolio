@@ -11,14 +11,10 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-  let clientCount = 0;
   let page = "/";
 
   try {
     const body = await request.json();
-    if (body && typeof body.clientCount === "number" && !isNaN(body.clientCount)) {
-      clientCount = body.clientCount;
-    }
     if (body && typeof body.page === "string") {
       page = body.page;
     }
@@ -34,12 +30,12 @@ export async function POST(request: Request) {
     undefined;
 
   const result = recordVisitor({
-    clientCount,
     userAgent,
     referrer,
     page,
     ip,
   });
+
 
   return NextResponse.json({
     count: result.count,

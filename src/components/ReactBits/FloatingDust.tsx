@@ -1,0 +1,50 @@
+"use client";
+
+import { useMemo } from "react";
+
+export default function FloatingDust() {
+  const particles = useMemo(() => {
+    return Array.from({ length: 24 }).map((_, i) => ({
+      id: i,
+      size: Math.random() * 2.4 + 1,
+      top: `${Math.random() * 95}%`,
+      left: `${Math.random() * 95}%`,
+      duration: `${Math.random() * 4 + 5}s`,
+      delay: `${Math.random() * 5}s`,
+      isAccent: i % 4 === 0,
+    }));
+  }, []);
+
+  return (
+    <div className="absolute inset-0 pointer-events-none z-[8] overflow-hidden" aria-hidden="true">
+      <style>{`
+        @keyframes floatParticle {
+          0%, 100% {
+            transform: translateY(0px) translateX(0px);
+            opacity: 0.2;
+          }
+          50% {
+            transform: translateY(-24px) translateX(12px);
+            opacity: 0.75;
+          }
+        }
+      `}</style>
+      {particles.map((p) => (
+        <div
+          key={p.id}
+          className="absolute rounded-full"
+          style={{
+            width: `${p.size}px`,
+            height: `${p.size}px`,
+            backgroundColor: p.isAccent ? "#2563eb" : "rgba(255, 255, 255, 0.35)",
+            top: p.top,
+            left: p.left,
+            animation: `floatParticle ${p.duration} ease-in-out infinite`,
+            animationDelay: p.delay,
+            boxShadow: p.isAccent ? "0 0 8px #2563eb" : "none",
+          }}
+        />
+      ))}
+    </div>
+  );
+}

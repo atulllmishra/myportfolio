@@ -1,8 +1,32 @@
 {
-  "visitorCount": 10,
-  "updatedAt": "2026-08-12T06:11:15.305Z",
+  "visitorCount": 13,
+  "updatedAt": "2026-08-13T16:41:01.010Z",
   "contacts": [],
   "visitorLogs": [
+    {
+      "id": "v_1786639261010_nr7bt",
+      "timestamp": "2026-08-13T16:41:01.010Z",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      "referrer": "http://localhost:3000/",
+      "page": "/",
+      "ipHash": "ip_18fl"
+    },
+    {
+      "id": "v_1786639257411_7gr99",
+      "timestamp": "2026-08-13T16:40:57.411Z",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:153.0) Gecko/20100101 Firefox/153.0",
+      "referrer": "http://localhost:3000/",
+      "page": "/",
+      "ipHash": "ip_u2dry5"
+    },
+    {
+      "id": "v_1786516057575_imhbu",
+      "timestamp": "2026-08-12T06:27:37.575Z",
+      "userAgent": "curl/8.7.1",
+      "referrer": "Direct / None",
+      "page": "/",
+      "ipHash": "ip_18fl"
+    },
     {
       "id": "v_1786515075305_n5z2w",
       "timestamp": "2026-08-12T06:11:15.305Z",
