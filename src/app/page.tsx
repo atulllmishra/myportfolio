@@ -8,6 +8,7 @@ import ScrollToTop from "@/components/ScrollToTop";
 import LoadingScreen from "@/components/ReactBits/LoadingScreen";
 import GhostCursor from "@/components/ReactBits/GhostCursor";
 import ScrollExpand from "@/components/ReactBits/ScrollExpand";
+import CelestialCanvas from "@/components/CelestialScene/CelestialCanvas";
 
 import Hero from "@/sections/Hero";
 import About from "@/sections/About";
@@ -27,7 +28,10 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-[#0b0f19] text-slate-100 selection:bg-blue-500 selection:text-white transition-colors duration-200">
+    <main className="relative min-h-screen text-slate-100 selection:bg-blue-500 selection:text-white transition-colors duration-200">
+      {/* Theme-aware 3D celestial background (Galaxy + Sun/Earth/Moon meshes) */}
+      <CelestialCanvas />
+
       <LoadingScreen />
       <GhostCursor />
       <Navbar />
@@ -49,4 +53,3 @@ export default function Home() {
     </main>
   );
 }
-

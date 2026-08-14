@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Menu, X, Download, Sun, Moon } from "lucide-react";
+import { Menu, X, Download, Sun, Moon, Zap } from "lucide-react";
 import { useTheme } from "@/components/ThemeProvider";
 
 const navLinks = [
@@ -11,10 +11,9 @@ const navLinks = [
   { name: "Projects", href: "#projects", id: "projects" },
   { name: "Skills", href: "#skills", id: "skills" },
   { name: "Recognitions", href: "#certifications", id: "certifications" },
-  { name: "AI Twin", href: "#ai-assistant", id: "ai-assistant" },
+  { name: "Virtual Twin", href: "#ai-assistant", id: "ai-assistant" },
   { name: "Contact", href: "#contact", id: "contact" },
 ];
-
 
 const profilePicUrl =
   "https://media.licdn.com/dms/image/v2/D4D03AQEZbzxHR0Z45Q/profile-displayphoto-crop_800_800/B4DZh7FG4QHwAI-/0/1754411595531?e=1787184000&v=beta&t=nSeMFlyp1Tf3p3940JcRZyBd7cJG_Bfp97VrVGZnz-o";
@@ -23,7 +22,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
-  const { theme, toggleTheme } = useTheme();
+  const { theme, toggleTheme, isDaytime } = useTheme();
 
   // Scroll listener for sticky header background
   useEffect(() => {
@@ -84,7 +83,7 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
           ? "py-3 bg-[#0b0f17]/90 backdrop-blur-md border-b border-[#1e2638] shadow-lg"
           : "py-4 bg-transparent"
@@ -112,7 +111,7 @@ export default function Navbar() {
         </a>
 
         {/* Desktop Links with Active Indicator */}
-        <nav className="hidden lg:flex items-center gap-1 text-xs font-medium text-slate-300 bg-[#121824]/60 p-1.5 rounded-full border border-[#1e2638]">
+        <nav className="hidden lg:flex items-center gap-1 text-xs font-medium text-slate-300 bg-[#121824]/80 p-1.5 rounded-full border border-[#1e2638] backdrop-blur-md">
           {navLinks.map((link) => {
             const isActive = activeSection === link.id;
             return (
@@ -122,7 +121,7 @@ export default function Navbar() {
                 onClick={(e) => handleNavClick(e, link.href)}
                 className={`px-3 py-1.5 rounded-full transition-all duration-200 font-medium ${
                   isActive
-                    ? "bg-blue-600 text-white shadow-sm font-semibold"
+                    ? "bg-blue-600 text-white shadow-md font-semibold"
                     : "hover:text-white hover:bg-slate-800/50 text-slate-300"
                 }`}
               >
@@ -134,21 +133,22 @@ export default function Navbar() {
 
         {/* Actions */}
         <div className="hidden md:flex items-center gap-2.5">
+          {/* Gen Z Theme Switcher Button */}
           <button
             onClick={toggleTheme}
-            className="p-2 rounded bg-[#121824] border border-[#1e2638] text-slate-300 hover:text-white transition-all flex items-center gap-1.5 text-xs font-mono cursor-pointer"
+            className="px-3 py-1.5 rounded-full bg-[#121824] border border-[#1e2638] text-slate-300 hover:text-white transition-all flex items-center gap-2 text-xs font-mono font-bold cursor-pointer hover:border-blue-500/50 shadow-sm"
             aria-label="Toggle Theme"
-            title={`Switch to ${theme === "dark" ? "Light" : "Dark"} Mode`}
+            title={`Switch to ${theme === "dark" ? "Light" : "Dark"} Mode (${isDaytime ? "Daytime" : "Nighttime"} Auto-detected)`}
           >
             {theme === "dark" ? (
               <>
-                <Sun className="w-3.5 h-3.5 text-amber-400" />
-                <span>Light</span>
+                <Sun className="w-3.5 h-3.5 text-amber-400 animate-spin" style={{ animationDuration: "12s" }} />
+                <span>SOLAR LIGHT</span>
               </>
             ) : (
               <>
-                <Moon className="w-3.5 h-3.5 text-slate-700" />
-                <span>Dark</span>
+                <Moon className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
+                <span>COSMIC DARK</span>
               </>
             )}
           </button>
@@ -157,7 +157,7 @@ export default function Navbar() {
             href="/resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded text-xs font-medium bg-blue-600 hover:bg-blue-500 text-white transition-all"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white transition-all shadow-md"
           >
             <Download className="w-3.5 h-3.5" />
             <span>CV</span>
@@ -168,19 +168,19 @@ export default function Navbar() {
         <div className="flex items-center gap-2 lg:hidden">
           <button
             onClick={toggleTheme}
-            className="p-2 rounded bg-[#121824] border border-[#1e2638] text-slate-300"
+            className="p-2 rounded-full bg-[#121824] border border-[#1e2638] text-slate-300"
             aria-label="Toggle theme"
           >
             {theme === "dark" ? (
               <Sun className="w-4 h-4 text-amber-400" />
             ) : (
-              <Moon className="w-4 h-4 text-slate-700" />
+              <Moon className="w-4 h-4 text-cyan-400" />
             )}
           </button>
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded bg-[#121824] border border-[#1e2638] text-slate-300"
+            className="p-2 rounded-full bg-[#121824] border border-[#1e2638] text-slate-300"
             aria-label="Toggle Menu"
           >
             {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
@@ -215,12 +215,12 @@ export default function Navbar() {
                 toggleTheme();
                 setMobileMenuOpen(false);
               }}
-              className="flex items-center gap-2 py-1.5 text-xs font-mono text-slate-300"
+              className="flex items-center gap-2 py-1.5 text-xs font-mono font-bold text-slate-300"
             >
               {theme === "dark" ? (
                 <Sun className="w-4 h-4 text-amber-400" />
               ) : (
-                <Moon className="w-4 h-4 text-slate-700" />
+                <Moon className="w-4 h-4 text-cyan-400" />
               )}
               <span>Switch to {theme === "dark" ? "Light" : "Dark"} Mode</span>
             </button>
@@ -229,7 +229,7 @@ export default function Navbar() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3.5 py-1.5 rounded text-xs font-medium bg-blue-600 text-white"
+              className="px-3.5 py-1.5 rounded-full text-xs font-bold bg-blue-600 text-white"
             >
               Download CV
             </a>

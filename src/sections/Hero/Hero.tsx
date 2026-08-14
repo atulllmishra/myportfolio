@@ -1,15 +1,16 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ArrowRight, Download, Bot, Mail, MapPin, Building2, GraduationCap, Code2, Sparkles, Trophy } from "lucide-react";
+import { ArrowRight, Download, Mail, MapPin, Building2, GraduationCap, Code2, Sparkles, Trophy, Zap } from "lucide-react";
 import TextPressure from "@/components/ReactBits/TextPressure";
 import FloatingDust from "@/components/ReactBits/FloatingDust";
 import MagneticButton from "@/components/ReactBits/MagneticButton";
+import { useTheme } from "@/components/ThemeProvider";
 
 const roles = [
-  "Full-Stack Web Developer",
-  "Generative AI Specialist",
-  "Software Development Engineer (SDE)",
+  "Full-Stack Engineering Heavyweight",
+  "Generative Systems Architect",
+  "C++ Data Structures Maestro",
   "Computer Science CSE Student",
 ];
 
@@ -20,14 +21,15 @@ export default function Hero() {
   const [roleIndex, setRoleIndex] = useState(0);
   const [displayText, setDisplayText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
+  const { theme, isDaytime } = useTheme();
 
   useEffect(() => {
     const currentRole = roles[roleIndex];
-    const typingSpeed = isDeleting ? 40 : 80;
+    const typingSpeed = isDeleting ? 35 : 70;
 
     const timeout = setTimeout(() => {
       if (!isDeleting && displayText === currentRole) {
-        setTimeout(() => setIsDeleting(true), 2000);
+        setTimeout(() => setIsDeleting(true), 2200);
       } else if (isDeleting && displayText === "") {
         setIsDeleting(false);
         setRoleIndex((prev) => (prev + 1) % roles.length);
@@ -44,26 +46,37 @@ export default function Hero() {
   }, [displayText, isDeleting, roleIndex]);
 
   return (
-    <section id="hero" className="relative pt-24 pb-16 md:pt-32 md:pb-20 bg-[#0b0f17] overflow-hidden scroll-mt-24">
-      {/* ReactBits Floating Particles */}
+    <section id="hero" className="relative pt-24 pb-16 md:pt-32 md:pb-20 overflow-hidden scroll-mt-24">
+      {/* Floating particles layer */}
       <FloatingDust />
 
-      {/* Ambient Blue Radial Glow */}
+      {/* Radial glow tailored to theme */}
       <div
-        className="absolute left-1/2 top-1/3 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] pointer-events-none opacity-20 z-[4]"
+        className="absolute left-1/2 top-1/3 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[750px] pointer-events-none opacity-25 z-[4] transition-all duration-700"
         style={{
-          background: "radial-gradient(circle, rgba(37,99,235,0.4) 0%, rgba(99,102,241,0.1) 40%, transparent 70%)",
-          filter: "blur(60px)",
+          background:
+            theme === "light"
+              ? "radial-gradient(circle, rgba(224,122,95,0.35) 0%, rgba(217,107,67,0.1) 45%, transparent 70%)"
+              : "radial-gradient(circle, rgba(37,99,235,0.4) 0%, rgba(99,102,241,0.15) 45%, transparent 70%)",
+          filter: "blur(70px)",
         }}
       />
 
       <div className="max-w-6xl mx-auto px-6 relative z-10">
-        
-        {/* ReactBits TextPressure Interactive Header Title */}
-        <div className="mb-8 w-full max-w-4xl mx-auto text-center drop-shadow-[0_0_25px_rgba(37,99,235,0.3)]">
-          <TextPressure text="ATUL KUMAR MISHRA" minFontSize={30} strokeColor="#2563eb" />
-          <p className="mt-2 text-xs font-mono font-bold tracking-[0.25em] uppercase text-blue-400">
-            Crafting Intelligent Interfaces & Systems
+
+        {/* Gen Z Interactive Header Badge */}
+        <div className="flex items-center justify-center mb-4">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-mono font-semibold tracking-wider uppercase animate-bounce">
+            <Zap className="w-3.5 h-3.5 text-amber-400" />
+            <span>{isDaytime ? "☀️ DAY SHIFT MODE" : "🌙 NIGHT COSMOS SHIFT"} • LOCKED IN ⚡</span>
+          </div>
+        </div>
+
+        {/* TextPressure Interactive Dynamic Header */}
+        <div className="mb-8 w-full max-w-4xl mx-auto text-center drop-shadow-[0_0_25px_rgba(37,99,235,0.35)]">
+          <TextPressure text="ATUL KUMAR MISHRA" minFontSize={28} strokeColor={theme === "light" ? "#e07a5f" : "#2563eb"} />
+          <p className="mt-2 text-xs font-mono font-bold tracking-[0.3em] uppercase text-blue-400">
+            NO CAP ARCHITECTURE • CRAFTING BOLD DIGITAL EXPERIENCES
           </p>
         </div>
 
@@ -71,20 +84,23 @@ export default function Hero() {
 
           {/* Left Column: Academic Profile Card */}
           <div className="lg:col-span-4 flex justify-center lg:sticky lg:top-24">
-            <div className="w-full rounded-2xl bg-[#121824]/90 border border-[#1e2638] p-6 space-y-5 shadow-2xl backdrop-blur-md">
+            <div className="w-full rounded-2xl bg-[#121824]/90 border border-[#1e2638] p-6 space-y-5 shadow-2xl backdrop-blur-md transition-all duration-300 hover:border-blue-500/40">
 
-              {/* Profile Image & Details */}
+              {/* Profile Avatar & Details */}
               <div className="flex flex-col items-center text-center pb-5 border-b border-[#1e2638] space-y-3">
-                <div className="relative">
+                <div className="relative group">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={profilePicUrl}
                     alt="Atul Kumar Mishra Profile"
-                    className="w-28 h-28 rounded-full object-cover border-2 border-blue-500/40 shadow-lg"
+                    className="w-28 h-28 rounded-full object-cover border-2 border-blue-500/50 shadow-xl group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <span
+                    className="absolute bottom-1 right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-[#121824] animate-ping"
+                    title="Available for Opportunities"
                   />
                   <span
                     className="absolute bottom-1 right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-[#121824]"
-                    title="Available for Opportunities"
                   />
                 </div>
 
@@ -92,7 +108,7 @@ export default function Hero() {
                   <h2 className="text-lg font-bold text-white tracking-tight">
                     Atul Kumar Mishra
                   </h2>
-                  <p className="text-xs text-blue-400 font-mono mt-0.5 font-semibold">
+                  <p className="text-xs text-blue-400 font-mono mt-0.5 font-bold">
                     B.Tech Computer Science (2024–Present)
                   </p>
                 </div>
@@ -144,14 +160,14 @@ export default function Hero() {
               {/* Core Skill Pills */}
               <div className="space-y-2">
                 <span className="text-[11px] font-mono text-slate-400 uppercase tracking-wider block font-semibold">
-                  Core Technologies
+                  Core Technologies:
                 </span>
                 <div className="flex flex-wrap gap-1.5 text-xs font-mono">
                   <span className="px-2.5 py-1 rounded-full bg-[#0b0f17] border border-[#1e2638] text-slate-300">
                     Next.js & React
                   </span>
                   <span className="px-2.5 py-1 rounded-full bg-[#0b0f17] border border-[#1e2638] text-slate-300">
-                    Generative AI / LLMs
+                    AI & LLMs
                   </span>
                   <span className="px-2.5 py-1 rounded-full bg-[#0b0f17] border border-[#1e2638] text-slate-300">
                     C++ DSA
@@ -163,75 +179,75 @@ export default function Hero() {
               </div>
 
               {/* Status Indicator */}
-              <div className="pt-3 border-t border-[#1e2638] flex items-center gap-2 text-xs font-mono text-emerald-400">
+              <div className="pt-3 border-t border-[#1e2638] flex items-center gap-2 text-xs font-mono text-emerald-400 font-medium">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span>Open for SDE & Full-Stack Roles</span>
+                <span>Open for SDE & Full-Stack Roles 🔥</span>
               </div>
 
             </div>
           </div>
 
-          {/* Right Column: Warm Intro & Key Highlights */}
+          {/* Right Column: Gen Z Punchy Intro & Metric Cards */}
           <div className="lg:col-span-8 space-y-6">
 
             {/* Intro Header */}
             <div className="space-y-3">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-mono font-medium">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-mono font-bold">
                 <Sparkles className="w-3.5 h-3.5" />
-                <span>Computer Science & Engineering</span>
+                <span>Computer Science & Engineering • 2024–Present</span>
               </div>
 
-              <h2 className="text-2xl sm:text-4xl font-bold text-white tracking-tight leading-tight">
-                Building Production-Grade Web Applications & AI Engines
-              </h2>
+              <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">
+                CRAFTING NEXT-GEN DIGITAL EXPERIENCES & HIGH-PERFORMANCE SYSTEMS
+              </h1>
 
-              <p className="text-lg sm:text-xl text-slate-300 font-medium h-8">
-                {displayText}
-                <span className="animate-pulse text-blue-400 font-normal">|</span>
+              <p className="text-lg sm:text-xl text-slate-300 font-bold h-8 flex items-center gap-1">
+                <span>{displayText}</span>
+                <span className="animate-pulse text-blue-400 font-bold">|</span>
               </p>
             </div>
 
-            {/* Human Bio Box */}
+            {/* Gen Z Story Box */}
             <div className="p-6 space-y-3.5 text-slate-300 text-sm leading-relaxed font-normal bg-[#121824]/90 border border-[#1e2638] rounded-2xl shadow-xl backdrop-blur-md">
               <p>
-                Hi! I am <strong className="text-white font-semibold">Atul Kumar Mishra</strong>, an undergraduate Computer Science student at MCAET ANDUAT with a passion for software development, modern web engineering, and artificial intelligence.
+                Yo! I am <strong className="text-white font-semibold">Atul Kumar Mishra</strong>, a Computer Science & Engineering undergrad at MCAET ANDUAT building production-grade software with zero fluff and maximum performance.
               </p>
 
               <p>
-                I specialize in building full-stack web applications using <strong className="text-white font-semibold">React, Next.js, and TypeScript</strong>, while engineering custom <strong className="text-white font-semibold">Generative AI & LLM solutions</strong> to solve real-world problems.
+                I specialize in shipping modern full-stack web applications using <strong className="text-white font-semibold">React 19, Next.js, and TypeScript</strong>, while engineering smart <strong className="text-white font-semibold">Generative AI workflows</strong> to automate real-world challenges.
               </p>
             </div>
 
             {/* Metric Highlights Row */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="p-4 space-y-1 bg-[#121824]/90 border border-[#1e2638] rounded-2xl shadow-lg">
+              <div className="p-4 space-y-1 bg-[#121824]/90 border border-[#1e2638] rounded-2xl shadow-lg hover:border-blue-500/50 transition-all">
                 <div className="flex items-center gap-2 text-blue-400 font-mono text-xs font-semibold">
                   <Code2 className="w-4 h-4 text-blue-400" />
                   <span>Full-Stack & AI</span>
                 </div>
-                <h3 className="text-lg font-bold text-white">5+ Apps Built</h3>
+                <h3 className="text-xl font-extrabold text-white">5+ Shipped Apps</h3>
                 <p className="text-xs text-slate-400">
-                  EdTech, B2B SaaS, Agritech & E-Commerce applications.
+                  EdTech, B2B SaaS, Agritech & E-Commerce platforms.
                 </p>
               </div>
 
-              <div className="p-4 space-y-1 bg-[#121824]/90 border border-[#1e2638] rounded-2xl shadow-lg">
+              <div className="p-4 space-y-1 bg-[#121824]/90 border border-[#1e2638] rounded-2xl shadow-lg hover:border-purple-500/50 transition-all">
                 <div className="flex items-center gap-2 text-purple-400 font-mono text-xs font-semibold">
                   <Trophy className="w-4 h-4 text-purple-400" />
                   <span>ImpactHack '25</span>
                 </div>
-                <h3 className="text-lg font-bold text-white">IIT Guwahati Finalist</h3>
+                <h3 className="text-xl font-extrabold text-white">IIT Guwahati Finalist</h3>
                 <p className="text-xs text-slate-400">
-                  National Hackathon finalist recognition.
+                  National Hackathon recognition for Smart Agri platform.
                 </p>
               </div>
 
-              <div className="p-4 space-y-1 bg-[#121824]/90 border border-[#1e2638] rounded-2xl shadow-lg">
+              <div className="p-4 space-y-1 bg-[#121824]/90 border border-[#1e2638] rounded-2xl shadow-lg hover:border-emerald-500/50 transition-all">
                 <div className="flex items-center gap-2 text-emerald-400 font-mono text-xs font-semibold">
                   <GraduationCap className="w-4 h-4 text-emerald-400" />
                   <span>C++ & DSA</span>
                 </div>
-                <h3 className="text-lg font-bold text-white">Strong CS Core</h3>
+                <h3 className="text-xl font-extrabold text-white">Strong CS Core</h3>
                 <p className="text-xs text-slate-400">
                   Algorithmic problem solving and data structures foundation.
                 </p>
@@ -241,16 +257,16 @@ export default function Hero() {
             {/* Action Buttons with ReactBits Magnetic Hover */}
             <div className="flex flex-wrap items-center gap-4 pt-2">
               <MagneticButton href="#projects">
-                <div className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-medium text-xs text-white bg-blue-600 hover:bg-blue-500 transition-all shadow-[0_0_25px_rgba(37,99,235,0.4)]">
-                  <span>Explore Work →</span>
+                <div className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-bold text-xs text-white bg-blue-600 hover:bg-blue-500 transition-all shadow-[0_0_25px_rgba(37,99,235,0.4)] cursor-pointer">
+                  <span>EXPLORE CREATIONS 🔥</span>
                   <ArrowRight className="w-4 h-4" />
                 </div>
               </MagneticButton>
 
               <MagneticButton href="#ai-assistant">
-                <div className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full font-medium text-xs text-slate-200 bg-[#121824] border border-[#1e2638] hover:border-blue-500/50 hover:text-white transition-all">
-                  <Bot className="w-4 h-4 text-purple-400" />
-                  <span>Talk with AI Twin</span>
+                <div className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full font-bold text-xs text-slate-200 bg-[#121824] border border-[#1e2638] hover:border-blue-500/50 hover:text-white transition-all cursor-pointer">
+                  <Zap className="w-4 h-4 text-amber-400" />
+                  <span>INTERACT WITH VIRTUAL ALTER EGO ⚡</span>
                 </div>
               </MagneticButton>
             </div>
@@ -262,5 +278,3 @@ export default function Hero() {
     </section>
   );
 }
-
-

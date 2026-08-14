@@ -8,26 +8,20 @@ interface ThemeContextType {
   theme: Theme;
   toggleTheme: () => void;
   setTheme: (theme: Theme) => void;
+  isDaytime: boolean;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>(() => {
-    if (typeof window !== "undefined") {
-      const savedTheme = localStorage.getItem("hugo-academic-theme") as Theme | null;
-      if (savedTheme && (savedTheme === "dark" || savedTheme === "light")) {
-        return savedTheme;
-      }
-    }
-    return "dark";
-  });
+  const [isDaytime, setIsDaytime] = useState<boolean>(true);
+  const [theme, setThemeState] = useState<Theme>("dark");
   const [mounted, setMounted] = useState(false);
 
   const applyTheme = (targetTheme: Theme) => {
     const root = document.documentElement;
     const body = document.body;
-    
+
     if (targetTheme === "light") {
       root.classList.remove("dark");
       root.classList.add("light");
@@ -48,12 +42,30 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   };
 
   useEffect(() => {
-    applyTheme(theme);
-    const timer = setTimeout(() => {
-      setMounted(true);
-    }, 0);
-    return () => clearTimeout(timer);
-  }, [theme]);
+    // Determine daytime (6:00 AM to 6:00 PM local time)
+    const currentHour = new Date().getHours();
+    const daytime = currentHour >= 6 && currentHour < 18;
+    setIsDaytime(daytime);
+
+    // Check saved user preference, fallback to timing-based theme
+    const savedTheme = localStorage.getItem("hugo-academic-theme") as Theme | null;
+    const initialTheme: Theme =
+      savedTheme && (savedTheme === "dark" || savedTheme === "light")
+        ? savedTheme
+        : daytime
+        ? "light"
+        : "dark";
+
+    setThemeState(initialTheme);
+    applyTheme(initialTheme);
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (mounted) {
+      applyTheme(theme);
+    }
+  }, [theme, mounted]);
 
   const setTheme = (newTheme: Theme) => {
     setThemeState(newTheme);
@@ -67,7 +79,14 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <ThemeContext.Provider value={{ theme: mounted ? theme : "dark", toggleTheme, setTheme }}>
+    <ThemeContext.Provider
+      value={{
+        theme: mounted ? theme : "dark",
+        toggleTheme,
+        setTheme,
+        isDaytime,
+      }}
+    >
       {children}
     </ThemeContext.Provider>
   );
