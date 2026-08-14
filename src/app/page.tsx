@@ -8,7 +8,7 @@ import ScrollToTop from "@/components/ScrollToTop";
 import LoadingScreen from "@/components/ReactBits/LoadingScreen";
 import GhostCursor from "@/components/ReactBits/GhostCursor";
 import ScrollExpand from "@/components/ReactBits/ScrollExpand";
-import CelestialCanvas from "@/components/CelestialScene/CelestialCanvas";
+import CelestialCanvas from "@/components/CelestialScene";
 
 import Hero from "@/sections/Hero";
 import About from "@/sections/About";
