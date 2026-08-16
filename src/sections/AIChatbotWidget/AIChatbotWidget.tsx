@@ -2,6 +2,8 @@
 
 import { useState, useRef, useEffect } from "react";
 import { Send, RefreshCw, ChevronRight, Zap, Sparkles } from "lucide-react";
+import { useTheme } from "@/components/ThemeProvider";
+import { audioHaptics } from "@/lib/audioHaptics";
 
 interface ChatMessage {
   id: string;
@@ -13,7 +15,7 @@ interface ChatMessage {
 const initialBotMessage: ChatMessage = {
   id: "welcome-1",
   sender: "bot",
-  text: "Yo! Welcome to my Virtual Twin chatroom ⚡ Feel free to ask me anything about Atul's background in Computer Science, featured projects (like heyBuddy, ProcureHub, or Smart Agri), core technical skills, or how to get in touch!",
+  text: "Hello. I'm Atul's virtual clone. Ask me about his projects, background, or tech stack. I'm faster than email.",
   timestamp: "Live",
 };
 
@@ -21,7 +23,7 @@ const suggestedPrompts = [
   "What projects has Atul built?",
   "Tell me about heyBuddy (AI EdTech)",
   "Tell me about ProcureHub B2B SaaS",
-  "What is Atul's tech stack & DSA skills?",
+  "What is Atul's tech stack?",
   "How can I contact Atul?",
 ];
 
@@ -30,6 +32,10 @@ export default function AIChatbotWidget() {
   const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
+  const { theme } = useTheme();
+
+  const isLight = theme === "light";
+  const accentColor = isLight ? "#C4563A" : "#E07A5F";
 
   const scrollToBottom = () => {
     if (chatContainerRef.current) {
@@ -47,6 +53,8 @@ export default function AIChatbotWidget() {
     const text = textToSend || inputValue.trim();
     if (!text) return;
 
+    audioHaptics.playClick(600, 0.05, "sine");
+
     const userMsg: ChatMessage = {
       id: crypto.randomUUID(),
       sender: "user",
@@ -62,63 +70,26 @@ export default function AIChatbotWidget() {
       let botResponse = "";
       const lower = text.toLowerCase();
 
-      // heyBuddy queries
-      if (lower.includes("heybuddy") || lower.includes("hey buddy") || lower.includes("edtech") || lower.includes("lecture") || lower.includes("video solution")) {
-        botResponse = `heyBuddy (Ongoing Project • August 2026 — Present) is an online AI EdTech video platform created by Atul.
-
-Key Features & Capabilities:
-• Multilingual AI Video Solutions: Automatically generates video & voice answers to user questions in multiple languages.
-• Lecture Difficulty Transformation: Converts lecture content dynamically into beginner, intermediate, or advanced levels tailored to learner needs.
-• Adaptive Learning Engine: Powered by Generative AI, Next.js, and LLMs for personalized education.`;
+      if (lower.includes("heybuddy") || lower.includes("edtech")) {
+        botResponse = `heyBuddy (Ongoing) is an AI EdTech video platform.\n\nMechanics:\nBuilt a custom pipeline wrapping open-weight TTS models and LLMs to generate structured JSON lecture nodes, stitched into a synchronized video timeline via client-side Canvas APIs.`;
       }
-      // ProcureHub queries
-      else if (lower.includes("procurehub") || lower.includes("b2b") || lower.includes("bribery") || lower.includes("bid") || lower.includes("procurement")) {
-        botResponse = `ProcureHub (procurehub.vercel.app | Oct 1, 2024 — Sept 24, 2025) is a transparent, bribeless B2B IT Procurement & Bid Management SaaS platform created by Atul.
-
-Key Features:
-• Eliminates corruption & bribery in IT maintenance contracts in India.
-• Equal Opportunity Bidding: Enables small contractors to compete fairly with enterprises based on technical merit.
-• Smart Contracts: Blockchain-backed execution for audit trails & compliance.
-• Real-time Analytics: Insights into bids, contract status, and contractor ratings.`;
+      else if (lower.includes("procurehub") || lower.includes("b2b")) {
+        botResponse = `ProcureHub is a transparent B2B IT Procurement platform.\n\nMechanics:\nImplemented a cryptographic bid-sealing mechanism using subtle crypto API and smart contracts, ensuring bid amounts remain completely hidden until the designated opening window.`;
       }
-      // Smart Agri queries
-      else if (lower.includes("smart agri") || lower.includes("hackathon") || lower.includes("iit") || lower.includes("guwahati") || lower.includes("impacthack") || lower.includes("farmer") || lower.includes("crop")) {
-        botResponse = `Smart Agri (smart-agri.vercel.app | March 2025) was named Finalist at IIT Guwahati ImpactHack Hackathon 2025!
-
-What it does:
-• Intelligent precision farming platform for agricultural decision support.
-• Real-time city temperature & weather condition forecasting for farmers.
-• Predictive analytics engine for live crop market prices & yield insights.`;
+      else if (lower.includes("smart agri") || lower.includes("hackathon")) {
+        botResponse = `Smart Agri (March 2025) - IIT Guwahati ImpactHack Finalist.\n\nMechanics:\nEngineered a low-bandwidth progressive web app (PWA) architecture with aggressive local caching for rural farmers on intermittent 3G networks.`;
       }
-      // MCAET Chatbot queries
-      else if (lower.includes("mcaet") || lower.includes("college bot") || lower.includes("render") || lower.includes("portal")) {
-        botResponse = `MCAET Chatbot (mcaetchatbot-2.onrender.com | July 2026 — Present) is a custom conversational bot engineered by Atul for Mahamaya College of Agricultural Engineering and Technology (MCAET, ANDUAT).
-
-Highlights:
-• Deployed live on Render & integrated directly into official college web portal (mcaet.vercel.app).
-• Automated query handling for admissions, student services, and campus info.`;
+      else if (lower.includes("mcaet") || lower.includes("chatbot")) {
+        botResponse = `MCAET Chatbot (Live) is the official generative AI assistant for MCAET college.\n\nMechanics:\nConstructed a highly specific RAG vector index using the college's entire administrative handbook and syllabus to prevent hallucination.`;
       }
-      // All Projects Overview
-      else if (lower.includes("project") || lower.includes("work") || lower.includes("portfolio") || lower.includes("built")) {
-        botResponse = `Here are Atul's 5 major projects:
-
-1. heyBuddy (August 2026 — Present) - AI Multilingual EdTech Video & Lecture Platform.
-2. E-Commerce Store (August 2026 — Present) - Storefront with AI Helpcenter (ecommerce-store-ivory-sigma.vercel.app).
-3. MCAET Chatbot (July 2026 — Present) - Live college bot on mcaet.vercel.app.
-4. Smart Agri (March 2025) - IIT Guwahati ImpactHack 2025 Finalist Agritech Platform.
-5. ProcureHub (Oct 2024 — Sept 2025) - B2B Transparent Procurement & Bribeless Bid SaaS.`;
+      else if (lower.includes("project") || lower.includes("portfolio")) {
+        botResponse = `1. heyBuddy - AI EdTech Video\n2. ProcureHub - B2B Procurement\n3. Smart Agri - IIT Hackathon Finalist\n4. MCAET Chatbot - Campus AI`;
       }
-      // Contact & Links
-      else if (lower.includes("contact") || lower.includes("email") || lower.includes("social") || lower.includes("linkedin") || lower.includes("github")) {
-        botResponse = `Connect with Atul:
-• Email: atulllmishra1@gmail.com
-• Phone: (+91) 74588 44711
-• GitHub: github.com/atulllmishra/
-• LinkedIn: linkedin.com/in/atul-kumar-mishra-3b3939363`;
+      else if (lower.includes("contact") || lower.includes("email")) {
+        botResponse = `Email: atulllmishra1@gmail.com\nGitHub: github.com/atulllmishra/\nLinkedIn: linkedin.com/in/atul-kumar-mishra-3b3939363`;
       }
-      // Default
       else {
-        botResponse = `Atul Kumar Mishra is a B.Tech CSE student at MCAET ANDUAT, creator of heyBuddy, IIT Guwahati ImpactHack 2025 Finalist, and Full-Stack Web Engineer.`;
+        botResponse = `I process text. Try asking about ProcureHub, heyBuddy, or Smart Agri.`;
       }
 
       const botMsg: ChatMessage = {
@@ -130,49 +101,52 @@ Highlights:
 
       setMessages((prev) => [...prev, botMsg]);
       setIsTyping(false);
-    }, 550);
+      audioHaptics.playClick(400, 0.05, "sine");
+    }, 600);
   };
 
   return (
-    <section id="ai-assistant" className="py-20 relative border-t border-[#1e2638] scroll-mt-24">
+    <section id="ai-assistant" className="py-24 relative border-t border-card scroll-mt-24">
       <div className="max-w-4xl mx-auto px-6">
 
         {/* Section Header */}
         <div className="max-w-2xl mb-8 space-y-2">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-mono font-bold uppercase">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-main border border-card text-xs font-mono font-bold uppercase" style={{ color: accentColor }}>
             <Zap className="w-3.5 h-3.5" />
             <span>Interactive Chatroom</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-            TALK TO MY VIRTUAL ALTER EGO ⚡
+          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
+            VIRTUAL <span style={{ color: accentColor }}>CLONE</span>
           </h2>
-          <p className="text-slate-400 text-sm">
-            Ask anything about ProcureHub, heyBuddy, Smart Agri, tech stack, or get in touch 24/7.
+          <p className="text-secondary text-sm font-medium">
+            Ask anything about the stack, the projects, or the background.
           </p>
         </div>
 
         {/* Chat Window */}
-        <div className="academic-card overflow-hidden flex flex-col h-[520px] border border-[#1e2638] shadow-2xl rounded-2xl">
+        <div className="overflow-hidden flex flex-col h-[520px] bg-card border border-card shadow-2xl rounded-2xl">
 
           {/* Header Bar */}
-          <div className="px-5 py-3.5 bg-[#0b0f17] border-b border-[#1e2638] flex items-center justify-between">
+          <div className="px-5 py-3.5 bg-main border-b border-card flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="p-2 rounded-lg bg-[#121824] border border-[#1e2638] text-amber-400">
+              <div className="p-2 rounded-lg bg-card border border-card" style={{ color: accentColor }}>
                 <Sparkles className="w-4 h-4" />
               </div>
               <div>
-                <h3 className="text-xs font-mono font-bold text-white flex items-center gap-1.5">
+                <h3 className="text-xs font-mono font-bold flex items-center gap-1.5 text-primary">
                   atul_virtual_clone
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  <span className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: accentColor }} />
                 </h3>
-                <span className="text-[10px] font-mono text-slate-400">CSE & Full-Stack Knowledge Base</span>
+                <span className="text-[10px] font-mono text-secondary">RAG Knowledge Base</span>
               </div>
             </div>
 
             <button
-              onClick={() => setMessages([initialBotMessage])}
-              className="flex items-center gap-1 px-2.5 py-1 rounded bg-[#121824] hover:bg-[#1e2638] text-xs font-mono text-slate-300 hover:text-white transition-colors border border-[#1e2638] cursor-pointer"
-              title="Reset Chat"
+              onClick={() => {
+                setMessages([initialBotMessage]);
+                audioHaptics.playSwitch();
+              }}
+              className="flex items-center gap-1 px-2.5 py-1 rounded bg-card hover:bg-main text-xs font-mono text-secondary hover:text-primary transition-colors border border-card cursor-pointer"
             >
               <RefreshCw className="w-3 h-3" />
               <span>Reset</span>
@@ -180,22 +154,23 @@ Highlights:
           </div>
 
           {/* Messages Container */}
-          <div ref={chatContainerRef} className="flex-1 p-5 overflow-y-auto space-y-3.5 bg-[#0b0f17]">
+          <div ref={chatContainerRef} className="flex-1 p-5 overflow-y-auto space-y-3.5 bg-card">
             {messages.map((msg) => (
               <div
                 key={msg.id}
                 className={`flex flex-col ${msg.sender === "user" ? "items-end" : "items-start"}`}
               >
-                <span className="text-[10px] font-mono text-slate-500 mb-1">
-                  {msg.sender === "user" ? "You" : "Virtual Twin"} • {msg.timestamp}
+                <span className="text-[10px] font-mono text-secondary mb-1">
+                  {msg.sender === "user" ? "You" : "Virtual Clone"} • {msg.timestamp}
                 </span>
 
                 <div
-                  className={`max-w-[88%] rounded-xl px-4 py-3 text-xs leading-relaxed ${
+                  className={`max-w-[88%] rounded-xl px-4 py-3 text-xs leading-relaxed font-medium ${
                     msg.sender === "user"
-                      ? "bg-blue-600 text-white font-medium shadow-md"
-                      : "bg-[#121824] border border-[#1e2638] text-slate-200 whitespace-pre-line shadow-sm"
+                      ? "text-white shadow-md"
+                      : "bg-main border border-card text-primary whitespace-pre-line shadow-sm"
                   }`}
+                  style={msg.sender === "user" ? { backgroundColor: accentColor } : {}}
                 >
                   {msg.text}
                 </div>
@@ -204,8 +179,8 @@ Highlights:
 
             {isTyping && (
               <div className="flex flex-col items-start space-y-1">
-                <span className="text-[10px] font-mono text-slate-500">Virtual Twin</span>
-                <div className="px-4 py-2 rounded-xl bg-[#121824] border border-[#1e2638] text-slate-400 text-xs font-mono">
+                <span className="text-[10px] font-mono text-secondary">Virtual Clone</span>
+                <div className="px-4 py-2 rounded-xl bg-main border border-card text-secondary text-xs font-mono">
                   Synthesizing response...
                 </div>
               </div>
@@ -213,16 +188,16 @@ Highlights:
           </div>
 
           {/* Suggested Chips */}
-          <div className="px-3.5 py-2.5 bg-[#0b0f17] border-t border-[#1e2638] overflow-x-auto flex items-center gap-2">
-            <span className="text-[10px] font-mono text-slate-500 shrink-0 font-bold">Quick Prompts:</span>
+          <div className="px-3.5 py-2.5 bg-main border-t border-card overflow-x-auto flex items-center gap-2">
+            <span className="text-[10px] font-mono text-secondary shrink-0 font-bold">Prompts:</span>
             {suggestedPrompts.map((prompt) => (
               <button
                 key={prompt}
                 onClick={() => handleSend(prompt)}
-                className="shrink-0 text-[11px] font-mono px-3 py-1 rounded-full bg-[#121824] hover:bg-[#1e2638] text-slate-300 hover:text-white border border-[#1e2638] transition-colors flex items-center gap-1 cursor-pointer"
+                className="shrink-0 text-[11px] font-mono px-3 py-1 rounded-full bg-card hover:bg-main border border-card text-secondary hover:text-primary transition-colors flex items-center gap-1 cursor-pointer"
               >
                 <span>{prompt}</span>
-                <ChevronRight className="w-3 h-3 text-slate-400" />
+                <ChevronRight className="w-3 h-3" />
               </button>
             ))}
           </div>
@@ -233,19 +208,23 @@ Highlights:
               e.preventDefault();
               handleSend();
             }}
-            className="p-3 bg-[#0b0f17] border-t border-[#1e2638] flex items-center gap-2"
+            className="p-3 bg-main border-t border-card flex items-center gap-2"
           >
             <input
               type="text"
               value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              placeholder="Ask anything about projects, tech stack, education..."
-              className="flex-1 bg-[#121824] border border-[#1e2638] rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-colors"
+              onChange={(e) => {
+                setInputValue(e.target.value);
+                if (e.target.value.length > inputValue.length) audioHaptics.playKey();
+              }}
+              placeholder="Ask anything..."
+              className="flex-1 bg-card border border-card rounded-xl px-4 py-2.5 text-xs text-primary placeholder:text-secondary focus:outline-none focus:border-accent transition-colors font-mono"
             />
             <button
               type="submit"
               disabled={!inputValue.trim() || isTyping}
-              className="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:opacity-40 text-white font-bold text-xs flex items-center gap-1.5 transition-all shadow-md cursor-pointer"
+              className="px-4 py-2.5 rounded-xl disabled:opacity-40 text-white font-bold text-xs flex items-center gap-1.5 transition-all shadow-md cursor-pointer hover:-translate-y-0.5"
+              style={{ backgroundColor: accentColor }}
             >
               <span>SEND</span>
               <Send className="w-3.5 h-3.5" />

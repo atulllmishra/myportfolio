@@ -1,82 +1,47 @@
-export type SkillCategory = "all" | "ai" | "web" | "core";
+export type SkillCategory = "all" | "engineering" | "graphics" | "backend";
 
 export interface SkillItem {
   name: string;
-  category: "ai" | "web" | "core";
-  level: number;
+  category: "engineering" | "graphics" | "backend";
   description: string;
   tags: string[];
 }
 
 export const skillsData: SkillItem[] = [
   {
-    name: "Generative AI & LLM Systems",
-    category: "ai",
-    level: 92,
-    description: "Developing custom AI conversational bots, LLM prompt engineering, and context-driven RAG models.",
-    tags: ["Gemini API", "OpenAI", "Prompt Engineering", "RAG"],
+    name: "React & Next.js Architecture",
+    category: "engineering",
+    description: "I write pure components, manage server/client boundaries, and avoid unnecessary re-renders. Fluent in React 19 rules and Turbopack.",
+    tags: ["React 19", "Next.js 15", "Server Actions", "Hooks"],
   },
   {
-    name: "AI Chatbot Architecture",
-    category: "ai",
-    level: 95,
-    description: "End-to-end deployment of live conversational bots for web & educational portals.",
-    tags: ["Render", "Vercel", "REST APIs", "Node.js"],
+    name: "TypeScript & Tooling",
+    category: "engineering",
+    description: "Strict mode always on. I use TS to catch structural errors before CI, not just for autocomplete.",
+    tags: ["Generics", "Zod", "ESLint", "Tailwind v4"],
   },
   {
-    name: "LangChain & Agentic Workflows",
-    category: "ai",
-    level: 85,
-    description: "Multi-step AI reasoning chains, structured JSON outputs, and vector embedding retrieval.",
-    tags: ["Embeddings", "Vector Search", "JSON Schemas"],
+    name: "WebGL & 3D Interactive",
+    category: "graphics",
+    description: "Writing custom shaders, optimizing draw calls, and mapping DOM events to 3D meshes using React Three Fiber.",
+    tags: ["Three.js", "R3F", "Drei", "GLSL"],
   },
   {
-    name: "React.js & Next.js App Router",
-    category: "web",
-    level: 90,
-    description: "Building modern Single Page Apps and App Router web applications with high performance.",
-    tags: ["App Router", "SSR", "TypeScript", "Hooks"],
+    name: "Motion & Physics",
+    category: "graphics",
+    description: "Building 60fps micro-interactions and tactile UI using physics engines and frame-perfect animation loops.",
+    tags: ["Framer Motion", "Matter.js", "GSAP", "Web Audio API"],
   },
   {
-    name: "JavaScript (ES6+) & TypeScript",
-    category: "web",
-    level: 88,
-    description: "Writing clean, type-safe asynchronous code for dynamic web interfaces.",
-    tags: ["Async/Await", "Promises", "DOM", "TypeScript"],
+    name: "Node.js & API Design",
+    category: "backend",
+    description: "Building fast, stateless microservices that interface with external DBs and complex vendor APIs without bottlenecking.",
+    tags: ["Express", "REST", "WebSockets", "Edge Functions"],
   },
   {
-    name: "HTML5, CSS3 & Tailwind CSS",
-    category: "web",
-    level: 94,
-    description: "Crafting responsive, clean, modern layouts with precise typography.",
-    tags: ["Tailwind", "Responsive", "Flex/Grid", "CSS3"],
-  },
-  {
-    name: "REST APIs & Microservices",
-    category: "web",
-    level: 86,
-    description: "Connecting web interfaces to backend APIs, database schemas, and AI endpoints.",
-    tags: ["Fetch API", "Express", "JSON", "CORS"],
-  },
-  {
-    name: "C++ Programming & OOP",
-    category: "core",
-    level: 88,
-    description: "Solid foundation in C++ object-oriented programming, STL, and memory management.",
-    tags: ["C++ STL", "OOP", "Pointers", "Memory"],
-  },
-  {
-    name: "Data Structures & Algorithms",
-    category: "core",
-    level: 85,
-    description: "Problem solving using arrays, trees, graphs, dynamic programming, and complexity analysis.",
-    tags: ["Arrays", "Trees", "Graphs", "DP"],
-  },
-  {
-    name: "DBMS & Operating Systems",
-    category: "core",
-    level: 84,
-    description: "Core CSE fundamentals: relational databases, SQL queries, memory allocation, and process execution.",
-    tags: ["SQL", "Relational Schema", "OS Concepts"],
-  },
+    name: "C++ & Core Algorithms",
+    category: "engineering",
+    description: "My foundation. I solve algorithmic challenges in C++ to keep my problem-solving sharp and understand memory allocation at a low level.",
+    tags: ["STL", "Data Structures", "Dynamic Programming", "Pointers"],
+  }
 ];

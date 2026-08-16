@@ -1,277 +1,118 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { ArrowRight, Download, Mail, MapPin, Building2, GraduationCap, Code2, Sparkles, Trophy, Zap } from "lucide-react";
-import TextPressure from "@/components/ReactBits/TextPressure";
+import { Download, ArrowRight, Terminal } from "lucide-react";
 import FloatingDust from "@/components/ReactBits/FloatingDust";
-import MagneticButton from "@/components/ReactBits/MagneticButton";
+import HackerBtn from "@/components/animation/HackerBtn";
+import FramerWrapper from "@/components/animation/FramerWrapper";
+import TextRotator from "@/components/animation/TextRotator";
 import { useTheme } from "@/components/ThemeProvider";
-
-const roles = [
-  "Full-Stack Engineering Heavyweight",
-  "Generative Systems Architect",
-  "C++ Data Structures Maestro",
-  "Computer Science CSE Student",
-];
 
 const profilePicUrl =
   "https://media.licdn.com/dms/image/v2/D4D03AQEZbzxHR0Z45Q/profile-displayphoto-crop_800_800/B4DZh7FG4QHwAI-/0/1754411595531?e=1787184000&v=beta&t=nSeMFlyp1Tf3p3940JcRZyBd7cJG_Bfp97VrVGZnz-o";
 
 export default function Hero() {
-  const [roleIndex, setRoleIndex] = useState(0);
-  const [displayText, setDisplayText] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
-  const { theme, isDaytime } = useTheme();
-
-  useEffect(() => {
-    const currentRole = roles[roleIndex];
-    const typingSpeed = isDeleting ? 35 : 70;
-
-    const timeout = setTimeout(() => {
-      if (!isDeleting && displayText === currentRole) {
-        setTimeout(() => setIsDeleting(true), 2200);
-      } else if (isDeleting && displayText === "") {
-        setIsDeleting(false);
-        setRoleIndex((prev) => (prev + 1) % roles.length);
-      } else {
-        setDisplayText(
-          isDeleting
-            ? currentRole.substring(0, displayText.length - 1)
-            : currentRole.substring(0, displayText.length + 1)
-        );
-      }
-    }, typingSpeed);
-
-    return () => clearTimeout(timeout);
-  }, [displayText, isDeleting, roleIndex]);
+  const { theme } = useTheme();
 
   return (
-    <section id="hero" className="relative pt-24 pb-16 md:pt-32 md:pb-20 overflow-hidden scroll-mt-24">
-      {/* Floating particles layer */}
+    <section id="hero" className="relative pt-24 pb-16 md:pt-32 md:pb-20 overflow-hidden scroll-mt-24 min-h-[90vh] flex items-center">
       <FloatingDust />
 
-      {/* Radial glow tailored to theme */}
       <div
-        className="absolute left-1/2 top-1/3 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[750px] pointer-events-none opacity-25 z-[4] transition-all duration-700"
+        className="absolute left-1/2 top-1/3 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[750px] pointer-events-none opacity-20 z-[4] transition-all duration-700 rounded-full"
         style={{
           background:
             theme === "light"
-              ? "radial-gradient(circle, rgba(224,122,95,0.35) 0%, rgba(217,107,67,0.1) 45%, transparent 70%)"
-              : "radial-gradient(circle, rgba(37,99,235,0.4) 0%, rgba(99,102,241,0.15) 45%, transparent 70%)",
-          filter: "blur(70px)",
+              ? "radial-gradient(circle, rgba(196,86,58,0.2) 0%, rgba(224,122,95,0.05) 50%, transparent 70%)"
+              : "radial-gradient(circle, rgba(224,122,95,0.15) 0%, rgba(212,168,83,0.05) 50%, transparent 70%)",
         }}
       />
 
-      <div className="max-w-6xl mx-auto px-6 relative z-10">
-
-        {/* Gen Z Interactive Header Badge */}
-        <div className="flex items-center justify-center mb-4">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-mono font-semibold tracking-wider uppercase animate-bounce">
-            <Zap className="w-3.5 h-3.5 text-amber-400" />
-            <span>{isDaytime ? "☀️ DAY SHIFT MODE" : "🌙 NIGHT COSMOS SHIFT"} • LOCKED IN ⚡</span>
-          </div>
-        </div>
-
-        {/* TextPressure Interactive Dynamic Header */}
-        <div className="mb-8 w-full max-w-4xl mx-auto text-center drop-shadow-[0_0_25px_rgba(37,99,235,0.35)]">
-          <TextPressure text="ATUL KUMAR MISHRA" minFontSize={28} strokeColor={theme === "light" ? "#e07a5f" : "#2563eb"} />
-          <p className="mt-2 text-xs font-mono font-bold tracking-[0.3em] uppercase text-blue-400">
-            NO CAP ARCHITECTURE • CRAFTING BOLD DIGITAL EXPERIENCES
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-
-          {/* Left Column: Academic Profile Card */}
-          <div className="lg:col-span-4 flex justify-center lg:sticky lg:top-24">
-            <div className="w-full rounded-2xl bg-[#121824]/90 border border-[#1e2638] p-6 space-y-5 shadow-2xl backdrop-blur-md transition-all duration-300 hover:border-blue-500/40">
-
-              {/* Profile Avatar & Details */}
-              <div className="flex flex-col items-center text-center pb-5 border-b border-[#1e2638] space-y-3">
-                <div className="relative group">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={profilePicUrl}
-                    alt="Atul Kumar Mishra Profile"
-                    className="w-28 h-28 rounded-full object-cover border-2 border-blue-500/50 shadow-xl group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <span
-                    className="absolute bottom-1 right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-[#121824] animate-ping"
-                    title="Available for Opportunities"
-                  />
-                  <span
-                    className="absolute bottom-1 right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-[#121824]"
-                  />
-                </div>
-
-                <div>
-                  <h2 className="text-lg font-bold text-white tracking-tight">
-                    Atul Kumar Mishra
-                  </h2>
-                  <p className="text-xs text-blue-400 font-mono mt-0.5 font-bold">
-                    B.Tech Computer Science (2024–Present)
-                  </p>
-                </div>
-
-                <div className="space-y-1.5 text-xs text-slate-400 w-full pt-1">
-                  <div className="flex items-center justify-center gap-1.5 font-mono text-[11px]">
-                    <Building2 className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                    <span>MCAET, ANDUAT University</span>
-                  </div>
-                  <div className="flex items-center justify-center gap-1.5 font-mono text-[11px]">
-                    <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                    <span>Ayodhya / UP, India</span>
-                  </div>
-                </div>
-
-                {/* Social Links Bar */}
-                <div className="flex items-center gap-2 pt-2">
-                  <MagneticButton href="mailto:atulllmishra1@gmail.com">
-                    <div className="p-2 rounded-lg bg-[#0b0f17] border border-[#1e2638] text-slate-300 hover:text-white hover:border-blue-500 transition-colors">
-                      <Mail className="w-4 h-4" />
-                    </div>
-                  </MagneticButton>
-
-                  <MagneticButton href="https://github.com/atulllmishra/" target="_blank" rel="noopener noreferrer">
-                    <div className="p-2 rounded-lg bg-[#0b0f17] border border-[#1e2638] text-slate-300 hover:text-white hover:border-blue-500 transition-colors">
-                      <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
-                      </svg>
-                    </div>
-                  </MagneticButton>
-
-                  <MagneticButton href="https://www.linkedin.com/in/atul-kumar-mishra-3b3939363" target="_blank" rel="noopener noreferrer">
-                    <div className="p-2 rounded-lg bg-[#0b0f17] border border-[#1e2638] text-slate-300 hover:text-white hover:border-blue-500 transition-colors">
-                      <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-                      </svg>
-                    </div>
-                  </MagneticButton>
-
-                  <MagneticButton href="/resume.pdf" target="_blank" rel="noopener noreferrer">
-                    <div className="px-3 py-1.5 rounded-lg bg-[#1e2638] text-slate-200 text-xs font-mono font-medium hover:bg-blue-600 hover:text-white transition-all flex items-center gap-1">
-                      <Download className="w-3.5 h-3.5" />
-                      <span>CV</span>
-                    </div>
-                  </MagneticButton>
-                </div>
-              </div>
-
-              {/* Core Skill Pills */}
-              <div className="space-y-2">
-                <span className="text-[11px] font-mono text-slate-400 uppercase tracking-wider block font-semibold">
-                  Core Technologies:
-                </span>
-                <div className="flex flex-wrap gap-1.5 text-xs font-mono">
-                  <span className="px-2.5 py-1 rounded-full bg-[#0b0f17] border border-[#1e2638] text-slate-300">
-                    Next.js & React
-                  </span>
-                  <span className="px-2.5 py-1 rounded-full bg-[#0b0f17] border border-[#1e2638] text-slate-300">
-                    AI & LLMs
-                  </span>
-                  <span className="px-2.5 py-1 rounded-full bg-[#0b0f17] border border-[#1e2638] text-slate-300">
-                    C++ DSA
-                  </span>
-                  <span className="px-2.5 py-1 rounded-full bg-[#0b0f17] border border-[#1e2638] text-slate-300">
-                    TypeScript
-                  </span>
-                </div>
-              </div>
-
-              {/* Status Indicator */}
-              <div className="pt-3 border-t border-[#1e2638] flex items-center gap-2 text-xs font-mono text-emerald-400 font-medium">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span>Open for SDE & Full-Stack Roles 🔥</span>
-              </div>
-
-            </div>
-          </div>
-
-          {/* Right Column: Gen Z Punchy Intro & Metric Cards */}
-          <div className="lg:col-span-8 space-y-6">
-
-            {/* Intro Header */}
-            <div className="space-y-3">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-mono font-bold">
-                <Sparkles className="w-3.5 h-3.5" />
-                <span>Computer Science & Engineering • 2024–Present</span>
-              </div>
-
-              <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">
-                CRAFTING NEXT-GEN DIGITAL EXPERIENCES & HIGH-PERFORMANCE SYSTEMS
+      <div className="max-w-7xl mx-auto px-6 relative z-10 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          
+          {/* LEFT SIDE: Text and Info */}
+          <FramerWrapper y={0} x={-100} className="flex flex-col justify-center space-y-6">
+            
+            <div className="space-y-2">
+              <h3 className="font-mono text-xl sm:text-2xl text-secondary">Hello, my name is</h3>
+              <h1 className="text-6xl sm:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.9] text-primary pb-2" style={{ textShadow: theme === 'light' ? '4px 4px 0px rgba(196,86,58,0.1)' : '4px 4px 0px rgba(224,122,95,0.1)'}}>
+                ATUL KUMAR <br /> 
+                <span style={{ color: theme === 'light' ? '#C4563A' : '#E07A5F' }}>MISHRA .</span>
               </h1>
-
-              <p className="text-lg sm:text-xl text-slate-300 font-bold h-8 flex items-center gap-1">
-                <span>{displayText}</span>
-                <span className="animate-pulse text-blue-400 font-bold">|</span>
-              </p>
             </div>
 
-            {/* Gen Z Story Box */}
-            <div className="p-6 space-y-3.5 text-slate-300 text-sm leading-relaxed font-normal bg-[#121824]/90 border border-[#1e2638] rounded-2xl shadow-xl backdrop-blur-md">
+            <TextRotator />
+
+            <div className="p-6 text-sm leading-relaxed bg-card/90 border border-card rounded-2xl shadow-xl backdrop-blur-md font-medium text-secondary max-w-xl">
               <p>
-                Yo! I am <strong className="text-white font-semibold">Atul Kumar Mishra</strong>, a Computer Science & Engineering undergrad at MCAET ANDUAT building production-grade software with zero fluff and maximum performance.
-              </p>
-
-              <p>
-                I specialize in shipping modern full-stack web applications using <strong className="text-white font-semibold">React 19, Next.js, and TypeScript</strong>, while engineering smart <strong className="text-white font-semibold">Generative AI workflows</strong> to automate real-world challenges.
+                I write React by day and solve complex algorithms in C++ by night. Currently pursuing my B.Tech in CSE (Class of '28). 
+                I don't just write code—I build and ship robust web applications that people actually want to use. 
               </p>
             </div>
 
-            {/* Metric Highlights Row */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="p-4 space-y-1 bg-[#121824]/90 border border-[#1e2638] rounded-2xl shadow-lg hover:border-blue-500/50 transition-all">
-                <div className="flex items-center gap-2 text-blue-400 font-mono text-xs font-semibold">
-                  <Code2 className="w-4 h-4 text-blue-400" />
-                  <span>Full-Stack & AI</span>
-                </div>
-                <h3 className="text-xl font-extrabold text-white">5+ Shipped Apps</h3>
-                <p className="text-xs text-slate-400">
-                  EdTech, B2B SaaS, Agritech & E-Commerce platforms.
-                </p>
-              </div>
-
-              <div className="p-4 space-y-1 bg-[#121824]/90 border border-[#1e2638] rounded-2xl shadow-lg hover:border-purple-500/50 transition-all">
-                <div className="flex items-center gap-2 text-purple-400 font-mono text-xs font-semibold">
-                  <Trophy className="w-4 h-4 text-purple-400" />
-                  <span>ImpactHack '25</span>
-                </div>
-                <h3 className="text-xl font-extrabold text-white">IIT Guwahati Finalist</h3>
-                <p className="text-xs text-slate-400">
-                  National Hackathon recognition for Smart Agri platform.
-                </p>
-              </div>
-
-              <div className="p-4 space-y-1 bg-[#121824]/90 border border-[#1e2638] rounded-2xl shadow-lg hover:border-emerald-500/50 transition-all">
-                <div className="flex items-center gap-2 text-emerald-400 font-mono text-xs font-semibold">
-                  <GraduationCap className="w-4 h-4 text-emerald-400" />
-                  <span>C++ & DSA</span>
-                </div>
-                <h3 className="text-xl font-extrabold text-white">Strong CS Core</h3>
-                <p className="text-xs text-slate-400">
-                  Algorithmic problem solving and data structures foundation.
-                </p>
-              </div>
+            <div className="flex flex-wrap items-center gap-4 pt-4">
+              <HackerBtn 
+                label="VIEW PROJECTS" 
+                icon={ArrowRight}
+                onClick={() => {
+                  const el = document.getElementById("projects");
+                  if (el) el.scrollIntoView({ behavior: "smooth" });
+                }} 
+              />
+              <button 
+                onClick={() => {
+                  window.dispatchEvent(new CustomEvent('toggle-command-palette'));
+                }}
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-bold text-sm font-mono bg-main border border-card hover:border-accent hover:bg-card transition-all cursor-pointer text-primary shadow-sm"
+              >
+                <Terminal className="w-4 h-4" style={{ color: theme === 'light' ? '#C4563A' : '#E07A5F' }} />
+                <span>OPEN TERMINAL (CMD+K)</span>
+              </button>
             </div>
+          </FramerWrapper>
 
-            {/* Action Buttons with ReactBits Magnetic Hover */}
-            <div className="flex flex-wrap items-center gap-4 pt-2">
-              <MagneticButton href="#projects">
-                <div className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-bold text-xs text-white bg-blue-600 hover:bg-blue-500 transition-all shadow-[0_0_25px_rgba(37,99,235,0.4)] cursor-pointer">
-                  <span>EXPLORE CREATIONS 🔥</span>
-                  <ArrowRight className="w-4 h-4" />
-                </div>
-              </MagneticButton>
+          {/* RIGHT SIDE: Animated Avatar */}
+          <FramerWrapper y={0} x={100} className="w-full flex justify-center lg:justify-end relative lg:block">
+            <div className="relative w-full max-w-[320px] sm:max-w-[380px] lg:max-w-[420px] aspect-[4/5] mx-auto rounded-3xl p-6 flex flex-col items-center justify-center overflow-hidden transition-colors duration-300"
+                 style={{ 
+                   background: theme === 'light' ? 'linear-gradient(135deg, rgba(196,86,58,0.03), rgba(196,86,58,0.08))' : 'linear-gradient(135deg, rgba(224,122,95,0.03), rgba(224,122,95,0.08))',
+                   border: `1px solid ${theme === 'light' ? 'rgba(196,86,58,0.15)' : 'rgba(224,122,95,0.15)'}`
+                 }}
+            >
+               {/* Animated Avatar Composition */}
+               <div className="relative w-48 h-48 sm:w-56 sm:h-56 flex items-center justify-center">
+                  
+                  {/* Pulsing rings */}
+                  <div className="absolute inset-0 rounded-full animate-ping opacity-20" style={{ backgroundColor: theme === 'light' ? '#C4563A' : '#E07A5F', animationDuration: '3s' }} />
+                  <div className="absolute inset-4 rounded-full animate-pulse opacity-40" style={{ backgroundColor: theme === 'light' ? '#C4563A' : '#E07A5F', animationDuration: '2s' }} />
+                  
+                  {/* Core Avatar */}
+                  <div className="relative z-10 w-32 h-32 sm:w-36 sm:h-36 rounded-full bg-card border-4 shadow-2xl flex items-center justify-center transition-transform duration-500 hover:scale-105 hover:rotate-3" 
+                       style={{ borderColor: theme === 'light' ? '#C4563A' : '#E07A5F' }}>
+                     <Terminal className="w-12 h-12 sm:w-14 sm:h-14" style={{ color: theme === 'light' ? '#C4563A' : '#E07A5F' }} />
+                  </div>
 
-              <MagneticButton href="#ai-assistant">
-                <div className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full font-bold text-xs text-slate-200 bg-[#121824] border border-[#1e2638] hover:border-blue-500/50 hover:text-white transition-all cursor-pointer">
-                  <Zap className="w-4 h-4 text-amber-400" />
-                  <span>INTERACT WITH VIRTUAL ALTER EGO ⚡</span>
-                </div>
-              </MagneticButton>
+                  {/* Orbiting element */}
+                  <div className="absolute w-full h-full animate-[spin_6s_linear_infinite]">
+                     <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-emerald-500 rounded-full border-4 border-card shadow-[0_0_15px_rgba(16,185,129,0.5)]" />
+                  </div>
+               </div>
+               
+               <div className="mt-12 flex flex-col items-center space-y-3">
+                 <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-card/80 backdrop-blur-md border shadow-sm" style={{ borderColor: theme === 'light' ? 'rgba(196,86,58,0.2)' : 'rgba(224,122,95,0.2)' }}>
+                   <span className="relative flex h-3 w-3">
+                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                     <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                   </span>
+                   <span className="text-xs font-mono font-bold text-primary tracking-widest uppercase">Open to Work</span>
+                 </div>
+                 <p className="text-sm font-medium text-secondary text-center px-4">
+                   Currently seeking full-time roles & freelance opportunities.
+                 </p>
+               </div>
+
             </div>
-
-          </div>
+          </FramerWrapper>
 
         </div>
       </div>

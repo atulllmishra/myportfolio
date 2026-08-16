@@ -8,6 +8,11 @@ interface CelestialMeshesProps {
   theme: "light" | "dark";
 }
 
+function seededRand(seed: number): number {
+  const x = Math.sin(seed * 127.1 + 311.7) * 43758.5453;
+  return x - Math.floor(x);
+}
+
 // Helper canvas textures for procedural high-performance graphics
 function createSunTexture() {
   if (typeof document === "undefined") return null;
@@ -28,10 +33,10 @@ function createSunTexture() {
   ctx.fillRect(0, 0, 512, 512);
 
   for (let i = 0; i < 400; i++) {
-    const x = Math.random() * 512;
-    const y = Math.random() * 512;
-    const r = Math.random() * 10 + 2;
-    ctx.fillStyle = `rgba(255, 255, 200, ${Math.random() * 0.4})`;
+    const x = seededRand(i * 1.1) * 512;
+    const y = seededRand(i * 2.2) * 512;
+    const r = seededRand(i * 3.3) * 10 + 2;
+    ctx.fillStyle = `rgba(255, 255, 200, ${seededRand(i * 4.4) * 0.4})`;
     ctx.beginPath();
     ctx.arc(x, y, r, 0, Math.PI * 2);
     ctx.fill();
@@ -64,14 +69,14 @@ function createEarthTexture(isDark: boolean) {
     { x: 550, y: 150, r: 60 },
   ];
 
-  seedContinents.forEach((c) => {
+  seedContinents.forEach((c, idx) => {
     ctx.beginPath();
     ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
     ctx.fill();
     for (let j = 0; j < 10; j++) {
-      const bx = c.x + (Math.random() - 0.5) * c.r * 1.4;
-      const by = c.y + (Math.random() - 0.5) * c.r * 1.4;
-      const br = Math.random() * (c.r * 0.5) + 12;
+      const bx = c.x + (seededRand(idx * 10 + j * 1.1) - 0.5) * c.r * 1.4;
+      const by = c.y + (seededRand(idx * 10 + j * 2.2) - 0.5) * c.r * 1.4;
+      const br = seededRand(idx * 10 + j * 3.3) * (c.r * 0.5) + 12;
       ctx.beginPath();
       ctx.arc(bx, by, br, 0, Math.PI * 2);
       ctx.fill();
@@ -81,20 +86,20 @@ function createEarthTexture(isDark: boolean) {
   if (isDark) {
     ctx.fillStyle = "#ffaa22";
     for (let k = 0; k < 900; k++) {
-      const lx = Math.random() * 1024;
-      const ly = Math.random() * 512;
-      ctx.fillRect(lx, ly, Math.random() * 2 + 1, Math.random() * 2 + 1);
+      const lx = seededRand(k * 4.4) * 1024;
+      const ly = seededRand(k * 5.5) * 512;
+      ctx.fillRect(lx, ly, seededRand(k * 6.6) * 2 + 1, seededRand(k * 7.7) * 2 + 1);
     }
   }
 
   ctx.fillStyle = isDark ? "rgba(255, 255, 255, 0.25)" : "rgba(255, 255, 255, 0.45)";
   for (let c = 0; c < 22; c++) {
-    const cx = Math.random() * 1024;
-    const cy = Math.random() * 512;
-    const cw = Math.random() * 160 + 50;
-    const ch = Math.random() * 30 + 10;
+    const cx = seededRand(c * 8.8) * 1024;
+    const cy = seededRand(c * 9.9) * 512;
+    const cw = seededRand(c * 10.1) * 160 + 50;
+    const ch = seededRand(c * 11.2) * 30 + 10;
     ctx.beginPath();
-    ctx.ellipse(cx, cy, cw, ch, Math.random(), 0, Math.PI * 2);
+    ctx.ellipse(cx, cy, cw, ch, seededRand(c * 12.3), 0, Math.PI * 2);
     ctx.fill();
   }
 
@@ -116,9 +121,9 @@ function createMoonTexture() {
   ctx.fillRect(0, 0, 512, 512);
 
   for (let i = 0; i < 200; i++) {
-    const x = Math.random() * 512;
-    const y = Math.random() * 512;
-    const r = Math.random() * 30 + 3;
+    const x = seededRand(i * 1.1) * 512;
+    const y = seededRand(i * 2.2) * 512;
+    const r = seededRand(i * 3.3) * 30 + 3;
     const darkGrad = ctx.createRadialGradient(x, y, 0, x, y, r);
     darkGrad.addColorStop(0, "#4a505b");
     darkGrad.addColorStop(0.7, "#6a707c");
@@ -230,10 +235,8 @@ export default function CelestialMeshes({ theme }: CelestialMeshesProps) {
 
   return (
     <>
-      {/* Lights */}
       <ambientLight intensity={isLight ? 0.7 : 0.35} />
       
-      {/* Sun Light (Warm Golden Directional) */}
       <directionalLight
         ref={sunLightRef}
         position={[-8, 4, 5]}
@@ -241,7 +244,6 @@ export default function CelestialMeshes({ theme }: CelestialMeshesProps) {
         intensity={2.8}
       />
 
-      {/* Moon Light (Silvery Cyan Directional) */}
       <directionalLight
         ref={moonLightRef}
         position={[-6, 4, 3]}
@@ -249,9 +251,8 @@ export default function CelestialMeshes({ theme }: CelestialMeshesProps) {
         intensity={0}
       />
 
-      {/* SUN MESH (Light Theme) */}
+      {/* SUN MESH */}
       <group ref={sunGroupRef} position={[-4.2, 1.6, -2]} scale={[0.001, 0.001, 0.001]}>
-        {/* Core Sun */}
         <mesh ref={sunMeshRef}>
           <sphereGeometry args={[1.3, 32, 32]} />
           <meshBasicMaterial
@@ -259,7 +260,6 @@ export default function CelestialMeshes({ theme }: CelestialMeshesProps) {
             color="#ffea99"
           />
         </mesh>
-        {/* Sun Corona Glow */}
         <mesh scale={[1.25, 1.25, 1.25]}>
           <sphereGeometry args={[1.3, 32, 32]} />
           <meshBasicMaterial
@@ -282,7 +282,7 @@ export default function CelestialMeshes({ theme }: CelestialMeshesProps) {
         </mesh>
       </group>
 
-      {/* MOON MESH (Dark Theme) */}
+      {/* MOON MESH */}
       <group ref={moonGroupRef} position={[-4.0, 1.4, -2]} scale={[1.15, 1.15, 1.15]}>
         <mesh ref={moonMeshRef}>
           <sphereGeometry args={[1.1, 32, 32]} />
@@ -293,7 +293,6 @@ export default function CelestialMeshes({ theme }: CelestialMeshesProps) {
             color="#e2e8f0"
           />
         </mesh>
-        {/* Moon Soft Moonlight Glow */}
         <mesh scale={[1.2, 1.2, 1.2]}>
           <sphereGeometry args={[1.1, 32, 32]} />
           <meshBasicMaterial
@@ -306,7 +305,7 @@ export default function CelestialMeshes({ theme }: CelestialMeshesProps) {
         </mesh>
       </group>
 
-      {/* EARTH MESH (Shared across themes) */}
+      {/* EARTH MESH */}
       <group ref={earthGroupRef} position={[3.8, -0.5, -1]} rotation={[0.41, 0, 0]}>
         <mesh ref={earthMeshRef}>
           <sphereGeometry args={[1.25, 64, 64]} />
@@ -319,7 +318,6 @@ export default function CelestialMeshes({ theme }: CelestialMeshesProps) {
             metalness={0.1}
           />
         </mesh>
-        {/* Earth Atmosphere Halo */}
         <mesh scale={[1.1, 1.1, 1.1]}>
           <sphereGeometry args={[1.25, 32, 32]} />
           <meshBasicMaterial

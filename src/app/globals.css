@@ -2,22 +2,22 @@
 
 @layer base {
   :root {
-    --bg-main: #0b0f17;
-    --bg-card: #121824;
-    --border-card: #1e2638;
-    --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
-    --accent-primary: #2563eb;
+    --bg-main: #0D0E12;
+    --bg-card: #161820;
+    --border-card: #2C2D35;
+    --text-primary: #F3F1E7;
+    --text-secondary: #A3A198;
+    --accent-primary: #E07A5F;
     --font-poppins: 'Poppins', sans-serif;
   }
 
   html.light, [data-theme="light"] {
-    --bg-main: #fff9f5;
-    --bg-card: #ffffff;
-    --border-card: #f3e2d5;
-    --text-primary: #2e221d;
-    --text-secondary: #56443c;
-    --accent-primary: #e07a5f;
+    --bg-main: #FDF6EE;
+    --bg-card: #FFFFFF;
+    --border-card: #E8DCCB;
+    --text-primary: #352A25;
+    --text-secondary: #705B50;
+    --accent-primary: #C4563A;
     --font-poppins: 'Poppins', sans-serif;
   }
 
@@ -349,4 +349,40 @@ html.light ::selection,
 /* Smooth Scroll */
 html {
   scroll-behavior: smooth;
+}
+
+/* TEXT ROTATOR STYLES  */
+.animate-text-slide {
+  animation: text-slide 12.5s cubic-bezier(0.83, 0, 0.17, 1) infinite;
+}
+
+@keyframes text-slide {
+  0%,
+  16% {
+    transform: translateY(0%);
+  }
+
+  20%,
+  36% {
+    transform: translateY(-16.66%);
+  }
+
+  40%,
+  56% {
+    transform: translateY(-33.33%);
+  }
+
+  60%,
+  76% {
+    transform: translateY(-50%);
+  }
+
+  80%,
+  96% {
+    transform: translateY(-66.66%);
+  }
+
+  100% {
+    transform: translateY(-83.33%);
+  }
 }

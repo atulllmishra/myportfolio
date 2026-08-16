@@ -1,39 +1,45 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Menu, X, Download, Sun, Moon, Zap } from "lucide-react";
+import { 
+  HomeIcon, 
+  User, 
+  Briefcase, 
+  FolderGit2, 
+  LightbulbIcon, 
+  Bot, 
+  Mail,
+  Sun,
+  Moon,
+  Volume2,
+  VolumeX,
+  Download
+} from "lucide-react";
+import { Dock, DockIcon, DockItem, DockLabel } from '@/components/animation/DockAnimation';
 import { useTheme } from "@/components/ThemeProvider";
+import { audioHaptics } from "@/lib/audioHaptics";
+import { cn } from "@/lib/utils";
 
 const navLinks = [
-  { name: "Home", href: "#hero", id: "hero" },
-  { name: "About", href: "#about", id: "about" },
-  { name: "Journey", href: "#timeline", id: "timeline" },
-  { name: "Projects", href: "#projects", id: "projects" },
-  { name: "Skills", href: "#skills", id: "skills" },
-  { name: "Recognitions", href: "#certifications", id: "certifications" },
-  { name: "Virtual Twin", href: "#ai-assistant", id: "ai-assistant" },
-  { name: "Contact", href: "#contact", id: "contact" },
+  { name: "Home", href: "#hero", id: "hero", icon: HomeIcon },
+  { name: "About", href: "#about", id: "about", icon: User },
+  { name: "Journey", href: "#timeline", id: "timeline", icon: Briefcase },
+  { name: "Projects", href: "#projects", id: "projects", icon: FolderGit2 },
+  { name: "Skills", href: "#skills", id: "skills", icon: LightbulbIcon },
+  { name: "Virtual Twin", href: "#ai-assistant", id: "ai-assistant", icon: Bot },
+  { name: "Contact", href: "#contact", id: "contact", icon: Mail },
 ];
 
-const profilePicUrl =
-  "https://media.licdn.com/dms/image/v2/D4D03AQEZbzxHR0Z45Q/profile-displayphoto-crop_800_800/B4DZh7FG4QHwAI-/0/1754411595531?e=1787184000&v=beta&t=nSeMFlyp1Tf3p3940JcRZyBd7cJG_Bfp97VrVGZnz-o";
-
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
-  const { theme, toggleTheme, isDaytime } = useTheme();
+  const [isMuted, setIsMuted] = useState(true);
+  const [isVisible, setIsVisible] = useState(true);
+  const { theme, toggleTheme } = useTheme();
 
-  // Scroll listener for sticky header background
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    setIsMuted(audioHaptics.getMuted());
   }, []);
 
-  // IntersectionObserver for active scrollspy section tracking
   useEffect(() => {
     const sectionIds = navLinks.map((link) => link.id);
     const sections = sectionIds
@@ -61,8 +67,44 @@ export default function Navbar() {
     return () => observer.disconnect();
   }, []);
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+    let isMouseInBottom = true; // Assume true initially so the timer starts on first move outside
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const inBottom = window.innerHeight - e.clientY < 150;
+      
+      if (inBottom) {
+        if (!isMouseInBottom) {
+          isMouseInBottom = true;
+          setIsVisible(true);
+          clearTimeout(timeout);
+        }
+      } else {
+        if (isMouseInBottom) {
+          isMouseInBottom = false;
+          clearTimeout(timeout);
+          timeout = setTimeout(() => {
+            setIsVisible(false);
+          }, 10000);
+        }
+      }
+    };
+
+    // Initial timeout to hide it if user doesn't move mouse to bottom
+    timeout = setTimeout(() => {
+      setIsVisible(false);
+      isMouseInBottom = false;
+    }, 10000);
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      clearTimeout(timeout);
+    };
+  }, []);
+
+  const handleNavClick = (href: string) => {
     const targetId = href.replace("#", "");
     const element = document.getElementById(targetId);
 
@@ -77,165 +119,85 @@ export default function Navbar() {
       });
 
       setActiveSection(targetId);
-      setMobileMenuOpen(false);
     }
   };
 
+  const handleToggleTheme = () => {
+    toggleTheme();
+    audioHaptics.playSwitch();
+  };
+
+  const handleToggleMute = () => {
+    const muted = audioHaptics.toggleMute();
+    setIsMuted(muted);
+    if (!muted) {
+      setTimeout(() => audioHaptics.playClick(600, 0.1, "sine"), 50);
+    }
+  };
+
+  const isLight = theme === "light";
+  const accentColor = isLight ? "#C4563A" : "#E07A5F";
+
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "py-3 bg-[#0b0f17]/90 backdrop-blur-md border-b border-[#1e2638] shadow-lg"
-          : "py-4 bg-transparent"
-      }`}
-    >
-      <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
+    <div className={cn(
+      "fixed bottom-6 right-0 left-0 px-0 sm:px-5 m-auto w-full sm:w-fit bg-transparent z-[99] transition-transform duration-500 ease-in-out",
+      !isVisible && "translate-y-[200%]"
+    )}>
+      <Dock className='items-end pb-3'>
+        {navLinks.map((item) => (
+          <a
+            href={item.href}
+            key={item.name}
+            onClick={(e) => {
+              e.preventDefault();
+              handleNavClick(item.href);
+            }}
+          >
+            <DockItem
+              className={cn(
+                "aspect-square rounded-full bg-main border border-card transition-all",
+                activeSection === item.id && "bg-card shadow-inner"
+              )}
+            >
+              <DockLabel>{item.name}</DockLabel>
+              <DockIcon className={cn(
+                "text-secondary transition-colors", 
+                activeSection === item.id && "text-primary"
+              )}>
+                <item.icon className="w-5 h-5" style={activeSection === item.id ? { color: accentColor } : {}} />
+              </DockIcon>
+            </DockItem>
+          </a>
+        ))}
         
-        {/* Brand */}
-        <a
-          href="#hero"
-          onClick={(e) => handleNavClick(e, "#hero")}
-          className="flex items-center gap-2.5 group cursor-pointer"
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={profilePicUrl}
-            alt="Atul Mishra"
-            className="w-8 h-8 rounded-full object-cover border border-slate-700 group-hover:border-blue-500 transition-colors"
-          />
-          <div className="flex flex-col">
-            <span className="font-bold text-sm text-white tracking-tight group-hover:text-blue-400 transition-colors">
-              Atul Kumar Mishra
-            </span>
-          </div>
+        {/* Separator */}
+        <div className="w-[1px] h-10 bg-card mx-2 hidden sm:block" />
+
+        {/* Controls */}
+        <DockItem onClick={handleToggleMute} className="aspect-square rounded-full bg-main border border-card">
+          <DockLabel>{isMuted ? "Unmute" : "Mute"}</DockLabel>
+          <DockIcon className="text-secondary">
+            {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+          </DockIcon>
+        </DockItem>
+
+        <DockItem onClick={handleToggleTheme} className="aspect-square rounded-full bg-main border border-card">
+          <DockLabel>{isLight ? "Dark Mode" : "Light Mode"}</DockLabel>
+          <DockIcon className="text-secondary">
+            {isLight ? <Moon className="w-5 h-5 text-cyan-500" /> : <Sun className="w-5 h-5 text-amber-500" />}
+          </DockIcon>
+        </DockItem>
+
+        <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">
+          <DockItem className="aspect-square rounded-full bg-main border border-card">
+            <DockLabel>Download CV</DockLabel>
+            <DockIcon className="text-secondary">
+              <Download className="w-5 h-5" />
+            </DockIcon>
+          </DockItem>
         </a>
 
-        {/* Desktop Links with Active Indicator */}
-        <nav className="hidden lg:flex items-center gap-1 text-xs font-medium text-slate-300 bg-[#121824]/80 p-1.5 rounded-full border border-[#1e2638] backdrop-blur-md">
-          {navLinks.map((link) => {
-            const isActive = activeSection === link.id;
-            return (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={(e) => handleNavClick(e, link.href)}
-                className={`px-3 py-1.5 rounded-full transition-all duration-200 font-medium ${
-                  isActive
-                    ? "bg-blue-600 text-white shadow-md font-semibold"
-                    : "hover:text-white hover:bg-slate-800/50 text-slate-300"
-                }`}
-              >
-                {link.name}
-              </a>
-            );
-          })}
-        </nav>
-
-        {/* Actions */}
-        <div className="hidden md:flex items-center gap-2.5">
-          {/* Gen Z Theme Switcher Button */}
-          <button
-            onClick={toggleTheme}
-            className="px-3 py-1.5 rounded-full bg-[#121824] border border-[#1e2638] text-slate-300 hover:text-white transition-all flex items-center gap-2 text-xs font-mono font-bold cursor-pointer hover:border-blue-500/50 shadow-sm"
-            aria-label="Toggle Theme"
-            title={`Switch to ${theme === "dark" ? "Light" : "Dark"} Mode (${isDaytime ? "Daytime" : "Nighttime"} Auto-detected)`}
-          >
-            {theme === "dark" ? (
-              <>
-                <Sun className="w-3.5 h-3.5 text-amber-400 animate-spin" style={{ animationDuration: "12s" }} />
-                <span>SOLAR LIGHT</span>
-              </>
-            ) : (
-              <>
-                <Moon className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
-                <span>COSMIC DARK</span>
-              </>
-            )}
-          </button>
-
-          <a
-            href="/resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white transition-all shadow-md"
-          >
-            <Download className="w-3.5 h-3.5" />
-            <span>CV</span>
-          </a>
-        </div>
-
-        {/* Mobile Toggle */}
-        <div className="flex items-center gap-2 lg:hidden">
-          <button
-            onClick={toggleTheme}
-            className="p-2 rounded-full bg-[#121824] border border-[#1e2638] text-slate-300"
-            aria-label="Toggle theme"
-          >
-            {theme === "dark" ? (
-              <Sun className="w-4 h-4 text-amber-400" />
-            ) : (
-              <Moon className="w-4 h-4 text-cyan-400" />
-            )}
-          </button>
-
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-full bg-[#121824] border border-[#1e2638] text-slate-300"
-            aria-label="Toggle Menu"
-          >
-            {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
-          </button>
-        </div>
-
-      </div>
-
-      {/* Mobile Drawer */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#0b0f17] border-b border-[#1e2638] px-6 py-4 space-y-2 mt-2 shadow-2xl">
-          {navLinks.map((link) => {
-            const isActive = activeSection === link.id;
-            return (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={(e) => handleNavClick(e, link.href)}
-                className={`block text-xs font-medium py-2 px-3 rounded-md transition-colors ${
-                  isActive
-                    ? "bg-blue-600 text-white font-semibold"
-                    : "text-slate-300 hover:text-white hover:bg-[#121824]"
-                }`}
-              >
-                {link.name}
-              </a>
-            );
-          })}
-          <div className="pt-3 border-t border-[#1e2638] flex items-center justify-between">
-            <button
-              onClick={() => {
-                toggleTheme();
-                setMobileMenuOpen(false);
-              }}
-              className="flex items-center gap-2 py-1.5 text-xs font-mono font-bold text-slate-300"
-            >
-              {theme === "dark" ? (
-                <Sun className="w-4 h-4 text-amber-400" />
-              ) : (
-                <Moon className="w-4 h-4 text-cyan-400" />
-              )}
-              <span>Switch to {theme === "dark" ? "Light" : "Dark"} Mode</span>
-            </button>
-            <a
-              href="/resume.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setMobileMenuOpen(false)}
-              className="px-3.5 py-1.5 rounded-full text-xs font-bold bg-blue-600 text-white"
-            >
-              Download CV
-            </a>
-          </div>
-        </div>
-      )}
-    </header>
+      </Dock>
+    </div>
   );
 }

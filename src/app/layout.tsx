@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import CommandPalette from "@/components/CommandPalette";
+import PhysicsPlayground from "@/components/PhysicsPlayground/PhysicsPlayground";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -10,27 +12,18 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Atul Kumar Mishra | Academic CV & Portfolio",
+  title: "Atul Kumar Mishra | Software Engineer",
   description:
-    "Academic Portfolio & CV of Atul Kumar Mishra - B.Tech Computer Science & Engineering (CSE) student at MCAET ANDUAT. Full-Stack Web Developer & Generative AI Specialist. IIT Guwahati ImpactHack 2025 Finalist.",
+    "I build interfaces people actually want to touch. React, Next.js, and WebGL.",
   keywords: [
     "Atul Kumar Mishra",
-    "Academic CV",
-    "Hugo Blox Theme",
-    "Computer Science Student",
-    "CSE MCAET",
-    "MCAET ANDUAT",
-    "IIT Guwahati ImpactHack Finalist",
-    "Web Developer",
-    "Generative AI Engineer",
-    "Software Development Engineer",
-    "ProcureHub",
-    "Smart Agri",
-    "MCAET Chatbot",
-    "E-Commerce Store",
+    "Software Engineer",
+    "Frontend Developer",
     "React",
     "Next.js",
-    "C++",
+    "WebGL",
+    "Creative Developer",
+    "India",
   ],
   authors: [{ name: "Atul Kumar Mishra" }],
   openGraph: {
@@ -47,9 +40,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${poppins.variable} scroll-smooth dark`}>
-      <body className="bg-[#0b0f19] text-slate-100 antialiased font-sans flex flex-col min-h-screen transition-colors duration-200">
+    <html lang="en" className={`${poppins.variable} scroll-smooth light`}>
+      <body className="antialiased font-sans flex flex-col min-h-screen transition-colors duration-200">
         <ThemeProvider>
+          {/* Global Interactive Overlays */}
+          <CommandPalette />
+          <PhysicsPlayground />
+          
           {children}
         </ThemeProvider>
       </body>

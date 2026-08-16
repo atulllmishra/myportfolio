@@ -18,6 +18,7 @@ import Skills from "@/sections/Skills";
 import Certifications from "@/sections/Certifications";
 import AIChatbotWidget from "@/sections/AIChatbotWidget";
 import Contact from "@/sections/Contact";
+import Playground from "@/sections/Playground";
 
 export default function Home() {
   useEffect(() => {
@@ -28,7 +29,7 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="relative min-h-screen text-slate-100 selection:bg-blue-500 selection:text-white transition-colors duration-200">
+    <main className="relative min-h-screen text-primary selection:bg-accent selection:text-white transition-colors duration-200 bg-[radial-gradient(var(--border-card)_1.5px,transparent_1.5px)] [background-size:20px_20px]">
       {/* Theme-aware 3D celestial background (Galaxy + Sun/Earth/Moon meshes) */}
       <CelestialCanvas />
 
@@ -36,17 +37,14 @@ export default function Home() {
       <GhostCursor />
       <Navbar />
       <Hero />
-      <ScrollExpand
-        title="Engineering Philosophy"
-        tagline="Precision & Intuition"
-        quote="I believe great software is born at the intersection of engineering precision and design intuition. Every pixel, every interaction, every line of code is an opportunity to create something that moves people."
-      />
+      <ScrollExpand />
       <About />
       <Timeline />
       <Projects />
       <Skills />
       <Certifications />
       <AIChatbotWidget />
+      <Playground />
       <Contact />
       <Footer />
       <ScrollToTop />

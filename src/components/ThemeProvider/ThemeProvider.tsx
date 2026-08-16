@@ -41,23 +41,18 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  // Simple sync external store logic to avoid hydration mismatches
+
   useEffect(() => {
     // Determine daytime (6:00 AM to 6:00 PM local time)
     const currentHour = new Date().getHours();
     const daytime = currentHour >= 6 && currentHour < 18;
     setIsDaytime(daytime);
 
-    // Check saved user preference, fallback to timing-based theme
     const savedTheme = localStorage.getItem("hugo-academic-theme") as Theme | null;
-    const initialTheme: Theme =
-      savedTheme && (savedTheme === "dark" || savedTheme === "light")
-        ? savedTheme
-        : daytime
-        ? "light"
-        : "dark";
-
+    const initialTheme: Theme = savedTheme ? savedTheme : (daytime ? "light" : "dark");
+    
     setThemeState(initialTheme);
-    applyTheme(initialTheme);
     setMounted(true);
   }, []);
 

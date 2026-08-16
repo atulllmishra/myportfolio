@@ -16,7 +16,7 @@ export default function CelestialCanvas() {
 
   if (!mounted) {
     return (
-      <div className="fixed inset-0 pointer-events-none z-0 bg-[#0b0f17] transition-colors duration-500" />
+      <div className="fixed inset-0 pointer-events-none z-0 bg-transparent transition-colors duration-500" />
     );
   }
 
