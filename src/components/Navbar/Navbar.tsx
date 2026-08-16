@@ -69,33 +69,22 @@ export default function Navbar() {
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
-    let isMouseInBottom = true; // Assume true initially so the timer starts on first move outside
+    
+    // Hide initially until mouse moves to bottom
+    timeout = setTimeout(() => {
+      setIsVisible(false);
+    }, 1000);
 
     const handleMouseMove = (e: MouseEvent) => {
       const inBottom = window.innerHeight - e.clientY < 150;
       
       if (inBottom) {
-        if (!isMouseInBottom) {
-          isMouseInBottom = true;
-          setIsVisible(true);
-          clearTimeout(timeout);
-        }
+        setIsVisible(true);
+        clearTimeout(timeout);
       } else {
-        if (isMouseInBottom) {
-          isMouseInBottom = false;
-          clearTimeout(timeout);
-          timeout = setTimeout(() => {
-            setIsVisible(false);
-          }, 10000);
-        }
+        setIsVisible(false);
       }
     };
-
-    // Initial timeout to hide it if user doesn't move mouse to bottom
-    timeout = setTimeout(() => {
-      setIsVisible(false);
-      isMouseInBottom = false;
-    }, 10000);
 
     window.addEventListener("mousemove", handleMouseMove);
     return () => {
@@ -140,7 +129,7 @@ export default function Navbar() {
 
   return (
     <div className={cn(
-      "fixed bottom-6 right-0 left-0 px-0 sm:px-5 m-auto w-full sm:w-fit bg-transparent z-[99] transition-transform duration-500 ease-in-out",
+      "fixed bottom-6 right-0 left-0 px-0 sm:px-5 m-auto w-full sm:w-fit bg-transparent z-[99] transition-transform duration-300 ease-in-out",
       !isVisible && "translate-y-[200%]"
     )}>
       <Dock className='items-end pb-3'>
