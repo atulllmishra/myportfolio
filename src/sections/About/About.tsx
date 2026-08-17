@@ -18,8 +18,8 @@ const personalInfo = [
 ];
 
 const hobbies = [
-  "Writing Shayari",
-  "Collecting Vintage Bollywood Posters",
+  "Basketball",
+  "Chess",
   "Building Side Projects",
   "Competitive Programming (C++)"
 ];
