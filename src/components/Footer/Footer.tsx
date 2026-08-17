@@ -5,9 +5,6 @@ import { ArrowUp, MapPin, Mail, Download, Clock, Calendar, Heart, Users } from "
 
 export default function Footer() {
   const [time, setTime] = useState<Date | null>(null);
-  const [visitorCount, setVisitorCount] = useState<number | null>(null);
-  const hasTrackedRef = useRef<boolean>(false);
-
   useEffect(() => {
     const timer = setInterval(() => {
       setTime(new Date());
@@ -16,49 +13,7 @@ export default function Footer() {
       setTime(new Date());
     }, 0);
 
-    let isMounted = true;
-
-    // Visitor Count Logic (Deduplicated unique visitor session tracking)
-    const handleVisitorCount = async () => {
-      if (hasTrackedRef.current) return;
-      hasTrackedRef.current = true;
-
-      const sessionKey = "portfolio_session_visited_v1";
-      const hasVisited = typeof window !== "undefined" && sessionStorage.getItem(sessionKey) === "true";
-
-      try {
-        let res: Response;
-        if (!hasVisited) {
-          try {
-            sessionStorage.setItem(sessionKey, "true");
-          } catch {}
-
-          res = await fetch("/api/visitor-count", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ page: window.location.pathname }),
-          });
-        } else {
-          res = await fetch("/api/visitor-count");
-        }
-
-        if (res.ok) {
-          const data = await res.json();
-          if (data && typeof data.count === "number") {
-            if (isMounted) setVisitorCount(data.count);
-            return;
-          }
-        }
-      } catch (err) {
-        console.warn("Failed to fetch visitor count:", err);
-      }
-    };
-
-
-    handleVisitorCount();
-
     return () => {
-      isMounted = false;
       clearInterval(timer);
       clearTimeout(timeout);
     };
@@ -196,15 +151,7 @@ export default function Footer() {
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-mono text-slate-500 text-center sm:text-left">
           <div className="flex items-center gap-3">
             <p>© {new Date().getFullYear()}. All Rights Reserved.</p>
-            <span className="text-slate-700">•</span>
-            <div
-              title="Unique Visitor Count"
-              className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#121824] border border-[#1e2638] text-xs font-mono font-semibold text-emerald-400 transition-all hover:border-emerald-500/40"
-            >
-              <Users className="w-3 h-3 text-emerald-400" />
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-              <span>{visitorCount !== null ? `${visitorCount.toLocaleString()} Visitors` : "Loading..."}</span>
-            </div>
+  {/* Removed visitor count display */}
           </div>
 
           <div className="flex items-center gap-4">

@@ -1,8 +1,16 @@
 {
-  "visitorCount": 14,
-  "updatedAt": "2026-08-14T02:39:07.224Z",
+  "visitorCount": 15,
+  "updatedAt": "2026-08-17T02:47:38.161Z",
   "contacts": [],
   "visitorLogs": [
+    {
+      "id": "v_1786934858161_nprbh",
+      "timestamp": "2026-08-17T02:47:38.161Z",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:153.0) Gecko/20100101 Firefox/153.0",
+      "referrer": "http://localhost:3000/",
+      "page": "/",
+      "ipHash": "ip_u2dry5"
+    },
     {
       "id": "v_1786675147224_azs21",
       "timestamp": "2026-08-14T02:39:07.224Z",
