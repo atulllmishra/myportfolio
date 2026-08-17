@@ -50,7 +50,7 @@ export default function MagneticButton({
         transform: `translate3d(${position.x}px, ${position.y}px, 0px)`,
         transition: position.x === 0 && position.y === 0 ? "transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)" : "none",
       }}
-      className={`inline-block cursor-pointer ${className}`}
+      className={`inline-flex items-center justify-center ${className}`}
       data-magnetic="true"
     >
       {children}
@@ -59,11 +59,13 @@ export default function MagneticButton({
 
   if (href) {
     return (
-      <a href={href} onClick={onClick} target={target} rel={rel} className="inline-block">
+      <a href={href} onClick={onClick} target={target} rel={rel} className="inline-flex">
         {content}
       </a>
     );
   }
 
-  return <div onClick={onClick} className="inline-block">{content}</div>;
+  return <div onClick={onClick} className="inline-flex">{content}</div>;
 }
+
+

@@ -28,13 +28,13 @@ export default function Hero() {
       />
 
       <div className="max-w-7xl mx-auto px-6 relative z-10 w-full flex flex-col items-center text-center mt-12 md:mt-0">
-          
+
         <FramerWrapper y={0} x={0} className="flex flex-col items-center justify-center space-y-8 max-w-4xl mx-auto">
-          
+
           <div className="space-y-4">
             <h3 className="font-mono text-xl sm:text-2xl text-secondary">Hello, my name is</h3>
-            <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-[0.9] text-primary pb-2" style={{ textShadow: theme === 'light' ? '4px 4px 0px rgba(196,86,58,0.1)' : '4px 4px 0px rgba(224,122,95,0.1)'}}>
-              ATUL KUMAR <br /> 
+            <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-[0.9] text-primary pb-2" style={{ textShadow: theme === 'light' ? '4px 4px 0px rgba(196,86,58,0.1)' : '4px 4px 0px rgba(224,122,95,0.1)' }}>
+              ATUL KUMAR <br />
               <span style={{ color: theme === 'light' ? '#C4563A' : '#E07A5F' }}>MISHRA .</span>
             </h1>
           </div>
@@ -45,21 +45,21 @@ export default function Hero() {
 
           <div className="p-6 md:p-8 text-base md:text-lg leading-relaxed bg-card/90 border border-card rounded-2xl shadow-xl backdrop-blur-md font-medium text-secondary max-w-2xl">
             <p>
-              I write React by day and solve complex algorithms in C++ by night. Currently pursuing my B.Tech in CSE (Class of '28). 
-              I don't just write code—I build and ship robust web applications that people actually want to use. 
+              I write React by day and solve complex algorithms in C++ by night. Currently pursuing my B.Tech in CSE (Class of '28).
+              I don't just write code—I build and ship robust web applications that people actually want to use.
             </p>
           </div>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6">
-            <HackerBtn 
-              label="VIEW PROJECTS" 
+            <HackerBtn
+              label="VIEW PROJECTS"
               icon={ArrowRight}
               onClick={() => {
                 const el = document.getElementById("projects");
                 if (el) el.scrollIntoView({ behavior: "smooth" });
-              }} 
+              }}
             />
-            <button 
+            <button
               onClick={() => {
                 window.dispatchEvent(new CustomEvent('toggle-command-palette'));
               }}

@@ -476,23 +476,33 @@ export default function Contact() {
                   />
                 </div>
 
-                {/* Submit button */}
-                <MagneticButton className="w-full">
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full py-3.5 sm:py-3 rounded-full font-medium text-xs sm:text-sm text-white bg-blue-600 hover:bg-blue-500 active:scale-[0.99] flex items-center justify-center gap-2 transition-all shadow-[0_0_25px_rgba(37,99,235,0.4)] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    {isSubmitting ? (
-                      <span>Sending message...</span>
-                    ) : (
-                      <>
-                        <span>Send Message →</span>
-                        <Send className="w-4 h-4" />
-                      </>
-                    )}
-                  </button>
-                </MagneticButton>
+                {/* Submit button with compact, non-collapsing boundary */}
+                <div className="pt-2 flex items-center justify-start">
+                  <MagneticButton>
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="group relative inline-flex items-center justify-center gap-1 px-2 py-2 sm:py-3 rounded-lg font-sans-serif text-xs sm:text-sm font-bold tracking-wider  text-white bg-gradient-to-r from-blue-400 via-indigo-400 to-blue-600 hover:from-blue-500 hover:via-indigo-500 hover:to-blue-500 active:scale-[0.94] border border-blue-600/40 hover:border-blue-600/80 transition-all duration-300 cursor-pointer overflow-hidden shrink-0"
+                    >
+                      {/* Subtle hover gradient sheen */}
+                      <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/15 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out pointer-events-none" />
+
+                      {isSubmitting ? (
+                        <div className="flex items-center justify-center gap-2">
+                          <div className="w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin shrink-0" />
+                          <span>Sending...</span>
+                        </div>
+                      ) : (
+                        <>
+                          <span className="relative z-10 whitespace-nowrap">Send Message</span>
+                          <Send className="w-4 h-4 relative z-10 shrink-0 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                        </>
+                      )}
+                    </button>
+                  </MagneticButton>
+                </div>
+
+
 
               </form>
             )}
