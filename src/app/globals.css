@@ -29,7 +29,15 @@
     letter-spacing: -0.01em;
     -webkit-font-smoothing: antialiased;
     transition: background-color 0.25s ease, color 0.25s ease;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
   }
+
+  button, a {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
 
   /* Custom Scrollbar */
   ::-webkit-scrollbar {
