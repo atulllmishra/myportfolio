@@ -7,7 +7,6 @@ import {
   Briefcase, 
   FolderGit2, 
   LightbulbIcon, 
-  Bot, 
   Mail,
   Sun,
   Moon,
@@ -26,7 +25,6 @@ const navLinks = [
   { name: "Journey", href: "#timeline", id: "timeline", icon: Briefcase },
   { name: "Projects", href: "#projects", id: "projects", icon: FolderGit2 },
   { name: "Skills", href: "#skills", id: "skills", icon: LightbulbIcon },
-  { name: "Virtual Twin", href: "#ai-assistant", id: "ai-assistant", icon: Bot },
   { name: "Contact", href: "#contact", id: "contact", icon: Mail },
 ];
 
@@ -144,8 +142,8 @@ export default function Navbar() {
           >
             <DockItem
               className={cn(
-                "aspect-square rounded-full bg-main border border-card transition-all",
-                activeSection === item.id && "bg-card shadow-inner"
+                "aspect-square rounded-full bg-main/50 hover:bg-main/80 border border-card/60 backdrop-blur-md transition-all shadow-sm",
+                activeSection === item.id && "bg-card/75 border-accent/60 shadow-inner"
               )}
             >
               <DockLabel>{item.name}</DockLabel>
@@ -160,17 +158,17 @@ export default function Navbar() {
         ))}
         
         {/* Separator */}
-        <div className="w-[1px] h-10 bg-card mx-2 hidden sm:block" />
+        <div className="w-[1px] h-8 bg-card/60 mx-1.5 hidden sm:block" />
 
         {/* Controls */}
-        <DockItem onClick={handleToggleMute} className="aspect-square rounded-full bg-main border border-card">
+        <DockItem onClick={handleToggleMute} className="aspect-square rounded-full bg-main/50 hover:bg-main/80 border border-card/60 backdrop-blur-md">
           <DockLabel>{isMuted ? "Unmute" : "Mute"}</DockLabel>
           <DockIcon className="text-secondary">
             {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
           </DockIcon>
         </DockItem>
 
-        <DockItem onClick={handleToggleTheme} className="aspect-square rounded-full bg-main border border-card">
+        <DockItem onClick={handleToggleTheme} className="aspect-square rounded-full bg-main/50 hover:bg-main/80 border border-card/60 backdrop-blur-md">
           <DockLabel>{isLight ? "Dark Mode" : "Light Mode"}</DockLabel>
           <DockIcon className="text-secondary">
             {isLight ? <Moon className="w-5 h-5 text-cyan-500" /> : <Sun className="w-5 h-5 text-amber-500" />}
@@ -178,7 +176,7 @@ export default function Navbar() {
         </DockItem>
 
         <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">
-          <DockItem className="aspect-square rounded-full bg-main border border-card">
+          <DockItem className="aspect-square rounded-full bg-main/50 hover:bg-main/80 border border-card/60 backdrop-blur-md">
             <DockLabel>Download CV</DockLabel>
             <DockIcon className="text-secondary">
               <Download className="w-5 h-5" />
@@ -190,3 +188,4 @@ export default function Navbar() {
     </div>
   );
 }
+
