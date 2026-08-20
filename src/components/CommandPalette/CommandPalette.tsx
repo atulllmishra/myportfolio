@@ -347,16 +347,17 @@ export default function CommandPalette() {
       icon: Phone,
       action: () => openUrl("tel:+917458844711"),
     },
+  ], [isLight, toggleTheme]);
 
-    // -------------------------------------------------------------
-    // PREFERENCES & UTILITIES
-    // -------------------------------------------------------------
+  // Default earlier commands shown initially before searching
+  const defaultEarlierCommands = useMemo<PaletteCommand[]>(() => [
+
     {
       id: "pref-theme",
-      name: `Switch Theme to ${isLight ? "Dark Mode" : "Light Mode"}`,
+      name: "Toggle Theme",
       category: "Preferences",
-      description: `Toggle current appearance to ${isLight ? "Dark Theme" : "Light Peach Theme"}`,
-      keywords: ["theme", "dark", "light", "mode", "toggle theme", "color", "appearance", "palette"],
+      description: `Switch to ${isLight ? "Dark Theme" : "Light Peach Theme"}`,
+      keywords: ["theme", "dark", "light", "mode", "toggle theme"],
       icon: isLight ? Moon : Sun,
       action: () => {
         toggleTheme();
@@ -365,34 +366,34 @@ export default function CommandPalette() {
       },
     },
     {
-      id: "pref-sound",
-      name: "Toggle UI Sound Haptics",
+      id: "pref-gravity",
+      name: "Zero-G Physics Mode",
       category: "Preferences",
-      description: "Enable or mute subtle click and switch audio feedback",
-      keywords: ["sound", "audio", "mute", "unmute", "haptics", "effects", "volume"],
-      icon: audioHaptics.getMuted() ? Volume2 : VolumeX,
+      description: "Interactive zero-gravity floating animation",
+      keywords: ["gravity", "zero-g", "physics"],
+      icon: Cpu,
       action: () => {
-        const muted = audioHaptics.toggleMute();
+        window.dispatchEvent(new CustomEvent("toggle-zero-g"));
         setIsOpen(false);
-        if (!muted) {
-          audioHaptics.playClick(600, 0.1, "sine");
-        }
       },
     },
     {
-      id: "util-clear",
-      name: "Clear Terminal Query",
-      category: "Preferences",
-      description: "Reset current search input buffer",
-      keywords: ["clear", "cls", "reset", "clean"],
-      icon: X,
-      action: () => setQuery(""),
-    }
+      id: "nav-projects-default",
+      name: "Go to Projects",
+      category: "Navigation",
+      description: "Jump to featured projects and live demos",
+      keywords: ["projects", "work", "portfolio"],
+      icon: Hash,
+      action: () => scrollToSection("projects"),
+      shortcut: "G P",
+    },
   ], [isLight, toggleTheme]);
 
-  // Fuzzy filter commands based on search query
+  // Fuzzy filter commands: Show default earlier items when query is empty, or search all sections/projects/skills
   const filteredCommands = useMemo(() => {
-    if (!query.trim()) return allCommands;
+    if (!query.trim()) {
+      return defaultEarlierCommands;
+    }
     const cleanQuery = query.toLowerCase().trim();
 
     return allCommands.filter((cmd) => {
@@ -403,7 +404,8 @@ export default function CommandPalette() {
 
       return nameMatch || descMatch || categoryMatch || keywordMatch;
     });
-  }, [allCommands, query]);
+  }, [allCommands, defaultEarlierCommands, query]);
+
 
   // Handle arrow key navigation & Enter trigger
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
