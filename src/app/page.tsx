@@ -7,7 +7,6 @@ import ScrollToTop from "@/components/ScrollToTop";
 
 import LoadingScreen from "@/components/ReactBits/LoadingScreen";
 import GhostCursor from "@/components/ReactBits/GhostCursor";
-import ScrollExpand from "@/components/ReactBits/ScrollExpand";
 
 import Hero from "@/sections/Hero";
 import About from "@/sections/About";
@@ -31,7 +30,6 @@ export default function Home() {
       <GhostCursor />
       <Navbar />
       <Hero />
-      <ScrollExpand />
       <About />
       <Timeline />
       <Projects />
@@ -43,4 +41,5 @@ export default function Home() {
     </main>
   );
 }
+
 

@@ -45,10 +45,10 @@ export default function Hero() {
 
           <div className="p-6 md:p-8 text-base md:text-lg leading-relaxed bg-card/90 border border-card rounded-2xl shadow-xl backdrop-blur-md font-medium text-secondary max-w-2xl">
             <p>
-              I write React by day and solve complex algorithms in C++ by night. Currently pursuing my B.Tech in CSE (Class of '28).
-              I don't just write code—I build and ship robust web applications that people actually want to use.
+              Full-Stack Web Developer & AI Solutions Engineer passionate about architecting high-performance applications and intuitive interfaces. Creator of <span className="text-primary font-bold">heyBuddy</span> (AI multilingual video learning) and National Finalist at <span className="text-primary font-bold">IIT Guwahati ImpactHack 2025</span>.
             </p>
           </div>
+
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6">
             <HackerBtn

@@ -45,13 +45,15 @@ export default function About() {
             </FramerWrapper>
 
             <FramerWrapper y={0} x={50}>
-              <div className="p-6 text-base sm:text-lg leading-relaxed bg-card/60 border border-card rounded-2xl shadow-xl backdrop-blur-md font-medium text-secondary max-w-3xl">
+              <div className="p-6 text-base sm:text-lg leading-relaxed bg-card/60 border border-card rounded-2xl shadow-xl backdrop-blur-md font-medium text-secondary max-w-3xl space-y-4">
                 <p>
-                  I'm a CS undergrad at MCAET who writes React during the day and solves algorithmic problems in C++ at night. My recent work includes a precision farming tool that made it to IIT Guwahati finals, a campus AI chatbot handling 200+ daily queries, and a transparent B2B procurement platform.
+                  I'm a Computer Science undergraduate (Class of '28) and Full-Stack AI Engineer. I specialize in developing performant web platforms with modern React / Next.js architectures, strict TypeScript, and production LLM/AI integrations.
                 </p>
-                <br />
                 <p>
-                  Clean code + Intuitive UI + High performance = Great user experiences. I don't call myself a 'problem solver.' I make things and ship them.
+                  My engineering journey is driven by shipping tools that solve tangible problems—ranging from <strong className="text-primary font-bold">heyBuddy</strong> (an AI-powered multilingual video and voice learning platform) and the official <strong className="text-primary font-bold">MCAET Campus AI Chatbot</strong> (handling 200+ daily queries with verified RAG search) to <strong className="text-primary font-bold">Smart Agri</strong> (a precision crop advisory PWA recognized as a National Finalist at IIT Guwahati ImpactHack 2025).
+                </p>
+                <p>
+                  I combine clean design, robust backend systems, and strong algorithmic problem solving in C++ to craft responsive, scalable digital experiences.
                 </p>
               </div>
             </FramerWrapper>
@@ -72,6 +74,7 @@ export default function About() {
               </div>
             ))}
           </FramerWrapper>
+
 
           <FramerWrapper className="block mt-8 w-full" y={100} delay={0.3}>
             <h3 className="flex items-center gap-2 text-2xl font-bold text-primary font-mono relative pb-3 border-b-4 border-card w-fit"
