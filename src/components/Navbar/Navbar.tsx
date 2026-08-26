@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { 
   HomeIcon, 
   User, 
-  Briefcase, 
   FolderGit2, 
   LightbulbIcon, 
   Mail,
@@ -28,7 +27,6 @@ import { cn } from "@/lib/utils";
 const navLinks = [
   { name: "Home", href: "#hero", id: "hero", icon: HomeIcon, desc: "Intro & Overview" },
   { name: "About", href: "#about", id: "about", icon: User, desc: "Background & Bio" },
-  { name: "Journey", href: "#timeline", id: "timeline", icon: Briefcase, desc: "Experience & Milestones" },
   { name: "Projects", href: "#projects", id: "projects", icon: FolderGit2, desc: "Featured Work & Demos" },
   { name: "Skills", href: "#skills", id: "skills", icon: LightbulbIcon, desc: "Tech Stack & Proficiencies" },
   { name: "Contact", href: "#contact", id: "contact", icon: Mail, desc: "Direct Messaging & Links" },

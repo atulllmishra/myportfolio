@@ -10,10 +10,8 @@ import GhostCursor from "@/components/ReactBits/GhostCursor";
 
 import Hero from "@/sections/Hero";
 import About from "@/sections/About";
-import Timeline from "@/sections/Timeline";
 import Projects from "@/sections/Projects";
 import Skills from "@/sections/Skills";
-import Certifications from "@/sections/Certifications";
 import Contact from "@/sections/Contact";
 
 export default function Home() {
@@ -31,10 +29,8 @@ export default function Home() {
       <Navbar />
       <Hero />
       <About />
-      <Timeline />
       <Projects />
       <Skills />
-      <Certifications />
       <Contact />
       <Footer />
       <ScrollToTop />
