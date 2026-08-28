@@ -26,21 +26,21 @@ export default function LoadingScreen() {
 
   return (
     <div
-      className={`fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#0b0f17] text-white transition-opacity duration-700 ${
+      className={`fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#fff9f5] text-[#2e221d] transition-opacity duration-700 ${
         progress >= 100 ? "opacity-0 pointer-events-none" : "opacity-100"
       }`}
     >
       <div className="flex flex-col items-center space-y-6 max-w-sm px-6">
-        <span className="font-mono text-6xl md:text-7xl font-bold tracking-tighter text-blue-500">
+        <span className="font-serif text-6xl md:text-7xl font-bold tracking-tighter text-[#C4563A]">
           {progress}%
         </span>
-        <div className="w-48 h-1 bg-slate-800 rounded-full overflow-hidden">
+        <div className="w-48 h-1.5 bg-[#f3e2d5] rounded-full overflow-hidden">
           <div
-            className="h-full bg-gradient-to-r from-blue-600 to-indigo-400 transition-all duration-200 ease-out"
+            className="h-full bg-gradient-to-r from-[#E07A5F] to-[#C4563A] transition-all duration-200 ease-out"
             style={{ width: `${progress}%` }}
           />
         </div>
-        <span className="text-xs font-mono tracking-[0.3em] uppercase text-slate-400">
+        <span className="text-xs font-serif tracking-[0.3em] uppercase text-[#705B50]">
           ATUL KUMAR MISHRA
         </span>
       </div>

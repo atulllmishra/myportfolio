@@ -76,10 +76,9 @@ export default function PhysicsPlayground() {
     ]);
 
     // Create badges as physics bodies
-    const isLight = theme === "light";
-    const accentColor = isLight ? "#C4563A" : "#E07A5F";
-    const cardColor = isLight ? "#FFFFFF" : "#161820";
-    const textColor = isLight ? "#352A25" : "#F3F1E7";
+    const accentColor = "#C4563A";
+    const cardColor = "#FFFFFF";
+    const textColor = "#352A25";
 
     const badgeBodies = badges.map((text, i) => {
       // Estimate width based on text
@@ -134,7 +133,7 @@ export default function PhysicsPlayground() {
     // Custom render loop for text
     Events.on(render, "afterRender", () => {
       const context = render.context;
-      context.font = "bold 14px monospace";
+      context.font = "bold 14px 'Times New Roman', Georgia, serif";
       context.textAlign = "center";
       context.textBaseline = "middle";
       context.fillStyle = textColor;

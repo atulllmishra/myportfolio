@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import {
   Mail,
   Phone,
@@ -10,85 +10,56 @@ import {
   Check,
   ArrowUpRight,
   Download,
-  ChevronDown,
+  Sparkles,
+  ArrowUp,
+  MessageSquare,
+  CheckCircle2,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import FramerWrapper from "@/components/animation/FramerWrapper";
 import MagneticButton from "@/components/ReactBits/MagneticButton";
+import { useTheme } from "@/components/ThemeProvider";
+import { audioHaptics } from "@/lib/audioHaptics";
 
-
-
-const COUNTRY_CODES = [
-
-  { code: "+91", label: "🇮🇳 +91 (India)" },
-  { code: "+1", label: "🇺🇸 +1 (USA/Canada)" },
-  { code: "+44", label: "🇬🇧 +44 (UK)" },
-  { code: "+61", label: "🇦🇺 +61 (Australia)" },
-  { code: "+971", label: "🇦🇪 +971 (UAE)" },
-  { code: "+49", label: "🇩🇪 +49 (Germany)" },
-  { code: "+33", label: "🇫🇷 +33 (France)" },
-  { code: "+81", label: "🇯🇵 +81 (Japan)" },
-  { code: "+86", label: "🇨🇳 +86 (China)" },
-  { code: "+65", label: "🇸🇬 +65 (Singapore)" },
-  { code: "+966", label: "🇸🇦 +966 (Saudi Arabia)" },
-  { code: "+7", label: "🇷🇺 +7 (Russia)" },
-  { code: "+55", label: "🇧🇷 +55 (Brazil)" },
+const TOPIC_OPTIONS = [
+  { id: "web-dev", label: "Web Development" },
+  { id: "ai", label: "AI Solutions" },
+  { id: "career", label: "Job Opportunity" },
+  { id: "collab", label: "Collaboration" },
+  { id: "general", label: "General Chat" },
 ];
 
-const SUBJECT_OPTIONS = [
-  { id: "web-dev", label: "Web Development" },
-  { id: "ai-sol", label: "AI Integration & Solutions" },
-  { id: "career", label: "Job / Career Opportunity" },
-  { id: "collab", label: "Partnership & Collaboration" },
-  { id: "inquiry", label: "General Inquiry" },
-  { id: "custom", label: "Other / Custom Topic" },
+const SOCIAL_LINKS = [
+  { name: "GitHub", href: "https://github.com/atulllmishra/", handle: "github.com/atulllmishra" },
+  { name: "LinkedIn", href: "https://www.linkedin.com/in/atul-kumar-mishra-3b3939363", handle: "linkedin.com/in/atul-kumar-mishra" },
+  { name: "Instagram", href: "https://www.instagram.com/atulllmishra/", handle: "@atulllmishra" },
+  { name: "LeetCode", href: "https://leetcode.com/u/atulllmishra/", handle: "leetcode.com/atulllmishra" },
 ];
 
 export default function Contact() {
+  const { theme } = useTheme();
+  const isLight = theme === "light";
+  const accentColor = isLight ? "#C4563A" : "#E07A5F";
+
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedPhone, setCopiedPhone] = useState(false);
 
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    countryCode: "+91",
     phone: "",
-    subject: "",
+    subject: "Web Development",
     message: "",
   });
 
-  const [selectedSubjectId, setSelectedSubjectId] = useState<string>("");
-  const [isCustomSubject, setIsCustomSubject] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
+  const [selectedTopic, setSelectedTopic] = useState<string>("Web Development");
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Close dropdown on click outside
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setIsDropdownOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  // Close dropdown on Escape key
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isDropdownOpen) {
-        setIsDropdownOpen(false);
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isDropdownOpen]);
-
   const copyToClipboard = (text: string, type: "email" | "phone") => {
     navigator.clipboard.writeText(text);
+    audioHaptics.playPop(true);
     if (type === "email") {
       setCopiedEmail(true);
       setTimeout(() => setCopiedEmail(false), 2000);
@@ -98,22 +69,17 @@ export default function Contact() {
     }
   };
 
-  const handleSelectSubject = (option: typeof SUBJECT_OPTIONS[number]) => {
-    setSelectedSubjectId(option.id);
-    if (option.id === "custom") {
-      setIsCustomSubject(true);
-      setFormData((prev) => ({ ...prev, subject: "" }));
-    } else {
-      setIsCustomSubject(false);
-      setFormData((prev) => ({ ...prev, subject: option.label }));
-    }
-    setIsDropdownOpen(false);
+  const handleTopicClick = (topicLabel: string) => {
+    setSelectedTopic(topicLabel);
+    setFormData((prev) => ({ ...prev, subject: topicLabel }));
+    audioHaptics.playClick(350, 0.04, "square");
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
-      setError("Please fill in all required fields (Name, Email, Message).");
+      setError("Please fill in all required fields (Name, Email, and Message).");
+      audioHaptics.playPop(false);
       return;
     }
 
@@ -136,384 +102,434 @@ export default function Contact() {
       }
 
       setSubmitted(true);
-      setFormData({ name: "", email: "", countryCode: "+91", phone: "", subject: "", message: "" });
-      setSelectedSubjectId("");
-      setIsCustomSubject(false);
+      audioHaptics.playPop(true);
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        subject: "Web Development",
+        message: "",
+      });
+      setSelectedTopic("Web Development");
     } catch (err: unknown) {
       const errorObj = err as Error;
       setError(errorObj?.message || "An unexpected error occurred. Please try again.");
+      audioHaptics.playPop(false);
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  return (
-    <section id="contact" className="py-16 sm:py-20 relative bg-[#0b0f17] border-t border-[#1e2638] scroll-mt-24">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        
-        {/* Header */}
-        <div className="max-w-3xl mb-8 sm:mb-10 space-y-2">
-          <span className="text-xs font-mono text-slate-400 uppercase tracking-wider block font-semibold">
-            Contact
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-            Get in Touch
-          </h2>
-          <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
-            Reach out directly for Web Development, AI projects, or career opportunities.
-          </p>
-        </div>
+  const scrollToTop = () => {
+    audioHaptics.playClick(400, 0.05, "sine");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+  return (
+    <section id="contact" className="py-24 relative border-t border-card scroll-mt-24 font-serif">
+      <div className="max-w-6xl mx-auto px-6 font-serif">
+        
+        {/* Section Header */}
+        <FramerWrapper y={20} className="mb-14 space-y-3 font-serif">
+          <div
+            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-main border border-card text-xs font-serif font-bold uppercase tracking-wider"
+            style={{ color: accentColor }}
+          >
+            <Mail className="w-3.5 h-3.5" />
+            <span>GET IN TOUCH</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight font-serif">
+            START A <span style={{ color: accentColor }}>CONVERSATION</span>
+          </h2>
+          <p className="text-secondary text-sm md:text-base font-normal max-w-xl leading-relaxed font-serif">
+            Have a project in mind, an exciting opportunity, or want to discuss AI systems and web engineering? Let&apos;s connect!
+          </p>
+        </FramerWrapper>
+
+        {/* 2-Column Responsive Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
-          {/* Left Column: Info Cards */}
-          <div className="lg:col-span-5 space-y-3 sm:space-y-3.5">
+          {/* Left Column: Direct Info & Availability */}
+          <FramerWrapper y={20} delay={0.1} className="lg:col-span-5 space-y-4">
             
-            {/* Email */}
-            <div className="academic-card p-3.5 sm:p-4 flex items-center justify-between gap-3">
-              <div className="flex items-center gap-3 min-w-0">
-                <div className="p-2.5 rounded-lg bg-[#0b0f17] border border-[#1e2638] text-slate-400 shrink-0">
+            {/* Status Card */}
+            <div className="p-5 rounded-2xl bg-card border border-card shadow-sm hover:border-accent/40 transition-all duration-300">
+              <div className="flex items-center gap-3">
+                <span className="relative flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500" />
+                </span>
+                <span className="text-xs font-mono font-bold uppercase tracking-wider text-primary">
+                  Available for new opportunities
+                </span>
+              </div>
+              <p className="text-xs text-secondary font-medium mt-2 leading-relaxed">
+                Currently open for Full-Stack &amp; AI Engineering roles, freelance projects, and research collaborations.
+              </p>
+            </div>
+
+            {/* Email Card */}
+            <div
+              className="p-4 rounded-2xl bg-card border border-card shadow-sm hover:border-accent/50 transition-all duration-300 flex items-center justify-between gap-3 group"
+              onMouseEnter={() => audioHaptics.playClick(600, 0.02, "sine")}
+            >
+              <div className="flex items-center gap-3.5 min-w-0">
+                <div
+                  className="p-3 rounded-xl bg-main border border-card transition-colors"
+                  style={{ color: accentColor }}
+                >
                   <Mail className="w-4 h-4" />
                 </div>
                 <div className="min-w-0">
-                  <span className="text-[10px] font-mono text-slate-400 uppercase block font-semibold">Email</span>
+                  <span className="text-[10px] font-mono text-secondary uppercase font-bold tracking-wider block">
+                    Direct Email
+                  </span>
                   <a
                     href="mailto:atulllmishra1@gmail.com"
-                    className="text-xs sm:text-xs font-bold text-white hover:text-blue-400 transition-colors font-mono block truncate"
+                    className="text-xs sm:text-sm font-bold text-primary hover:text-accent font-mono block truncate transition-colors"
                   >
                     atulllmishra1@gmail.com
                   </a>
                 </div>
               </div>
+
               <button
                 type="button"
                 onClick={() => copyToClipboard("atulllmishra1@gmail.com", "email")}
-                className="p-2 rounded-lg bg-[#0b0f17] border border-[#1e2638] text-slate-400 hover:text-white transition-colors shrink-0 active:scale-95"
+                className="p-2.5 rounded-xl bg-main border border-card text-secondary hover:text-primary hover:border-accent transition-all shrink-0 cursor-pointer active:scale-95"
                 title="Copy Email"
                 aria-label="Copy Email Address"
               >
-                {copiedEmail ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                {copiedEmail ? (
+                  <Check className="w-4 h-4 text-emerald-500" />
+                ) : (
+                  <Copy className="w-4 h-4" />
+                )}
               </button>
             </div>
 
-            {/* Phone */}
-            <div className="academic-card p-3.5 sm:p-4 flex items-center justify-between gap-3">
-              <div className="flex items-center gap-3 min-w-0">
-                <div className="p-2.5 rounded-lg bg-[#0b0f17] border border-[#1e2638] text-slate-400 shrink-0">
+            {/* Phone Card */}
+            <div
+              className="p-4 rounded-2xl bg-card border border-card shadow-sm hover:border-accent/50 transition-all duration-300 flex items-center justify-between gap-3 group"
+              onMouseEnter={() => audioHaptics.playClick(600, 0.02, "sine")}
+            >
+              <div className="flex items-center gap-3.5 min-w-0">
+                <div
+                  className="p-3 rounded-xl bg-main border border-card transition-colors"
+                  style={{ color: accentColor }}
+                >
                   <Phone className="w-4 h-4" />
                 </div>
                 <div className="min-w-0">
-                  <span className="text-[10px] font-mono text-slate-400 uppercase block font-semibold">Phone / WhatsApp</span>
+                  <span className="text-[10px] font-mono text-secondary uppercase font-bold tracking-wider block">
+                    Phone / WhatsApp
+                  </span>
                   <a
                     href="tel:+917458844711"
-                    className="text-xs sm:text-xs font-bold text-white hover:text-blue-400 transition-colors font-mono block truncate"
+                    className="text-xs sm:text-sm font-bold text-primary hover:text-accent font-mono block truncate transition-colors"
                   >
                     (+91) 74588 44711
                   </a>
                 </div>
               </div>
+
               <button
                 type="button"
-                onClick={() => copyToClipboard("(+91) 74588 44711", "phone")}
-                className="p-2 rounded-lg bg-[#0b0f17] border border-[#1e2638] text-slate-400 hover:text-white transition-colors shrink-0 active:scale-95"
+                onClick={() => copyToClipboard("+917458844711", "phone")}
+                className="p-2.5 rounded-xl bg-main border border-card text-secondary hover:text-primary hover:border-accent transition-all shrink-0 cursor-pointer active:scale-95"
                 title="Copy Phone"
                 aria-label="Copy Phone Number"
               >
-                {copiedPhone ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                {copiedPhone ? (
+                  <Check className="w-4 h-4 text-emerald-500" />
+                ) : (
+                  <Copy className="w-4 h-4" />
+                )}
               </button>
             </div>
 
-            {/* Resume Card */}
-            <div className="academic-card p-3.5 sm:p-4 flex items-center justify-between gap-3">
-              <div className="flex items-center gap-3 min-w-0">
-                <div className="p-2.5 rounded-lg bg-[#0b0f17] border border-[#1e2638] text-slate-400 shrink-0">
-                  <Download className="w-4 h-4" />
-                </div>
-                <div className="min-w-0">
-                  <span className="text-[10px] font-mono text-slate-400 uppercase block font-semibold">Resume</span>
-                  <span className="text-xs text-white font-mono block truncate">Download Curriculum Vitae</span>
-                </div>
-              </div>
-              <a
-                href="/resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-3.5 py-1.5 rounded-lg bg-blue-600 text-white font-medium text-xs hover:bg-blue-500 transition-colors shrink-0 flex items-center gap-1.5"
+            {/* Location & Affiliation */}
+            <div className="p-4 rounded-2xl bg-card border border-card shadow-sm flex items-center gap-3.5">
+              <div
+                className="p-3 rounded-xl bg-main border border-card shrink-0"
+                style={{ color: accentColor }}
               >
-                <span>Download</span>
-              </a>
-            </div>
-
-            {/* Location */}
-            <div className="academic-card p-3.5 sm:p-4 flex items-center gap-3">
-              <div className="p-2.5 rounded-lg bg-[#0b0f17] border border-[#1e2638] text-slate-400 shrink-0">
                 <MapPin className="w-4 h-4" />
               </div>
               <div className="min-w-0">
-                <span className="text-[10px] font-mono text-slate-400 uppercase block font-semibold">Campus</span>
-                <p className="text-xs font-bold text-white truncate">
-                  MCAET, ANDUAT University Campus
+                <span className="text-[10px] font-mono text-secondary uppercase font-bold tracking-wider block">
+                  Location &amp; Campus
+                </span>
+                <p className="text-xs sm:text-sm font-bold text-primary truncate">
+                  MCAET, ANDUAT University
                 </p>
-                <p className="text-[11px] text-slate-400 font-mono truncate">
+                <p className="text-xs text-secondary font-mono truncate">
                   Ayodhya / Uttar Pradesh, India
                 </p>
               </div>
             </div>
 
-            {/* Social Profiles Grid */}
-            <div className="academic-card p-3.5 sm:p-4 space-y-2.5">
-              <span className="text-[10px] font-mono text-slate-400 uppercase block font-semibold">
-                Social Profiles
-              </span>
-              <div className="grid grid-cols-2 gap-2">
-                {[
-                  { name: "GitHub", href: "https://github.com/atulllmishra/" },
-                  { name: "LinkedIn", href: "https://www.linkedin.com/in/atul-kumar-mishra-3b3939363" },
-                  { name: "Instagram", href: "https://www.instagram.com/atulllmishra/" },
-                  { name: "LeetCode", href: "https://leetcode.com" },
-                ].map((social) => (
+            {/* Resume & Social Links Grid */}
+            <div className="p-5 rounded-2xl bg-card border border-card shadow-sm space-y-3.5">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-mono text-secondary uppercase font-bold tracking-wider">
+                  Social &amp; Profiles
+                </span>
+                <a
+                  href="/resume.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-primary hover:text-accent transition-colors"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span>Resume PDF</span>
+                </a>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2.5">
+                {SOCIAL_LINKS.map((item) => (
                   <a
-                    key={social.name}
-                    href={social.href}
+                    key={item.name}
+                    href={item.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-between p-2.5 rounded-lg bg-[#0b0f17] border border-[#1e2638] text-xs font-mono text-slate-300 hover:text-white hover:border-blue-500/50 transition-colors"
+                    onMouseEnter={() => audioHaptics.playClick(600, 0.02, "sine")}
+                    className="flex items-center justify-between p-2.5 rounded-xl bg-main border border-card text-xs font-mono font-medium text-secondary hover:text-primary hover:border-accent transition-all group cursor-pointer"
                   >
-                    <span className="truncate">{social.name}</span>
-                    <ArrowUpRight className="w-3 h-3 text-slate-500 shrink-0" />
+                    <span className="truncate">{item.name}</span>
+                    <ArrowUpRight className="w-3.5 h-3.5 text-secondary group-hover:text-accent group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0 ml-1" />
                   </a>
                 ))}
               </div>
             </div>
 
-          </div>
+          </FramerWrapper>
 
-          {/* Right Column: Mobile-Compatible Contact Form */}
-          <div className="lg:col-span-7 academic-card p-4 sm:p-6 border border-[#1e2638]">
-            <h3 className="text-base sm:text-lg font-bold text-white mb-1">
-              Send a Direct Message
-            </h3>
-            <p className="text-xs text-slate-400 mb-5">
-              Fill out your details below and I will reply via email promptly.
-            </p>
-
-            {submitted ? (
-              <div className="py-10 text-center space-y-4">
-                <div className="w-12 h-12 rounded-full bg-blue-600/10 border border-blue-500/30 text-blue-400 flex items-center justify-center mx-auto">
-                  <Check className="w-6 h-6" />
-                </div>
-                <h4 className="text-lg font-bold text-white">Message Sent Successfully!</h4>
-                <p className="text-slate-300 text-xs sm:text-sm max-w-sm mx-auto leading-relaxed">
-                  Thank you for reaching out. Your message has been delivered and I will get back to you shortly.
-                </p>
-                <button
-                  type="button"
-                  onClick={() => setSubmitted(false)}
-                  className="px-4 py-2 rounded-lg bg-[#0b0f17] border border-[#1e2638] text-xs font-mono text-slate-300 hover:text-white hover:border-slate-500 transition-colors"
-                >
-                  Send Another Message
-                </button>
+          {/* Right Column: Direct Message Form Card */}
+          <FramerWrapper y={20} delay={0.2} className="lg:col-span-7">
+            <div className="p-6 sm:p-8 rounded-3xl bg-card border border-card shadow-lg backdrop-blur-sm">
+              <div className="flex items-center gap-2 mb-2">
+                <MessageSquare className="w-4 h-4" style={{ color: accentColor }} />
+                <h3 className="text-xl font-bold tracking-tight text-primary">
+                  Send a Direct Message
+                </h3>
               </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
-                {error && (
-                  <div className="p-3 rounded-lg bg-red-950/50 border border-red-800/80 text-red-300 text-xs flex items-center justify-between gap-2">
-                    <span>{error}</span>
+              <p className="text-xs text-secondary font-medium mb-6">
+                Drop your details and message below. I will receive it directly and reply promptly.
+              </p>
+
+              {submitted ? (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="py-12 text-center space-y-4"
+                >
+                  <div
+                    className="w-14 h-14 rounded-2xl bg-main border border-card flex items-center justify-center mx-auto"
+                    style={{ color: accentColor }}
+                  >
+                    <CheckCircle2 className="w-7 h-7" />
+                  </div>
+                  <h4 className="text-xl font-bold text-primary">
+                    Message Sent Successfully!
+                  </h4>
+                  <p className="text-secondary text-xs sm:text-sm max-w-md mx-auto leading-relaxed">
+                    Thank you for reaching out! Your message has been safely delivered and I will get back to you shortly.
+                  </p>
+                  <div className="pt-2">
                     <button
                       type="button"
-                      onClick={() => setError(null)}
-                      className="text-red-400 hover:text-white font-bold p-1"
+                      onClick={() => setSubmitted(false)}
+                      className="px-5 py-2.5 rounded-xl bg-main border border-card text-xs font-mono font-bold text-secondary hover:text-primary hover:border-accent transition-all cursor-pointer shadow-sm"
                     >
-                      ×
+                      Send Another Message
                     </button>
                   </div>
-                )}
+                </motion.div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  {error && (
+                    <div className="p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-500 text-xs flex items-center justify-between gap-2 font-medium">
+                      <span>{error}</span>
+                      <button
+                        type="button"
+                        onClick={() => setError(null)}
+                        className="text-rose-500 hover:text-rose-400 font-bold p-1 cursor-pointer"
+                      >
+                        ×
+                      </button>
+                    </div>
+                  )}
 
-                {/* Name & Email inputs */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                  {/* Name & Email Row */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-mono font-bold text-secondary flex items-center gap-1">
+                        <span>Name</span>
+                        <span style={{ color: accentColor }}>*</span>
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        placeholder="Your name"
+                        className="w-full bg-main border border-card rounded-xl px-3.5 py-2.5 text-sm text-primary placeholder:text-secondary/50 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/40 transition-all font-medium"
+                      />
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-mono font-bold text-secondary flex items-center gap-1">
+                        <span>Email</span>
+                        <span style={{ color: accentColor }}>*</span>
+                      </label>
+                      <input
+                        type="email"
+                        required
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        placeholder="your.email@example.com"
+                        className="w-full bg-main border border-card rounded-xl px-3.5 py-2.5 text-sm text-primary placeholder:text-secondary/50 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/40 transition-all font-medium"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Phone (Optional) */}
                   <div className="space-y-1.5">
-                    <label className="text-xs font-mono text-slate-300 flex items-center justify-between">
-                      <span>Name <span className="text-blue-400">*</span></span>
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder="e.g. Rahul Sharma"
-                      className="w-full bg-[#0b0f17] border border-[#1e2638] rounded-lg px-3 py-2.5 text-base sm:text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
-                    />
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-mono text-slate-300 flex items-center justify-between">
-                      <span>Email <span className="text-blue-400">*</span></span>
-                    </label>
-                    <input
-                      type="email"
-                      required
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      placeholder="email@example.com"
-                      className="w-full bg-[#0b0f17] border border-[#1e2638] rounded-lg px-3 py-2.5 text-base sm:text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
-                    />
-                  </div>
-                </div>
-
-                {/* Phone Number with Country Code - OPTIONAL */}
-                <div className="space-y-1.5">
-                  <div className="flex items-center justify-between text-xs font-mono">
-                    <label className="text-slate-300 font-medium">
-                      Mobile / Phone Number
-                    </label>
-                    <span className="text-[11px] text-slate-500 font-normal lowercase bg-slate-800/40 px-2 py-0.5 rounded border border-slate-700/50">
-                      optional
-                    </span>
-                  </div>
-                  <div className="flex flex-col sm:flex-row gap-2">
-                    <select
-                      value={formData.countryCode}
-                      onChange={(e) => setFormData({ ...formData, countryCode: e.target.value })}
-                      className="bg-[#0b0f17] border border-[#1e2638] rounded-lg px-3 py-2.5 text-base sm:text-xs text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors font-mono cursor-pointer sm:w-44 shrink-0"
-                    >
-                      {COUNTRY_CODES.map((item) => (
-                        <option key={item.code} value={item.code} className="bg-[#0b0f17] text-white">
-                          {item.label}
-                        </option>
-                      ))}
-                    </select>
+                    <div className="flex items-center justify-between text-xs font-mono">
+                      <label className="font-bold text-secondary">
+                        Phone / WhatsApp
+                      </label>
+                      <span className="text-[10px] text-secondary font-mono uppercase">
+                        Optional
+                      </span>
+                    </div>
                     <input
                       type="tel"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      placeholder="e.g. 98765 43210 (Optional)"
-                      className="flex-1 bg-[#0b0f17] border border-[#1e2638] rounded-lg px-3 py-2.5 text-base sm:text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors font-mono"
+                      placeholder="+91 98765 43210 (Optional)"
+                      className="w-full bg-main border border-card rounded-xl px-3.5 py-2.5 text-sm text-primary placeholder:text-secondary/50 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/40 transition-all font-medium font-mono"
                     />
                   </div>
-                </div>
 
-                {/* Clean Subject Field with Attached Inline Dropdown */}
-                <div className="space-y-1.5 relative" ref={dropdownRef}>
-                  <label className="text-xs font-mono text-slate-300 block">Subject</label>
-
-                  <div className="relative">
-                    <button
-                      type="button"
-                      onClick={() => setIsDropdownOpen((prev) => !prev)}
-                      className="w-full bg-[#0b0f17] border border-[#1e2638] rounded-lg px-3 py-2.5 text-left text-base sm:text-xs flex items-center justify-between hover:border-slate-500 focus:outline-none focus:border-blue-500 transition-colors cursor-pointer"
-                    >
-                      <span className={formData.subject ? "text-white font-medium truncate" : "text-slate-500 truncate"}>
-                        {formData.subject || "Select subject..."}
-                      </span>
-                      <ChevronDown className={`w-4 h-4 text-slate-400 shrink-0 ml-2 transition-transform duration-200 ${isDropdownOpen ? "rotate-180 text-blue-400" : ""}`} />
-                    </button>
-
-                    {/* Attached Inline Dropdown Menu */}
-                    <AnimatePresence>
-                      {isDropdownOpen && (
-                        <motion.div
-                          initial={{ opacity: 0, y: -4, scale: 0.98 }}
-                          animate={{ opacity: 1, y: 0, scale: 1 }}
-                          exit={{ opacity: 0, y: -4, scale: 0.98 }}
-                          transition={{ duration: 0.15 }}
-                          className="absolute top-full left-0 right-0 mt-1 z-30 bg-[#121824] border border-[#1e2638] rounded-lg shadow-xl p-1 space-y-0.5"
-                        >
-                          {SUBJECT_OPTIONS.map((opt) => {
-                            const isSelected = selectedSubjectId === opt.id || (opt.id !== "custom" && formData.subject === opt.label);
-
-                            return (
-                              <button
-                                key={opt.id}
-                                type="button"
-                                onClick={() => handleSelectSubject(opt)}
-                                className={`w-full text-left px-3 py-2 rounded-md text-xs transition-colors flex items-center justify-between cursor-pointer ${
-                                  isSelected
-                                    ? "bg-blue-600/20 text-blue-400 font-medium"
-                                    : "text-slate-300 hover:bg-[#0b0f17] hover:text-white"
-                                }`}
-                              >
-                                <span className="truncate">{opt.label}</span>
-                                {isSelected && <Check className="w-3.5 h-3.5 text-blue-400 shrink-0 ml-2" />}
-                              </button>
-                            );
-                          })}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+                  {/* Topic Selector Pills */}
+                  <div className="space-y-2 pt-1">
+                    <label className="text-xs font-mono font-bold text-secondary block">
+                      Topic / Subject
+                    </label>
+                    <div className="flex flex-wrap gap-2">
+                      {TOPIC_OPTIONS.map((topic) => {
+                        const isSelected = selectedTopic === topic.label;
+                        return (
+                          <button
+                            key={topic.id}
+                            type="button"
+                            onClick={() => handleTopicClick(topic.label)}
+                            className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all border cursor-pointer ${
+                              isSelected
+                                ? "text-white shadow-sm"
+                                : "bg-main border-card text-secondary hover:text-primary hover:border-accent"
+                            }`}
+                            style={isSelected ? { backgroundColor: accentColor, borderColor: accentColor } : {}}
+                          >
+                            {topic.label}
+                          </button>
+                        );
+                      })}
+                    </div>
                   </div>
 
-                  {/* Custom Subject text input if "custom" is selected */}
-                  {isCustomSubject && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      className="pt-1.5"
-                    >
-                      <input
-                        type="text"
-                        value={formData.subject}
-                        onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                        placeholder="Type custom subject here..."
-                        className="w-full bg-[#0b0f17] border border-blue-500/50 rounded-lg px-3 py-2 text-base sm:text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-colors"
-                        autoFocus
-                      />
-                    </motion.div>
-                  )}
-                </div>
+                  {/* Message Field */}
+                  <div className="space-y-1.5 pt-1">
+                    <label className="text-xs font-mono font-bold text-secondary flex items-center gap-1">
+                      <span>Message</span>
+                      <span style={{ color: accentColor }}>*</span>
+                    </label>
+                    <textarea
+                      required
+                      rows={4}
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      placeholder="Write your message or project requirements here..."
+                      className="w-full bg-main border border-card rounded-xl px-3.5 py-2.5 text-sm text-primary placeholder:text-secondary/50 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/40 transition-all font-medium resize-none leading-relaxed"
+                    />
+                  </div>
 
-                {/* Message input */}
-                <div className="space-y-1.5">
-                  <label className="text-xs font-mono text-slate-300 flex items-center justify-between">
-                    <span>Message <span className="text-blue-400">*</span></span>
-                  </label>
-                  <textarea
-                    required
-                    rows={4}
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    placeholder="Write your message..."
-                    className="w-full bg-[#0b0f17] border border-[#1e2638] rounded-lg px-3 py-2.5 text-base sm:text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors resize-none leading-relaxed"
-                  />
-                </div>
+                  {/* Submit Button */}
+                  <div className="pt-2 flex items-center justify-start">
+                    <MagneticButton>
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="inline-flex items-center justify-center gap-2 px-7 py-3 rounded-xl font-mono text-xs sm:text-sm font-bold tracking-wider text-white shadow-md hover:opacity-90 active:scale-95 transition-all cursor-pointer"
+                        style={{ backgroundColor: accentColor }}
+                      >
+                        {isSubmitting ? (
+                          <>
+                            <div className="w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin shrink-0" />
+                            <span>SENDING...</span>
+                          </>
+                        ) : (
+                          <>
+                            <span>SEND MESSAGE</span>
+                            <Send className="w-4 h-4" />
+                          </>
+                        )}
+                      </button>
+                    </MagneticButton>
+                  </div>
 
-                {/* Submit button with compact, non-collapsing boundary */}
-                <div className="pt-2 flex items-center justify-start">
-                  <MagneticButton>
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="group relative inline-flex items-center justify-center gap-1 px-2 py-2 sm:py-3 rounded-lg font-sans-serif text-xs sm:text-sm font-bold tracking-wider  text-white bg-gradient-to-r from-blue-400 via-indigo-400 to-blue-600 hover:from-blue-500 hover:via-indigo-500 hover:to-blue-500 active:scale-[0.94] border border-blue-600/40 hover:border-blue-600/80 transition-all duration-300 cursor-pointer overflow-hidden shrink-0"
-                    >
-                      {/* Subtle hover gradient sheen */}
-                      <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/15 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out pointer-events-none" />
-
-                      {isSubmitting ? (
-                        <div className="flex items-center justify-center gap-2">
-                          <div className="w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin shrink-0" />
-                          <span>Sending...</span>
-                        </div>
-                      ) : (
-                        <>
-                          <span className="relative z-10 whitespace-nowrap">Send Message</span>
-                          <Send className="w-4 h-4 relative z-10 shrink-0 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                        </>
-                      )}
-                    </button>
-                  </MagneticButton>
-                </div>
-
-
-
-              </form>
-            )}
-
-          </div>
+                </form>
+              )}
+            </div>
+          </FramerWrapper>
 
         </div>
+
+        {/* Clean, Decent, and Normal Site Conclusion */}
+        <FramerWrapper y={15} delay={0.3} className="mt-20 pt-8 border-t border-card flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-secondary">
+          <div className="flex items-center gap-2 text-center sm:text-left">
+            <span>© {new Date().getFullYear()} Atul Kumar Mishra.</span>
+            <span className="hidden sm:inline text-secondary/40">•</span>
+            <span className="text-secondary/70">All rights reserved.</span>
+          </div>
+
+          <div className="flex items-center gap-6">
+            <a
+              href="https://github.com/atulllmishra/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-primary transition-colors"
+            >
+              GitHub
+            </a>
+            <a
+              href="https://www.linkedin.com/in/atul-kumar-mishra-3b3939363"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-primary transition-colors"
+            >
+              LinkedIn
+            </a>
+            <a
+              href="mailto:atulllmishra1@gmail.com"
+              className="hover:text-primary transition-colors"
+            >
+              Email
+            </a>
+            <button
+              onClick={scrollToTop}
+              className="inline-flex items-center gap-1 hover:text-primary transition-colors cursor-pointer"
+              title="Back to Top"
+            >
+              <ArrowUp className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Top</span>
+            </button>
+          </div>
+        </FramerWrapper>
+
       </div>
     </section>
   );
 }
-
-
-

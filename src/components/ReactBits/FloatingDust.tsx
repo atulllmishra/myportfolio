@@ -52,12 +52,12 @@ export default function FloatingDust() {
           style={{
             width: `${p.size}px`,
             height: `${p.size}px`,
-            backgroundColor: p.isAccent ? "#2563eb" : "rgba(255, 255, 255, 0.35)",
+            backgroundColor: p.isAccent ? "#C4563A" : "rgba(224, 122, 95, 0.3)",
             top: p.top,
             left: p.left,
             animation: `floatParticle ${p.duration} ease-in-out infinite`,
             animationDelay: p.delay,
-            boxShadow: p.isAccent ? "0 0 8px #2563eb" : "none",
+            boxShadow: p.isAccent ? "0 0 6px rgba(196, 86, 58, 0.4)" : "none",
           }}
         />
       ))}

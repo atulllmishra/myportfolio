@@ -143,7 +143,7 @@ function CoreMechanism({ theme }: { theme: "light" | "dark" }) {
 }
 
 // Main Component
-export default function HeroCenterpiece({ theme = "dark" }: HeroCenterpieceProps) {
+export default function HeroCenterpiece({ theme = "light" }: HeroCenterpieceProps) {
   return (
     <div className="w-full h-full absolute inset-0 z-0">
       <Canvas
@@ -151,12 +151,12 @@ export default function HeroCenterpiece({ theme = "dark" }: HeroCenterpieceProps
         gl={{ antialias: true, alpha: true }}
         dpr={[1, 2]} // Clamp pixel ratio for performance
       >
-        <ambientLight intensity={theme === "light" ? 1.2 : 0.5} />
-        <pointLight position={[5, 5, 5]} intensity={2} color={theme === "light" ? "#ffffff" : "#F2CC8F"} />
-        <pointLight position={[-5, -5, -5]} intensity={1} color={theme === "light" ? "#C4563A" : "#E07A5F"} />
+        <ambientLight intensity={1.2} />
+        <pointLight position={[5, 5, 5]} intensity={2} color="#ffffff" />
+        <pointLight position={[-5, -5, -5]} intensity={1} color="#C4563A" />
         
-        <CoreMechanism theme={theme} />
-        <OrbitalDust theme={theme} />
+        <CoreMechanism theme="light" />
+        <OrbitalDust theme="light" />
       </Canvas>
     </div>
   );

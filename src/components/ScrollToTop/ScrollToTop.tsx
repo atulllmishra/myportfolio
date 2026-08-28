@@ -2,18 +2,17 @@
 
 import { useEffect, useState } from "react";
 import { ArrowUp } from "lucide-react";
+import { audioHaptics } from "@/lib/audioHaptics";
+import { useTheme } from "@/components/ThemeProvider";
 
 export default function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const { theme } = useTheme();
+  const isLight = theme === "light";
+  const accentColor = isLight ? "#C4563A" : "#E07A5F";
 
   useEffect(() => {
     const handleScroll = () => {
-      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-      if (totalHeight > 0) {
-        const progress = (window.scrollY / totalHeight) * 100;
-        setScrollProgress(progress);
-      }
       setIsVisible(window.scrollY > 300);
     };
 
@@ -22,6 +21,7 @@ export default function ScrollToTop() {
   }, []);
 
   const scrollToTop = () => {
+    audioHaptics.playClick(400, 0.05, "sine");
     window.scrollTo({
       top: 0,
       behavior: "smooth",
@@ -33,7 +33,8 @@ export default function ScrollToTop() {
   return (
     <button
       onClick={scrollToTop}
-      className="fixed bottom-6 right-6 z-40 p-3 rounded-full bg-[#121824]/90 backdrop-blur-md border border-[#1e2638] text-blue-400 hover:text-white hover:bg-blue-600 hover:border-blue-500 shadow-xl transition-all duration-300 group cursor-pointer"
+      onMouseEnter={() => audioHaptics.playClick(600, 0.02, "sine")}
+      className="fixed bottom-6 right-6 z-40 p-3 rounded-full bg-card/90 backdrop-blur-md border border-card text-secondary hover:text-white hover:bg-accent hover:border-accent shadow-xl hover:shadow-2xl transition-all duration-300 group cursor-pointer active:scale-95"
       aria-label="Scroll to top"
       title="Back to top"
     >

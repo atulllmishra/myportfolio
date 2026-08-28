@@ -7,8 +7,6 @@ import {
   FolderGit2, 
   LightbulbIcon, 
   Mail,
-  Sun,
-  Moon,
   Volume2,
   VolumeX,
   Download,
@@ -37,7 +35,7 @@ export default function Navbar() {
   const [isMuted, setIsMuted] = useState(true);
   const [isVisible, setIsVisible] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { theme, toggleTheme } = useTheme();
+  const { theme } = useTheme();
 
   useEffect(() => {
     setIsMuted(audioHaptics.getMuted());
@@ -116,11 +114,6 @@ export default function Navbar() {
     }
   };
 
-  const handleToggleTheme = () => {
-    toggleTheme();
-    audioHaptics.playSwitch();
-  };
-
   const handleToggleMute = () => {
     const muted = audioHaptics.toggleMute();
     setIsMuted(muted);
@@ -130,7 +123,7 @@ export default function Navbar() {
   };
 
   const isLight = theme === "light";
-  const accentColor = isLight ? "#C4563A" : "#E07A5F";
+  const accentColor = "#C4563A";
 
   return (
     <>
@@ -176,13 +169,6 @@ export default function Navbar() {
             <DockLabel>{isMuted ? "Unmute" : "Mute"}</DockLabel>
             <DockIcon className="text-secondary">
               {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
-            </DockIcon>
-          </DockItem>
-
-          <DockItem onClick={handleToggleTheme} className="aspect-square rounded-full bg-main/50 hover:bg-main/80 border border-card/60 backdrop-blur-md">
-            <DockLabel>{isLight ? "Dark Mode" : "Light Mode"}</DockLabel>
-            <DockIcon className="text-secondary">
-              {isLight ? <Moon className="w-5 h-5 text-cyan-500" /> : <Sun className="w-5 h-5 text-amber-500" />}
             </DockIcon>
           </DockItem>
 
@@ -242,14 +228,14 @@ export default function Navbar() {
             <Mail className="w-5 h-5" style={activeSection === "contact" ? { color: accentColor } : {}} />
           </button>
 
-          {/* Quick Theme Switch */}
+          {/* Quick Audio Mute Switch */}
           <button
             type="button"
-            onClick={handleToggleTheme}
+            onClick={handleToggleMute}
             className="flex items-center justify-center p-2.5 rounded-xl text-secondary hover:text-primary transition-all cursor-pointer"
-            aria-label="Toggle Theme"
+            aria-label="Toggle Mute"
           >
-            {isLight ? <Moon className="w-5 h-5 text-cyan-500" /> : <Sun className="w-5 h-5 text-amber-500" />}
+            {isMuted ? <VolumeX className="w-5 h-5 text-rose-500" /> : <Volume2 className="w-5 h-5 text-emerald-600" />}
           </button>
 
           {/* Primary Mobile Menu Drawer Button */}

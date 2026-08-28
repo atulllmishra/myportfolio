@@ -5,18 +5,18 @@ import { achievementsList, AchievementItem } from "@/data/certificationsData";
 
 export default function Certifications() {
   return (
-    <section id="certifications" className="py-20 relative bg-[#0b0f17] border-t border-[#1e2638] scroll-mt-24">
+    <section id="certifications" className="py-20 relative bg-main border-t border-card scroll-mt-24 font-serif">
       <div className="max-w-6xl mx-auto px-6">
         
         {/* Header */}
         <div className="max-w-3xl mb-10 space-y-2">
-          <span className="text-xs font-mono text-slate-400 uppercase tracking-wider block font-semibold">
+          <span className="text-xs font-serif text-accent uppercase tracking-wider block font-semibold">
             Recognitions
           </span>
-          <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-bold text-primary tracking-tight font-serif">
             Achievements & Credentials
           </h2>
-          <p className="text-slate-400 text-sm">
+          <p className="text-secondary text-sm font-serif">
             Hackathon recognitions, deployed AI systems, and competitive programming accomplishments.
           </p>
         </div>
@@ -26,34 +26,34 @@ export default function Certifications() {
           {achievementsList.map((item: AchievementItem, idx: number) => (
             <div
               key={idx}
-              className="academic-card p-5 flex flex-col justify-between space-y-4"
+              className="academic-card p-5 flex flex-col justify-between space-y-4 bg-card border border-card rounded-xl shadow-sm hover:border-accent"
             >
               <div className="space-y-2.5">
                 <div className="flex items-center justify-between">
-                  <span className="text-[11px] font-mono text-slate-400 uppercase font-semibold">
+                  <span className="text-[11px] font-serif text-accent uppercase font-semibold">
                     {item.category}
                   </span>
-                  <Trophy className="w-4 h-4 text-slate-400" />
+                  <Trophy className="w-4 h-4 text-accent" />
                 </div>
 
-                <h3 className="text-base font-bold text-white tracking-tight">
+                <h3 className="text-base font-bold text-primary tracking-tight font-serif">
                   {item.title}
                 </h3>
-                <span className="text-xs font-mono text-slate-400 block font-medium">
+                <span className="text-xs font-serif text-secondary block font-medium">
                   {item.issuer}
                 </span>
 
-                <p className="text-xs text-slate-300 leading-relaxed font-normal">
+                <p className="text-xs text-secondary leading-relaxed font-normal font-serif">
                   {item.description}
                 </p>
               </div>
 
-              <div className="space-y-2.5 pt-3 border-t border-[#1e2638]">
+              <div className="space-y-2.5 pt-3 border-t border-card">
                 <div className="flex flex-wrap gap-1">
                   {item.tags.map((t: string) => (
                     <span
                       key={t}
-                      className="px-2 py-0.5 rounded text-[10px] font-mono bg-[#0b0f17] text-slate-400 border border-[#1e2638]"
+                      className="px-2 py-0.5 rounded text-[10px] font-serif bg-main text-secondary border border-card"
                     >
                       #{t}
                     </span>
@@ -65,7 +65,7 @@ export default function Certifications() {
                     href={item.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-mono text-blue-400 hover:underline pt-1 font-medium"
+                    className="inline-flex items-center gap-1.5 text-xs font-serif text-accent hover:underline pt-1 font-medium"
                   >
                     <span>View Achievement</span>
                     <ExternalLink className="w-3.5 h-3.5" />

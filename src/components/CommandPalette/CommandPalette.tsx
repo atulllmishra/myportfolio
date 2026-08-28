@@ -14,8 +14,6 @@ import {
   FolderGit2, 
   LightbulbIcon, 
   Mail, 
-  Sun, 
-  Moon, 
   Volume2, 
   VolumeX, 
   Download, 
@@ -51,7 +49,7 @@ export default function CommandPalette() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
   const resultsContainerRef = useRef<HTMLDivElement>(null);
-  const { theme, toggleTheme } = useTheme();
+  const { theme } = useTheme();
 
   // Keyboard shortcut listener for Cmd+K / Ctrl+K and custom events
   useEffect(() => {
@@ -326,24 +324,10 @@ export default function CommandPalette() {
       icon: Phone,
       action: () => openUrl("tel:+917458844711"),
     },
-  ], [isLight, toggleTheme]);
+  ], [isLight]);
 
   // Default earlier commands shown initially before searching
   const defaultEarlierCommands = useMemo<PaletteCommand[]>(() => [
-
-    {
-      id: "pref-theme",
-      name: "Toggle Theme",
-      category: "Preferences",
-      description: `Switch to ${isLight ? "Dark Theme" : "Light Peach Theme"}`,
-      keywords: ["theme", "dark", "light", "mode", "toggle theme"],
-      icon: isLight ? Moon : Sun,
-      action: () => {
-        toggleTheme();
-        audioHaptics.playSwitch();
-        setIsOpen(false);
-      },
-    },
     {
       id: "pref-gravity",
       name: "Zero-G Physics Mode",
@@ -366,7 +350,7 @@ export default function CommandPalette() {
       action: () => scrollToSection("projects"),
       shortcut: "G P",
     },
-  ], [isLight, toggleTheme]);
+  ], [isLight]);
 
   // Fuzzy filter commands: Show default earlier items when query is empty, or search all sections/projects/skills
   const filteredCommands = useMemo(() => {

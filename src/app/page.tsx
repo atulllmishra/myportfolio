@@ -2,11 +2,8 @@
 
 import { useEffect } from "react";
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
-
 import LoadingScreen from "@/components/ReactBits/LoadingScreen";
-import GhostCursor from "@/components/ReactBits/GhostCursor";
 
 import Hero from "@/sections/Hero";
 import About from "@/sections/About";
@@ -25,14 +22,12 @@ export default function Home() {
   return (
     <main className="relative min-h-screen text-primary selection:bg-accent selection:text-white transition-colors duration-200 bg-[radial-gradient(var(--border-card)_1.5px,transparent_1.5px)] [background-size:20px_20px]">
       <LoadingScreen />
-      <GhostCursor />
       <Navbar />
       <Hero />
       <About />
       <Projects />
       <Skills />
       <Contact />
-      <Footer />
       <ScrollToTop />
     </main>
   );

@@ -43,12 +43,11 @@ export default function Hero() {
             <TextRotator />
           </div>
 
-          <div className="p-6 md:p-8 text-base md:text-lg leading-relaxed bg-card/90 border border-card rounded-2xl shadow-xl backdrop-blur-md font-medium text-secondary max-w-2xl">
+          <div className="p-6 md:p-8 text-base md:text-lg leading-relaxed bg-card/90 border border-card rounded-2xl shadow-xl backdrop-blur-md font-normal text-secondary max-w-2xl font-serif">
             <p>
               Full-Stack Web Developer & AI Solutions Engineer passionate about architecting high-performance applications and intuitive interfaces. Creator of <span className="text-primary font-bold">heyBuddy</span> (AI multilingual video learning) and National Finalist at <span className="text-primary font-bold">IIT Guwahati ImpactHack 2025</span>.
             </p>
           </div>
-
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6">
             <HackerBtn
@@ -63,9 +62,9 @@ export default function Hero() {
               onClick={() => {
                 window.dispatchEvent(new CustomEvent('toggle-command-palette'));
               }}
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-bold text-sm font-mono bg-main border border-card hover:border-accent hover:bg-card transition-all cursor-pointer text-primary shadow-sm w-full sm:w-auto"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-bold text-sm font-serif bg-main border border-card hover:border-accent hover:bg-card transition-all cursor-pointer text-primary shadow-sm w-full sm:w-auto"
             >
-              <Terminal className="w-4 h-4" style={{ color: theme === 'light' ? '#C4563A' : '#E07A5F' }} />
+              <Terminal className="w-4 h-4" style={{ color: '#C4563A' }} />
               <span>OPEN TERMINAL (CMD+K)</span>
             </button>
           </div>

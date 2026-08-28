@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 
-type Theme = "dark" | "light";
+type Theme = "light";
 
 interface ThemeContextType {
   theme: Theme;
@@ -14,72 +14,43 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [isDaytime, setIsDaytime] = useState<boolean>(true);
-  const [theme, setThemeState] = useState<Theme>("dark");
   const [mounted, setMounted] = useState(false);
 
-  const applyTheme = (targetTheme: Theme) => {
+  const applyTheme = () => {
+    if (typeof document === "undefined") return;
     const root = document.documentElement;
     const body = document.body;
 
-    if (targetTheme === "light") {
-      root.classList.remove("dark");
-      root.classList.add("light");
-      if (body) {
-        body.classList.remove("dark");
-        body.classList.add("light");
-      }
-      root.setAttribute("data-theme", "light");
-    } else {
-      root.classList.remove("light");
-      root.classList.add("dark");
-      if (body) {
-        body.classList.remove("light");
-        body.classList.add("dark");
-      }
-      root.setAttribute("data-theme", "dark");
+    root.classList.remove("dark");
+    root.classList.add("light");
+    if (body) {
+      body.classList.remove("dark");
+      body.classList.add("light");
     }
+    root.setAttribute("data-theme", "light");
   };
 
-  // Simple sync external store logic to avoid hydration mismatches
-
   useEffect(() => {
-    // Determine daytime (6:00 AM to 6:00 PM local time)
-    const currentHour = new Date().getHours();
-    const daytime = currentHour >= 6 && currentHour < 18;
-    setIsDaytime(daytime);
-
-    const savedTheme = localStorage.getItem("hugo-academic-theme") as Theme | null;
-    const initialTheme: Theme = savedTheme ? savedTheme : (daytime ? "light" : "dark");
-    
-    setThemeState(initialTheme);
+    applyTheme();
+    localStorage.setItem("hugo-academic-theme", "light");
     setMounted(true);
   }, []);
 
-  useEffect(() => {
-    if (mounted) {
-      applyTheme(theme);
-    }
-  }, [theme, mounted]);
-
-  const setTheme = (newTheme: Theme) => {
-    setThemeState(newTheme);
-    localStorage.setItem("hugo-academic-theme", newTheme);
-    applyTheme(newTheme);
+  const setTheme = () => {
+    applyTheme();
   };
 
   const toggleTheme = () => {
-    const nextTheme = theme === "dark" ? "light" : "dark";
-    setTheme(nextTheme);
+    applyTheme();
   };
 
   return (
     <ThemeContext.Provider
       value={{
-        theme: mounted ? theme : "dark",
+        theme: "light",
         toggleTheme,
         setTheme,
-        isDaytime,
+        isDaytime: true,
       }}
     >
       {children}
@@ -94,3 +65,4 @@ export function useTheme() {
   }
   return context;
 }
+

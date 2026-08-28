@@ -38,14 +38,14 @@ export default function Projects() {
       <div className="max-w-6xl mx-auto px-6">
         
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 font-serif">
           <div className="max-w-2xl space-y-3">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-main border border-card text-xs font-mono font-bold uppercase tracking-wider" style={{ color: theme === 'light' ? '#C4563A' : '#E07A5F' }}>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-main border border-card text-xs font-serif font-bold uppercase tracking-wider text-accent">
               <Layers className="w-3.5 h-3.5" />
               <span>PRODUCTION SYSTEMS</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
-              RECENT <span style={{ color: theme === 'light' ? '#C4563A' : '#E07A5F' }}>WORKS</span>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight font-serif">
+              RECENT <span style={{ color: '#C4563A' }}>WORKS</span>
             </h2>
           </div>
 
@@ -55,12 +55,12 @@ export default function Projects() {
               <button
                 key={tab.id}
                 onClick={() => handleTabClick(tab.id)}
-                className={`px-4 py-2 rounded-full text-xs font-mono font-bold transition-all border ${
+                className={`px-4 py-2 rounded-full text-xs font-serif font-bold transition-all border ${
                   activeTab === tab.id
                     ? "bg-accent text-white border-accent shadow-md"
                     : "bg-main border-card text-secondary hover:text-primary hover:border-accent"
                 }`}
-                style={activeTab === tab.id ? { backgroundColor: theme === 'light' ? '#C4563A' : '#E07A5F', borderColor: theme === 'light' ? '#C4563A' : '#E07A5F' } : {}}
+                style={activeTab === tab.id ? { backgroundColor: '#C4563A', borderColor: '#C4563A' } : {}}
               >
                 {tab.label}
               </button>

@@ -20,10 +20,7 @@ export default function CelestialCanvas() {
     );
   }
 
-  // Dynamic hueShift based on active theme
-  // Light: warm golden solar peach tones (0.18)
-  // Dark: deep cosmic midnight blue-violet tones (0.78)
-  const hueShift = theme === "light" ? 0.18 : 0.78;
+  const hueShift = 0.18;
 
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
@@ -33,20 +30,18 @@ export default function CelestialCanvas() {
         className="w-full h-full"
       >
         {/* Galaxy background component from ReactBits passing dynamic hueShift prop */}
-        <Galaxy hueShift={hueShift} count={2200} speed={0.35} theme={theme} />
+        <Galaxy hueShift={hueShift} count={2200} speed={0.35} theme="light" />
 
-        {/* Conditionally rendered 3D meshes for Sun, Earth, Moon */}
-        <CelestialMeshes theme={theme} />
+        {/* Conditionally rendered 3D meshes for Sun, Earth */}
+        <CelestialMeshes theme="light" />
       </Canvas>
 
-      {/* Subtle overlay vignette gradient tailored to theme */}
+      {/* Subtle overlay vignette gradient tailored to light theme */}
       <div
         className="absolute inset-0 transition-opacity duration-700 pointer-events-none"
         style={{
           background:
-            theme === "light"
-              ? "radial-gradient(circle at 50% 30%, rgba(255, 249, 245, 0.3) 0%, rgba(255, 249, 245, 0.85) 100%)"
-              : "radial-gradient(circle at 50% 30%, rgba(11, 15, 23, 0.2) 0%, rgba(11, 15, 23, 0.85) 100%)",
+            "radial-gradient(circle at 50% 30%, rgba(255, 249, 245, 0.3) 0%, rgba(255, 249, 245, 0.85) 100%)",
         }}
       />
     </div>

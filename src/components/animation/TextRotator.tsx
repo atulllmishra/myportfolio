@@ -11,19 +11,17 @@ const roles = [
 ];
 
 function TextRotator() {
-  const { theme } = useTheme();
-  
   return (
-    <div className="py-4 rounded-md flex flex-col justify-start items-start overflow-hidden">
-      <div className="font-mono text-base sm:text-2xl [text-wrap:balance] text-secondary flex items-center">
+    <div className="py-4 rounded-md flex flex-col justify-start items-start overflow-hidden font-serif">
+      <div className="font-serif italic text-base sm:text-2xl [text-wrap:balance] text-secondary flex items-center">
         I am a
         <span className="inline-flex ml-3 flex-col h-[calc(theme(fontSize.base)*theme(lineHeight.tight))] sm:h-[calc(theme(fontSize.2xl)*theme(lineHeight.tight))] overflow-hidden">
-          <ul className="block text-left font-sans font-bold text-base sm:text-2xl leading-tight [&_li]:block animate-text-slide">
+          <ul className="block text-left font-serif font-bold not-italic text-base sm:text-2xl leading-tight [&_li]:block animate-text-slide">
             {roles.map((role, index) => (
               <li 
                 key={index} 
                 className="transition-colors"
-                style={{ color: theme === 'light' ? '#C4563A' : '#E07A5F' }}
+                style={{ color: '#C4563A' }}
               >
                 {role}
               </li>

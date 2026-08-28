@@ -38,32 +38,18 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-
   /* Custom Scrollbar */
   ::-webkit-scrollbar {
     width: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: var(--bg-main);
+    background: #fff9f5;
   }
   ::-webkit-scrollbar-thumb {
-    background: var(--border-card);
+    background: #f0dbce;
     border-radius: 3px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #e07a5f;
-  }
-  
-  html.light ::-webkit-scrollbar-track,
-  [data-theme="light"] ::-webkit-scrollbar-track {
-    background: #fff9f5;
-  }
-  html.light ::-webkit-scrollbar-thumb,
-  [data-theme="light"] ::-webkit-scrollbar-thumb {
-    background: #f0dbce;
-  }
-  html.light ::-webkit-scrollbar-thumb:hover,
-  [data-theme="light"] ::-webkit-scrollbar-thumb:hover {
     background: #e07a5f;
   }
 }
