@@ -78,27 +78,27 @@ export default function ProjectCard3D({ project, theme, onOpenDetails }: Project
         />
 
         <div className="flex justify-between items-start mb-4" style={{ transform: "translateZ(30px)" }}>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-main border border-card text-[11px] font-serif font-bold uppercase tracking-wider text-accent">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-main border border-card text-[11px] font-bold uppercase tracking-wider text-accent">
             <Code2 className="w-3 h-3" />
             <span>{project.categoryLabel}</span>
           </div>
-          <div className="text-xs font-serif text-secondary font-medium px-2 py-1 bg-main rounded-md border border-card">
+          <div className="text-xs text-secondary font-medium px-2 py-1 bg-main rounded-md border border-card">
             {project.timeline}
           </div>
         </div>
 
-        <h3 className="text-xl sm:text-2xl font-bold mb-2 tracking-tight font-serif" style={{ transform: "translateZ(40px)" }}>
+        <h3 className="text-xl sm:text-2xl font-bold mb-2 tracking-tight" style={{ transform: "translateZ(40px)" }}>
           {project.title}
         </h3>
         
-        <p className="text-sm text-secondary font-normal leading-relaxed mb-6 flex-grow font-serif" style={{ transform: "translateZ(20px)" }}>
+        <p className="text-sm text-secondary font-medium leading-relaxed mb-6 flex-grow" style={{ transform: "translateZ(20px)" }}>
           {project.description}
         </p>
 
         {/* Tech Chips */}
         <div className="flex flex-wrap gap-2 mb-6" style={{ transform: "translateZ(25px)" }}>
           {project.tech.map((t, i) => (
-            <span key={i} className="px-2.5 py-1 text-[11px] font-serif font-medium rounded-md bg-main border border-card text-primary">
+            <span key={i} className="px-2.5 py-1 text-[11px] font-medium rounded-md bg-main border border-card text-primary">
               {t}
             </span>
           ))}
@@ -135,7 +135,7 @@ export default function ProjectCard3D({ project, theme, onOpenDetails }: Project
             )}
           </div>
           
-          <div className="text-[11px] font-serif font-bold tracking-wider uppercase flex items-center gap-1 text-accent transition-transform group-hover:translate-x-1" style={{ color: "#C4563A" }}>
+          <div className="text-[11px] font-bold tracking-wider uppercase flex items-center gap-1 text-accent transition-transform group-hover:translate-x-1" style={{ color: "#C4563A" }}>
             <span>Examine</span>
             <ArrowUpRight className="w-3.5 h-3.5" />
           </div>

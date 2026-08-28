@@ -5,18 +5,18 @@ import { achievementsList, AchievementItem } from "@/data/certificationsData";
 
 export default function Certifications() {
   return (
-    <section id="certifications" className="py-20 relative bg-main border-t border-card scroll-mt-24 font-serif">
+    <section id="certifications" className="py-20 relative bg-main border-t border-card scroll-mt-24">
       <div className="max-w-6xl mx-auto px-6">
         
         {/* Header */}
         <div className="max-w-3xl mb-10 space-y-2">
-          <span className="text-xs font-serif text-accent uppercase tracking-wider block font-semibold">
+          <span className="text-xs text-accent uppercase tracking-wider block font-bold">
             Recognitions
           </span>
-          <h2 className="text-2xl sm:text-3xl font-bold text-primary tracking-tight font-serif">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-primary tracking-tight">
             Achievements & Credentials
           </h2>
-          <p className="text-secondary text-sm font-serif">
+          <p className="text-secondary text-sm font-medium">
             Hackathon recognitions, deployed AI systems, and competitive programming accomplishments.
           </p>
         </div>
@@ -30,20 +30,20 @@ export default function Certifications() {
             >
               <div className="space-y-2.5">
                 <div className="flex items-center justify-between">
-                  <span className="text-[11px] font-serif text-accent uppercase font-semibold">
+                  <span className="text-[11px] text-accent uppercase font-bold">
                     {item.category}
                   </span>
                   <Trophy className="w-4 h-4 text-accent" />
                 </div>
 
-                <h3 className="text-base font-bold text-primary tracking-tight font-serif">
+                <h3 className="text-base font-bold text-primary tracking-tight">
                   {item.title}
                 </h3>
-                <span className="text-xs font-serif text-secondary block font-medium">
+                <span className="text-xs text-secondary block font-semibold">
                   {item.issuer}
                 </span>
 
-                <p className="text-xs text-secondary leading-relaxed font-normal font-serif">
+                <p className="text-xs text-secondary leading-relaxed font-normal">
                   {item.description}
                 </p>
               </div>
@@ -53,7 +53,7 @@ export default function Certifications() {
                   {item.tags.map((t: string) => (
                     <span
                       key={t}
-                      className="px-2 py-0.5 rounded text-[10px] font-serif bg-main text-secondary border border-card"
+                      className="px-2 py-0.5 rounded text-[10px] font-medium bg-main text-secondary border border-card"
                     >
                       #{t}
                     </span>
@@ -65,7 +65,7 @@ export default function Certifications() {
                     href={item.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-serif text-accent hover:underline pt-1 font-medium"
+                    className="inline-flex items-center gap-1.5 text-xs text-accent hover:underline pt-1 font-semibold"
                   >
                     <span>View Achievement</span>
                     <ExternalLink className="w-3.5 h-3.5" />

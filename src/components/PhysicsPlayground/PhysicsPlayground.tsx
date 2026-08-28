@@ -133,7 +133,7 @@ export default function PhysicsPlayground() {
     // Custom render loop for text
     Events.on(render, "afterRender", () => {
       const context = render.context;
-      context.font = "bold 14px 'Times New Roman', Georgia, serif";
+      context.font = "bold 13px 'Poppins', system-ui, sans-serif";
       context.textAlign = "center";
       context.textBaseline = "middle";
       context.fillStyle = textColor;

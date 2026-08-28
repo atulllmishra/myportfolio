@@ -32,10 +32,10 @@ export default function Hero() {
         <FramerWrapper y={0} x={0} className="flex flex-col items-center justify-center space-y-8 max-w-4xl mx-auto">
 
           <div className="space-y-4">
-            <h3 className="font-mono text-xl sm:text-2xl text-secondary">Hello, my name is</h3>
-            <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-[0.9] text-primary pb-2" style={{ textShadow: theme === 'light' ? '4px 4px 0px rgba(196,86,58,0.1)' : '4px 4px 0px rgba(224,122,95,0.1)' }}>
+            <h3 className="text-xl sm:text-2xl text-secondary font-medium tracking-wide">Hello, my name is</h3>
+            <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-[0.9] text-primary pb-2" style={{ textShadow: '4px 4px 0px rgba(196,86,58,0.1)' }}>
               ATUL KUMAR <br />
-              <span style={{ color: theme === 'light' ? '#C4563A' : '#E07A5F' }}>MISHRA .</span>
+              <span style={{ color: '#C4563A' }}>MISHRA .</span>
             </h1>
           </div>
 
@@ -43,7 +43,7 @@ export default function Hero() {
             <TextRotator />
           </div>
 
-          <div className="p-6 md:p-8 text-base md:text-lg leading-relaxed bg-card/90 border border-card rounded-2xl shadow-xl backdrop-blur-md font-normal text-secondary max-w-2xl font-serif">
+          <div className="p-6 md:p-8 text-base md:text-lg leading-relaxed bg-card/90 border border-card rounded-2xl shadow-xl backdrop-blur-md font-medium text-secondary max-w-2xl">
             <p>
               Full-Stack Web Developer & AI Solutions Engineer passionate about architecting high-performance applications and intuitive interfaces. Creator of <span className="text-primary font-bold">heyBuddy</span> (AI multilingual video learning) and National Finalist at <span className="text-primary font-bold">IIT Guwahati ImpactHack 2025</span>.
             </p>
@@ -62,7 +62,7 @@ export default function Hero() {
               onClick={() => {
                 window.dispatchEvent(new CustomEvent('toggle-command-palette'));
               }}
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-bold text-sm font-serif bg-main border border-card hover:border-accent hover:bg-card transition-all cursor-pointer text-primary shadow-sm w-full sm:w-auto"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-bold text-sm bg-main border border-card hover:border-accent hover:bg-card transition-all cursor-pointer text-primary shadow-sm w-full sm:w-auto"
             >
               <Terminal className="w-4 h-4" style={{ color: '#C4563A' }} />
               <span>OPEN TERMINAL (CMD+K)</span>

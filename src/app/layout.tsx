@@ -8,7 +8,8 @@ import "./globals.css";
 const poppins = Poppins({
   variable: "--font-poppins",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -40,7 +41,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${poppins.variable} scroll-smooth light`}>
+    <html lang="en" className={`${poppins.variable} scroll-smooth light`} data-theme="light">
       <body className="antialiased font-sans flex flex-col min-h-screen transition-colors duration-200">
         <ThemeProvider>
           {/* Global Interactive Overlays */}

@@ -165,16 +165,16 @@ export default function About() {
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-card/80 border border-card text-xs font-serif font-semibold uppercase tracking-wider text-secondary shadow-sm"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-card/80 border border-card text-xs font-semibold uppercase tracking-wider text-secondary shadow-sm"
           >
             <User2 className="h-4 w-4" style={{ color: accentColor }} />
             <span>About Me</span>
           </motion.div>
 
           <FramerWrapper y={20} x={0} className="w-full">
-            <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 font-serif">
+            <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
               <div className="max-w-2xl space-y-3">
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.1] text-primary font-serif">
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.1] text-primary">
                   A little about   {"  "}
                   <span style={{ color: accentColor }}> me.</span>
                 </h2>
@@ -185,21 +185,21 @@ export default function About() {
           </FramerWrapper>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-7 items-stretch font-serif">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-7 items-stretch">
           <div className="lg:col-span-8 flex flex-col justify-between">
-            <InteractiveTiltCard glowColor={glowColor} className="p-8 sm:p-10 h-full flex flex-col justify-between font-serif">
+            <InteractiveTiltCard glowColor={glowColor} className="p-8 sm:p-10 h-full flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between pb-4 mb-6 border-b border-card">
                   <div className="flex items-center gap-2.5">
                     
-                    <span className="text-sm font-bold font-serif text-primary uppercase tracking-wider">
+                    <span className="text-sm font-bold text-primary uppercase tracking-wider">
                       About me !
                     </span>
                   </div>
                   
                 </div>
 
-                <div className="text-base sm:text-lg text-secondary leading-relaxed space-y-5 font-normal font-serif">
+                <div className="text-base sm:text-lg text-secondary leading-relaxed space-y-5 font-normal">
                   <p>
                     Hey there! I'm <strong className="text-primary font-semibold">Atul Kumar Mishra</strong>. I'm a Computer Science undergraduate and Full-Stack AI Engineer who loves the feeling of taking a blank canvas and engineering it into an intuitive, polished digital product.
                   </p>
@@ -213,18 +213,18 @@ export default function About() {
               </div>
 
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-6 mt-6 border-t border-card font-serif">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-6 mt-6 border-t border-card">
                 <div className="p-3 rounded-2xl bg-main/50 border border-card">
-                  <span className="text-[10px] font-serif text-secondary uppercase block">Core Focus</span>
-                  <span className="text-xs font-bold text-primary font-serif mt-0.5 block">AI & Full-Stack</span>
+                  <span className="text-[10px] text-secondary uppercase block font-semibold">Core Focus</span>
+                  <span className="text-xs font-bold text-primary mt-0.5 block">AI & Full-Stack</span>
                 </div>
                 <div className="p-3 rounded-2xl bg-main/50 border border-card">
-                  <span className="text-[10px] font-serif text-secondary uppercase block">Location</span>
-                  <span className="text-xs font-bold text-primary font-serif mt-0.5 block">Ayodhya, India</span>
+                  <span className="text-[10px] text-secondary uppercase block font-semibold">Location</span>
+                  <span className="text-xs font-bold text-primary mt-0.5 block">Ayodhya, India</span>
                 </div>
                 <div className="p-3 rounded-2xl bg-main/50 border border-card col-span-2 sm:col-span-1">
-                  <span className="text-[10px] font-serif text-secondary uppercase block">Availability</span>
-                  <span className="text-xs font-bold text-accent font-serif mt-0.5 block">Open to Work</span>
+                  <span className="text-[10px] text-secondary uppercase block font-semibold">Availability</span>
+                  <span className="text-xs font-bold text-accent mt-0.5 block">Open to Work</span>
                 </div>
               </div>
             </InteractiveTiltCard>

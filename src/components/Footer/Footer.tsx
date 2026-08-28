@@ -28,7 +28,7 @@ export default function Footer() {
   const formattedTime = time ? time.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: true }) : "";
 
   return (
-    <footer className="bg-main border-t border-card pt-14 pb-8 relative overflow-hidden font-serif">
+    <footer className="bg-main border-t border-card pt-14 pb-8 relative overflow-hidden">
       <div className="max-w-6xl mx-auto px-6 relative z-10">
 
         {/* Top Sweet Gesture & Live Time (Left Accent Bar Visual) */}
@@ -36,17 +36,17 @@ export default function Footer() {
           
           {/* Sweet Gesture Message with Left Accent Line */}
           <div className="pl-4 border-l-2 border-accent space-y-1 max-w-xl">
-            <h4 className="text-sm font-bold text-primary flex items-center gap-1.5 font-serif">
+            <h4 className="text-sm font-bold text-primary flex items-center gap-1.5">
               <span>Thank you for visiting!</span>
               <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500 inline" />
             </h4>
-            <p className="text-xs text-secondary leading-relaxed font-serif">
+            <p className="text-xs text-secondary leading-relaxed">
               Wishing you a productive and wonderful day ahead. Feel free to reach out for collaborations or a quick chat anytime!
             </p>
           </div>
 
           {/* Live Date, Day & Time Data */}
-          <div className="flex items-center gap-3 font-serif text-xs text-secondary shrink-0">
+          <div className="flex items-center gap-3 text-xs text-secondary shrink-0">
             <div className="flex items-center gap-2">
               <Clock className="w-3.5 h-3.5 text-accent animate-pulse" />
               <span className="font-bold text-primary tracking-wide">{formattedTime || "--:--:--"}</span>
@@ -66,24 +66,24 @@ export default function Footer() {
           {/* Brand Column */}
           <div className="md:col-span-5 space-y-3">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-full bg-card text-accent font-serif font-bold text-xs flex items-center justify-center border border-card shadow-sm">
+              <div className="w-8 h-8 rounded-full bg-card text-accent font-bold text-xs flex items-center justify-center border border-card shadow-sm">
                 AM
               </div>
               <div className="flex flex-col">
-                <span className="font-bold text-sm text-primary tracking-tight font-serif">
+                <span className="font-bold text-sm text-primary tracking-tight">
                   Atul Kumar Mishra
                 </span>
-                <span className="text-[11px] text-secondary font-serif">
+                <span className="text-[11px] text-secondary font-medium">
                   B.Tech CSE • MCAET ANDUAT
                 </span>
               </div>
             </div>
 
-            <p className="text-secondary text-xs leading-relaxed max-w-sm font-serif">
+            <p className="text-secondary text-xs leading-relaxed max-w-sm">
               Computer Science & Engineering (CSE) student at Mahamaya College of Agricultural Engineering and Technology (MCAET, ANDUAT)
             </p>
 
-            <div className="flex items-center gap-4 text-xs font-serif text-secondary pt-0.5">
+            <div className="flex items-center gap-4 text-xs text-secondary pt-0.5">
               <a href="mailto:atulllmishra1@gmail.com" className="hover:text-accent flex items-center gap-1.5 transition-colors">
                 <Mail className="w-3.5 h-3.5 text-accent" />
                 <span>atulllmishra1@gmail.com</span>
@@ -93,10 +93,10 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div className="md:col-span-3 space-y-2.5">
-            <h4 className="text-xs font-serif text-secondary uppercase tracking-wider font-semibold">
+            <h4 className="text-xs text-secondary uppercase tracking-wider font-bold">
               Links
             </h4>
-            <ul className="space-y-1.5 text-xs text-secondary font-serif">
+            <ul className="space-y-1.5 text-xs text-secondary">
               <li>
                 <a href="https://github.com/atulllmishra/" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">
                   GitHub Profile
@@ -113,7 +113,7 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="text-secondary hover:text-accent flex items-center gap-1 font-serif pt-1">
+                <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="text-secondary hover:text-accent flex items-center gap-1 pt-1 font-medium">
                   <Download className="w-3 h-3" />
                   <span>Download Resume</span>
                 </a>
@@ -123,11 +123,11 @@ export default function Footer() {
 
           {/* Location & Map */}
           <div className="md:col-span-4 space-y-2.5">
-            <h4 className="text-xs font-serif text-secondary uppercase tracking-wider font-semibold flex items-center gap-1.5">
+            <h4 className="text-xs text-secondary uppercase tracking-wider font-bold flex items-center gap-1.5">
               <MapPin className="w-3.5 h-3.5 text-accent" />
               <span>Campus Affiliation</span>
             </h4>
-            <p className="text-xs text-secondary font-serif">
+            <p className="text-xs text-secondary">
               Mahamaya College of Agricultural Engineering and Technology (MCAET, ANDUAT), UP, India
             </p>
 
@@ -148,7 +148,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar: All Rights Reserved & Visitor Count & Developed By */}
-        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-serif text-secondary text-center sm:text-left">
+        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-secondary text-center sm:text-left">
           <div className="flex items-center gap-3">
             <p>© {new Date().getFullYear()}. All Rights Reserved.</p>
           </div>

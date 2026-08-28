@@ -5,7 +5,15 @@ import { addContactSubmission } from "@/lib/db";
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, email, countryCode, phone, subject, message } = body;
+    const { name, email, countryCode, phone, subject, message, honeypot, website_hp } = body;
+
+    // Honeypot check: If bot filled hidden field, return success silently without doing anything
+    if (honeypot || website_hp) {
+      return NextResponse.json({
+        success: true,
+        message: "Message processed successfully.",
+      });
+    }
 
     // Basic Validation
     if (!name || !email || !message) {

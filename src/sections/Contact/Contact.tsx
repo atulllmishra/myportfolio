@@ -10,10 +10,10 @@ import {
   Check,
   ArrowUpRight,
   Download,
-  Sparkles,
-  ArrowUp,
-  MessageSquare,
   CheckCircle2,
+  Eye,
+  EyeOff,
+  ShieldCheck,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import FramerWrapper from "@/components/animation/FramerWrapper";
@@ -21,13 +21,17 @@ import MagneticButton from "@/components/ReactBits/MagneticButton";
 import { useTheme } from "@/components/ThemeProvider";
 import { audioHaptics } from "@/lib/audioHaptics";
 
-const TOPIC_OPTIONS = [
-  { id: "web-dev", label: "Web Development" },
-  { id: "ai", label: "AI Solutions" },
-  { id: "career", label: "Job Opportunity" },
-  { id: "collab", label: "Collaboration" },
-  { id: "general", label: "General Chat" },
-];
+const EMAIL_USER = "atulllmishra1";
+const EMAIL_DOMAIN = "gmail.com";
+const FULL_EMAIL = `${EMAIL_USER}@${EMAIL_DOMAIN}`;
+const MASKED_EMAIL = `${EMAIL_USER.slice(0, 4)}••••••@${EMAIL_DOMAIN}`;
+
+const PHONE_COUNTRY = "+91";
+const PHONE_PREFIX = "74588";
+const PHONE_SUFFIX = "44711";
+const FULL_PHONE = `${PHONE_COUNTRY}${PHONE_PREFIX}${PHONE_SUFFIX}`;
+const DISPLAY_PHONE = `(${PHONE_COUNTRY}) ${PHONE_PREFIX} ${PHONE_SUFFIX}`;
+const MASKED_PHONE = `(${PHONE_COUNTRY}) ${PHONE_PREFIX} •••••`;
 
 const SOCIAL_LINKS = [
   { name: "GitHub", href: "https://github.com/atulllmishra/", handle: "github.com/atulllmishra" },
@@ -41,6 +45,8 @@ export default function Contact() {
   const isLight = theme === "light";
   const accentColor = isLight ? "#C4563A" : "#E07A5F";
 
+  const [revealedEmail, setRevealedEmail] = useState(false);
+  const [revealedPhone, setRevealedPhone] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedPhone, setCopiedPhone] = useState(false);
 
@@ -50,9 +56,9 @@ export default function Contact() {
     phone: "",
     subject: "Web Development",
     message: "",
+    honeypot: "",
   });
 
-  const [selectedTopic, setSelectedTopic] = useState<string>("Web Development");
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -69,14 +75,13 @@ export default function Contact() {
     }
   };
 
-  const handleTopicClick = (topicLabel: string) => {
-    setSelectedTopic(topicLabel);
-    setFormData((prev) => ({ ...prev, subject: topicLabel }));
-    audioHaptics.playClick(350, 0.04, "square");
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (formData.honeypot) {
+      setSubmitted(true);
+      return;
+    }
+
     if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
       setError("Please fill in all required fields (Name, Email, and Message).");
       audioHaptics.playPop(false);
@@ -109,8 +114,8 @@ export default function Contact() {
         phone: "",
         subject: "Web Development",
         message: "",
+        honeypot: "",
       });
-      setSelectedTopic("Web Development");
     } catch (err: unknown) {
       const errorObj = err as Error;
       setError(errorObj?.message || "An unexpected error occurred. Please try again.");
@@ -120,30 +125,22 @@ export default function Contact() {
     }
   };
 
-  const scrollToTop = () => {
-    audioHaptics.playClick(400, 0.05, "sine");
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   return (
-    <section id="contact" className="py-24 relative border-t border-card scroll-mt-24 font-serif">
-      <div className="max-w-6xl mx-auto px-6 font-serif">
+    <section id="contact" className="py-24 relative border-t border-card scroll-mt-24">
+      <div className="max-w-6xl mx-auto px-6">
         
         {/* Section Header */}
-        <FramerWrapper y={20} className="mb-14 space-y-3 font-serif">
+        <FramerWrapper y={20} className="mb-14 space-y-3">
           <div
-            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-main border border-card text-xs font-serif font-bold uppercase tracking-wider"
+            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-main border border-card text-xs font-bold uppercase tracking-wider"
             style={{ color: accentColor }}
           >
             <Mail className="w-3.5 h-3.5" />
             <span>GET IN TOUCH</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight font-serif">
-            START A <span style={{ color: accentColor }}>CONVERSATION</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight">
+            LET&apos;S <span style={{ color: accentColor }}>CONNECT !</span>
           </h2>
-          <p className="text-secondary text-sm md:text-base font-normal max-w-xl leading-relaxed font-serif">
-            Have a project in mind, an exciting opportunity, or want to discuss AI systems and web engineering? Let&apos;s connect!
-          </p>
         </FramerWrapper>
 
         {/* 2-Column Responsive Layout */}
@@ -159,93 +156,193 @@ export default function Contact() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                   <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500" />
                 </span>
-                <span className="text-xs font-mono font-bold uppercase tracking-wider text-primary">
-                  Available for new opportunities
+                <span className="text-xs font-bold uppercase tracking-wider text-primary">
+                  Open to work!
                 </span>
               </div>
-              <p className="text-xs text-secondary font-medium mt-2 leading-relaxed">
-                Currently open for Full-Stack &amp; AI Engineering roles, freelance projects, and research collaborations.
-              </p>
             </div>
 
-            {/* Email Card */}
+            {/* Email Card with Click-to-Reveal */}
             <div
               className="p-4 rounded-2xl bg-card border border-card shadow-sm hover:border-accent/50 transition-all duration-300 flex items-center justify-between gap-3 group"
               onMouseEnter={() => audioHaptics.playClick(600, 0.02, "sine")}
             >
               <div className="flex items-center gap-3.5 min-w-0">
                 <div
-                  className="p-3 rounded-xl bg-main border border-card transition-colors"
+                  className="p-3 rounded-xl bg-main border border-card transition-colors shrink-0"
                   style={{ color: accentColor }}
                 >
                   <Mail className="w-4 h-4" />
                 </div>
                 <div className="min-w-0">
-                  <span className="text-[10px] font-mono text-secondary uppercase font-bold tracking-wider block">
-                    Direct Email
-                  </span>
-                  <a
-                    href="mailto:atulllmishra1@gmail.com"
-                    className="text-xs sm:text-sm font-bold text-primary hover:text-accent font-mono block truncate transition-colors"
-                  >
-                    atulllmishra1@gmail.com
-                  </a>
+                  <div className="flex items-center gap-1.5 mb-0.5">
+                    <span className="text-[10px] font-mono text-secondary uppercase font-bold tracking-wider">
+                      Direct Email
+                    </span>
+
+                  </div>
+                  <AnimatePresence mode="wait">
+                    {!revealedEmail ? (
+                      <motion.p
+                        key="masked"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="text-xs sm:text-sm font-bold text-secondary/70 font-mono tracking-wider truncate select-none"
+                      >
+                        {MASKED_EMAIL}
+                      </motion.p>
+                    ) : (
+                      <motion.a
+                        key="revealed"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        href={`mailto:${FULL_EMAIL}`}
+                        className="text-xs sm:text-sm font-bold text-primary hover:text-accent font-mono block truncate transition-colors"
+                      >
+                        {FULL_EMAIL}
+                      </motion.a>
+                    )}
+                  </AnimatePresence>
                 </div>
               </div>
 
-              <button
-                type="button"
-                onClick={() => copyToClipboard("atulllmishra1@gmail.com", "email")}
-                className="p-2.5 rounded-xl bg-main border border-card text-secondary hover:text-primary hover:border-accent transition-all shrink-0 cursor-pointer active:scale-95"
-                title="Copy Email"
-                aria-label="Copy Email Address"
-              >
-                {copiedEmail ? (
-                  <Check className="w-4 h-4 text-emerald-500" />
+              <div className="flex items-center gap-1.5 shrink-0">
+                {!revealedEmail ? (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setRevealedEmail(true);
+                      audioHaptics.playClick(500, 0.03, "sine");
+                    }}
+                    className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-main border border-card text-xs font-mono font-bold text-primary hover:text-accent hover:border-accent transition-all cursor-pointer active:scale-95 shadow-sm"
+                    title="Click to reveal email"
+                  >
+                    <Eye className="w-3.5 h-3.5" style={{ color: accentColor }} />
+                    <span className="text-[11px]">Reveal</span>
+                  </button>
                 ) : (
-                  <Copy className="w-4 h-4" />
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => copyToClipboard(FULL_EMAIL, "email")}
+                      className="p-2.5 rounded-xl bg-main border border-card text-secondary hover:text-primary hover:border-accent transition-all cursor-pointer active:scale-95 shadow-sm"
+                      title="Copy Email"
+                      aria-label="Copy Email Address"
+                    >
+                      {copiedEmail ? (
+                        <Check className="w-4 h-4 text-emerald-500" />
+                      ) : (
+                        <Copy className="w-4 h-4" />
+                      )}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setRevealedEmail(false);
+                        audioHaptics.playClick(400, 0.02, "sine");
+                      }}
+                      className="p-2.5 rounded-xl bg-main border border-card text-secondary hover:text-primary hover:border-accent transition-all cursor-pointer active:scale-95 shadow-sm"
+                      title="Hide Email"
+                      aria-label="Hide Email Address"
+                    >
+                      <EyeOff className="w-4 h-4" />
+                    </button>
+                  </>
                 )}
-              </button>
+              </div>
             </div>
 
-            {/* Phone Card */}
+            {/* Phone Card with Click-to-Reveal */}
             <div
               className="p-4 rounded-2xl bg-card border border-card shadow-sm hover:border-accent/50 transition-all duration-300 flex items-center justify-between gap-3 group"
               onMouseEnter={() => audioHaptics.playClick(600, 0.02, "sine")}
             >
               <div className="flex items-center gap-3.5 min-w-0">
                 <div
-                  className="p-3 rounded-xl bg-main border border-card transition-colors"
+                  className="p-3 rounded-xl bg-main border border-card transition-colors shrink-0"
                   style={{ color: accentColor }}
                 >
                   <Phone className="w-4 h-4" />
                 </div>
                 <div className="min-w-0">
-                  <span className="text-[10px] font-mono text-secondary uppercase font-bold tracking-wider block">
-                    Phone / WhatsApp
-                  </span>
-                  <a
-                    href="tel:+917458844711"
-                    className="text-xs sm:text-sm font-bold text-primary hover:text-accent font-mono block truncate transition-colors"
-                  >
-                    (+91) 74588 44711
-                  </a>
+                  <div className="flex items-center gap-1.5 mb-0.5">
+                    <span className="text-[10px] font-mono text-secondary uppercase font-bold tracking-wider">
+                      Phone / WhatsApp
+                    </span>
+                  </div>
+                  <AnimatePresence mode="wait">
+                    {!revealedPhone ? (
+                      <motion.p
+                        key="masked"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="text-xs sm:text-sm font-bold text-secondary/70 font-mono tracking-wider truncate select-none"
+                      >
+                        {MASKED_PHONE}
+                      </motion.p>
+                    ) : (
+                      <motion.a
+                        key="revealed"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        href={`tel:${FULL_PHONE}`}
+                        className="text-xs sm:text-sm font-bold text-primary hover:text-accent font-mono block truncate transition-colors"
+                      >
+                        {DISPLAY_PHONE}
+                      </motion.a>
+                    )}
+                  </AnimatePresence>
                 </div>
               </div>
 
-              <button
-                type="button"
-                onClick={() => copyToClipboard("+917458844711", "phone")}
-                className="p-2.5 rounded-xl bg-main border border-card text-secondary hover:text-primary hover:border-accent transition-all shrink-0 cursor-pointer active:scale-95"
-                title="Copy Phone"
-                aria-label="Copy Phone Number"
-              >
-                {copiedPhone ? (
-                  <Check className="w-4 h-4 text-emerald-500" />
+              <div className="flex items-center gap-1.5 shrink-0">
+                {!revealedPhone ? (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setRevealedPhone(true);
+                      audioHaptics.playClick(500, 0.03, "sine");
+                    }}
+                    className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-main border border-card text-xs font-mono font-bold text-primary hover:text-accent hover:border-accent transition-all cursor-pointer active:scale-95 shadow-sm"
+                    title="Click to reveal phone number"
+                  >
+                    <Eye className="w-3.5 h-3.5" style={{ color: accentColor }} />
+                    <span className="text-[11px]">Reveal</span>
+                  </button>
                 ) : (
-                  <Copy className="w-4 h-4" />
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => copyToClipboard(FULL_PHONE, "phone")}
+                      className="p-2.5 rounded-xl bg-main border border-card text-secondary hover:text-primary hover:border-accent transition-all cursor-pointer active:scale-95 shadow-sm"
+                      title="Copy Phone"
+                      aria-label="Copy Phone Number"
+                    >
+                      {copiedPhone ? (
+                        <Check className="w-4 h-4 text-emerald-500" />
+                      ) : (
+                        <Copy className="w-4 h-4" />
+                      )}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setRevealedPhone(false);
+                        audioHaptics.playClick(400, 0.02, "sine");
+                      }}
+                      className="p-2.5 rounded-xl bg-main border border-card text-secondary hover:text-primary hover:border-accent transition-all cursor-pointer active:scale-95 shadow-sm"
+                      title="Hide Phone"
+                      aria-label="Hide Phone Number"
+                    >
+                      <EyeOff className="w-4 h-4" />
+                    </button>
+                  </>
                 )}
-              </button>
+              </div>
             </div>
 
             {/* Location & Affiliation */}
@@ -258,13 +355,10 @@ export default function Contact() {
               </div>
               <div className="min-w-0">
                 <span className="text-[10px] font-mono text-secondary uppercase font-bold tracking-wider block">
-                  Location &amp; Campus
+                  Location 
                 </span>
                 <p className="text-xs sm:text-sm font-bold text-primary truncate">
-                  MCAET, ANDUAT University
-                </p>
-                <p className="text-xs text-secondary font-mono truncate">
-                  Ayodhya / Uttar Pradesh, India
+                  Jamshedpur Jharkhand
                 </p>
               </div>
             </div>
@@ -309,14 +403,11 @@ export default function Contact() {
           <FramerWrapper y={20} delay={0.2} className="lg:col-span-7">
             <div className="p-6 sm:p-8 rounded-3xl bg-card border border-card shadow-lg backdrop-blur-sm">
               <div className="flex items-center gap-2 mb-2">
-                <MessageSquare className="w-4 h-4" style={{ color: accentColor }} />
+
                 <h3 className="text-xl font-bold tracking-tight text-primary">
-                  Send a Direct Message
+                  Get In Touch
                 </h3>
               </div>
-              <p className="text-xs text-secondary font-medium mb-6">
-                Drop your details and message below. I will receive it directly and reply promptly.
-              </p>
 
               {submitted ? (
                 <motion.div
@@ -334,7 +425,7 @@ export default function Contact() {
                     Message Sent Successfully!
                   </h4>
                   <p className="text-secondary text-xs sm:text-sm max-w-md mx-auto leading-relaxed">
-                    Thank you for reaching out! Your message has been safely delivered and I will get back to you shortly.
+                    Thank you for reaching out,I will get back to you shortly.
                   </p>
                   <div className="pt-2">
                     <button
@@ -342,12 +433,24 @@ export default function Contact() {
                       onClick={() => setSubmitted(false)}
                       className="px-5 py-2.5 rounded-xl bg-main border border-card text-xs font-mono font-bold text-secondary hover:text-primary hover:border-accent transition-all cursor-pointer shadow-sm"
                     >
-                      Send Another Message
+                      Continue
                     </button>
                   </div>
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
+                  {/* Honeypot field (hidden from real users, traps automated spam bots) */}
+                  <input
+                    type="text"
+                    name="website_hp"
+                    value={formData.honeypot}
+                    onChange={(e) => setFormData({ ...formData, honeypot: e.target.value })}
+                    className="hidden"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    aria-hidden="true"
+                  />
+
                   {error && (
                     <div className="p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-500 text-xs flex items-center justify-between gap-2 font-medium">
                       <span>{error}</span>
@@ -400,44 +503,14 @@ export default function Contact() {
                       <label className="font-bold text-secondary">
                         Phone / WhatsApp
                       </label>
-                      <span className="text-[10px] text-secondary font-mono uppercase">
-                        Optional
-                      </span>
                     </div>
                     <input
                       type="tel"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      placeholder="+91 98765 43210 (Optional)"
+                      placeholder="+91 1234567890 (Optional)"
                       className="w-full bg-main border border-card rounded-xl px-3.5 py-2.5 text-sm text-primary placeholder:text-secondary/50 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/40 transition-all font-medium font-mono"
                     />
-                  </div>
-
-                  {/* Topic Selector Pills */}
-                  <div className="space-y-2 pt-1">
-                    <label className="text-xs font-mono font-bold text-secondary block">
-                      Topic / Subject
-                    </label>
-                    <div className="flex flex-wrap gap-2">
-                      {TOPIC_OPTIONS.map((topic) => {
-                        const isSelected = selectedTopic === topic.label;
-                        return (
-                          <button
-                            key={topic.id}
-                            type="button"
-                            onClick={() => handleTopicClick(topic.label)}
-                            className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all border cursor-pointer ${
-                              isSelected
-                                ? "text-white shadow-sm"
-                                : "bg-main border-card text-secondary hover:text-primary hover:border-accent"
-                            }`}
-                            style={isSelected ? { backgroundColor: accentColor, borderColor: accentColor } : {}}
-                          >
-                            {topic.label}
-                          </button>
-                        );
-                      })}
-                    </div>
                   </div>
 
                   {/* Message Field */}
@@ -451,7 +524,7 @@ export default function Contact() {
                       rows={4}
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      placeholder="Write your message or project requirements here..."
+                      placeholder="Write your message here.."
                       className="w-full bg-main border border-card rounded-xl px-3.5 py-2.5 text-sm text-primary placeholder:text-secondary/50 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/40 transition-all font-medium resize-none leading-relaxed"
                     />
                   </div>
@@ -518,14 +591,6 @@ export default function Contact() {
             >
               Email
             </a>
-            <button
-              onClick={scrollToTop}
-              className="inline-flex items-center gap-1 hover:text-primary transition-colors cursor-pointer"
-              title="Back to Top"
-            >
-              <ArrowUp className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Top</span>
-            </button>
           </div>
         </FramerWrapper>
 

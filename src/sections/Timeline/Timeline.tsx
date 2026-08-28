@@ -14,18 +14,18 @@ const iconMap = {
 
 export default function Timeline() {
   return (
-    <section id="timeline" className="py-20 relative bg-main border-t border-card scroll-mt-24 font-serif">
+    <section id="timeline" className="py-20 relative bg-main border-t border-card scroll-mt-24">
       <div className="max-w-6xl mx-auto px-6">
         
         {/* Header */}
         <div className="max-w-3xl mb-12 space-y-2">
-          <span className="text-xs font-serif text-accent uppercase tracking-wider block font-semibold">
+          <span className="text-xs text-accent uppercase tracking-wider block font-bold">
             Timeline
           </span>
-          <h2 className="text-2xl sm:text-3xl font-bold text-primary tracking-tight font-serif">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-primary tracking-tight">
             Journey & Experience
           </h2>
-          <p className="text-secondary text-sm font-serif">
+          <p className="text-secondary text-sm font-medium">
             Academic achievements, software development milestones, hackathons, and production deployments.
           </p>
         </div>
@@ -47,12 +47,12 @@ export default function Timeline() {
                   
                   {/* Top Bar: Year & Badge */}
                   <div className="flex flex-wrap items-center justify-between gap-2 border-b border-card pb-3">
-                    <div className="flex items-center gap-2 text-xs font-serif text-secondary">
+                    <div className="flex items-center gap-2 text-xs text-secondary font-medium">
                       <Calendar className="w-3.5 h-3.5 text-accent" />
                       <span>{item.year}</span>
                     </div>
                     {item.badge && (
-                      <span className="px-2.5 py-0.5 rounded text-[11px] font-serif font-medium bg-accent/10 text-accent border border-accent/20">
+                      <span className="px-2.5 py-0.5 rounded text-[11px] font-semibold bg-accent/10 text-accent border border-accent/20">
                         {item.badge}
                       </span>
                     )}
@@ -60,7 +60,7 @@ export default function Timeline() {
 
                   {/* Title & Role */}
                   <div>
-                    <h3 className="text-base font-bold text-primary tracking-tight flex items-center gap-2 font-serif">
+                    <h3 className="text-base font-bold text-primary tracking-tight flex items-center gap-2">
                       {item.title}
                       {item.link && (
                         <a
@@ -74,19 +74,19 @@ export default function Timeline() {
                         </a>
                       )}
                     </h3>
-                    <p className="text-xs text-accent font-serif mt-0.5 font-medium">
+                    <p className="text-xs text-accent mt-0.5 font-semibold">
                       {item.role} • <span className="text-secondary">{item.institution}</span>
                     </p>
                   </div>
 
                   {/* Location */}
-                  <div className="flex items-center gap-1.5 text-xs text-secondary font-serif">
+                  <div className="flex items-center gap-1.5 text-xs text-secondary font-medium">
                     <MapPin className="w-3.5 h-3.5 text-secondary/70" />
                     <span>{item.location}</span>
                   </div>
 
                   {/* Description */}
-                  <p className="text-xs text-secondary leading-relaxed font-serif">
+                  <p className="text-xs text-secondary leading-relaxed font-normal">
                     {item.description}
                   </p>
 
@@ -95,7 +95,7 @@ export default function Timeline() {
                     {item.tags.map((tag: string) => (
                       <span
                         key={tag}
-                        className="px-2 py-0.5 rounded text-[10px] font-serif bg-main text-secondary border border-card"
+                        className="px-2 py-0.5 rounded text-[10px] font-medium bg-main text-secondary border border-card"
                       >
                         #{tag}
                       </span>

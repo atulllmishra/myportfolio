@@ -1,30 +1,41 @@
 @import "tailwindcss";
 
+@theme {
+  --font-poppins: var(--font-poppins), 'Poppins', system-ui, -apple-system, sans-serif;
+  --font-sans: var(--font-poppins), 'Poppins', system-ui, -apple-system, sans-serif;
+  --font-serif: var(--font-poppins), 'Poppins', system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-poppins), 'Poppins', system-ui, -apple-system, monospace;
+}
+
 @layer base {
   :root {
-    --bg-main: #0D0E12;
-    --bg-card: #161820;
-    --border-card: #2C2D35;
-    --text-primary: #F3F1E7;
-    --text-secondary: #A3A198;
-    --accent-primary: #E07A5F;
-    --font-poppins: 'Poppins', sans-serif;
-  }
-
-  html.light, [data-theme="light"] {
-    --bg-main: #FDF6EE;
+    --bg-main: #fff9f5;
     --bg-card: #FFFFFF;
-    --border-card: #E8DCCB;
-    --text-primary: #352A25;
+    --border-card: #f3e2d5;
+    --text-primary: #2e221d;
     --text-secondary: #705B50;
     --accent-primary: #C4563A;
-    --font-poppins: 'Poppins', sans-serif;
+    --font-poppins: 'Poppins', system-ui, -apple-system, sans-serif;
+  }
+
+  html.light, [data-theme="light"], html {
+    --bg-main: #fff9f5;
+    --bg-card: #FFFFFF;
+    --border-card: #f3e2d5;
+    --text-primary: #2e221d;
+    --text-secondary: #705B50;
+    --accent-primary: #C4563A;
+    --font-poppins: 'Poppins', system-ui, -apple-system, sans-serif;
+  }
+
+  *, *::before, *::after {
+    font-family: var(--font-poppins), 'Poppins', system-ui, -apple-system, sans-serif !important;
   }
 
   body {
     background-color: var(--bg-main);
     color: var(--text-primary);
-    font-family: var(--font-poppins), "Poppins", system-ui, -apple-system, sans-serif;
+    font-family: var(--font-poppins), 'Poppins', system-ui, -apple-system, sans-serif !important;
     overflow-x: hidden;
     letter-spacing: -0.01em;
     -webkit-font-smoothing: antialiased;

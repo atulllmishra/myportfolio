@@ -31,7 +31,7 @@ export default function LoadingScreen() {
       }`}
     >
       <div className="flex flex-col items-center space-y-6 max-w-sm px-6">
-        <span className="font-serif text-6xl md:text-7xl font-bold tracking-tighter text-[#C4563A]">
+        <span className="text-6xl md:text-7xl font-bold tracking-tighter text-[#C4563A]">
           {progress}%
         </span>
         <div className="w-48 h-1.5 bg-[#f3e2d5] rounded-full overflow-hidden">
@@ -40,7 +40,7 @@ export default function LoadingScreen() {
             style={{ width: `${progress}%` }}
           />
         </div>
-        <span className="text-xs font-serif tracking-[0.3em] uppercase text-[#705B50]">
+        <span className="text-xs tracking-[0.3em] uppercase text-[#705B50] font-semibold">
           ATUL KUMAR MISHRA
         </span>
       </div>
