@@ -18,7 +18,9 @@
     --font-poppins: 'Poppins', system-ui, -apple-system, sans-serif;
   }
 
-  html.light, [data-theme="light"], html {
+  html.light,
+  [data-theme="light"],
+  html {
     --bg-main: #fff9f5;
     --bg-card: #FFFFFF;
     --border-card: #f3e2d5;
@@ -28,7 +30,9 @@
     --font-poppins: 'Poppins', system-ui, -apple-system, sans-serif;
   }
 
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     font-family: var(--font-poppins), 'Poppins', system-ui, -apple-system, sans-serif !important;
   }
 
@@ -44,7 +48,8 @@
     touch-action: manipulation;
   }
 
-  button, a {
+  button,
+  a {
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
   }
@@ -53,13 +58,16 @@
   ::-webkit-scrollbar {
     width: 6px;
   }
+
   ::-webkit-scrollbar-track {
     background: #fff9f5;
   }
+
   ::-webkit-scrollbar-thumb {
     background: #f0dbce;
     border-radius: 3px;
   }
+
   ::-webkit-scrollbar-thumb:hover {
     background: #e07a5f;
   }
@@ -175,8 +183,18 @@ html.light .border-\[\#1e293b\],
 }
 
 /* Typography in Light Mode */
-html.light h1, html.light h2, html.light h3, html.light h4, html.light h5, html.light h6,
-[data-theme="light"] h1, [data-theme="light"] h2, [data-theme="light"] h3, [data-theme="light"] h4, [data-theme="light"] h5, [data-theme="light"] h6 {
+html.light h1,
+html.light h2,
+html.light h3,
+html.light h4,
+html.light h5,
+html.light h6,
+[data-theme="light"] h1,
+[data-theme="light"] h2,
+[data-theme="light"] h3,
+[data-theme="light"] h4,
+[data-theme="light"] h5,
+[data-theme="light"] h6 {
   color: #2e221d !important;
 }
 
@@ -362,6 +380,7 @@ html {
 }
 
 @keyframes text-slide {
+
   0%,
   16% {
     transform: translateY(0%);

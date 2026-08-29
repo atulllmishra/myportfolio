@@ -34,24 +34,48 @@ import { useTheme } from "@/components/ThemeProvider";
 export interface PaletteCommand {
   id: string;
   name: string;
-  category: "Navigation" | "Projects" | "Skills" | "Links & Social" | "Preferences";
+
   description: string;
   keywords: string[];
   icon: any;
   action: () => void;
   badge?: string;
-  shortcut?: string;
+
 }
 
 export default function CommandPalette() {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [isMuted, setIsMuted] = useState(false);
+  
   const inputRef = useRef<HTMLInputElement>(null);
   const resultsContainerRef = useRef<HTMLDivElement>(null);
   const { theme } = useTheme();
 
-  // Keyboard shortcut listener for Cmd+K / Ctrl+K and custom events
+  const isLight = theme === "light";
+  const accentColor = "#C4563A";
+  const accentHover = "#E07A5F";
+
+  // Initialize sound mute state
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setIsMuted(audioHaptics.getMuted());
+    }
+  }, []);
+
+  // Lock background scrolling when open to prevent interference
+  useEffect(() => {
+    if (isOpen) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [isOpen]);
+
+  // Keyboard shortcut listener for Cmd+K / Ctrl+K / Ctrl+`
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       // Toggle palette on Cmd+K or Ctrl+K or Ctrl+`
@@ -95,9 +119,6 @@ export default function CommandPalette() {
     }
   }, [isOpen]);
 
-  const isLight = theme === "light";
-  const accentColor = isLight ? "#C4563A" : "#E07A5F";
-
   const scrollToSection = (id: string) => {
     setIsOpen(false);
     const element = document.getElementById(id);
@@ -117,6 +138,14 @@ export default function CommandPalette() {
     window.open(url, "_blank", "noopener,noreferrer");
   };
 
+  const toggleSound = () => {
+    const muted = audioHaptics.toggleMute();
+    setIsMuted(muted);
+    if (!muted) {
+      audioHaptics.playClick(500, 0.05);
+    }
+  };
+
   // Comprehensive command navigation library
   const allCommands: PaletteCommand[] = useMemo(() => [
     // -------------------------------------------------------------
@@ -125,113 +154,85 @@ export default function CommandPalette() {
     {
       id: "nav-home",
       name: "Navigate to Home",
-      category: "Navigation",
-      description: "Return to the top hero section & overview",
+      description: "Return to top hero overview & introduction",
       keywords: ["home", "hero", "start", "top", "intro", "welcome", "main"],
       icon: HomeIcon,
       action: () => scrollToSection("hero"),
-      shortcut: "G H",
     },
     {
       id: "nav-about",
       name: "Navigate to About Me",
-      category: "Navigation",
       description: "Read bio, engineering philosophy, and background",
       keywords: ["about", "bio", "profile", "background", "whoami", "me", "story", "education"],
       icon: User,
       action: () => scrollToSection("about"),
-      shortcut: "G A",
     },
     {
       id: "nav-projects",
       name: "Navigate to Projects",
-      category: "Navigation",
       description: "Explore deployed apps, SaaS products, and AI solutions",
       keywords: ["projects", "work", "portfolio", "apps", "showcase", "builds", "software"],
       icon: FolderGit2,
       action: () => scrollToSection("projects"),
-      shortcut: "G P",
     },
     {
       id: "nav-skills",
       name: "Navigate to Technical Skills",
-      category: "Navigation",
       description: "Fullstack capabilities, architecture, and languages",
       keywords: ["skills", "tech", "stack", "languages", "toolkit", "expertise", "frameworks", "tools"],
       icon: LightbulbIcon,
       action: () => scrollToSection("skills"),
-      shortcut: "G S",
     },
     {
       id: "nav-contact",
       name: "Navigate to Contact",
-      category: "Navigation",
       description: "Send direct message, reach out, or schedule a chat",
       keywords: ["contact", "email", "message", "hire", "touch", "reach", "inquiry", "collaborate"],
       icon: Mail,
       action: () => scrollToSection("contact"),
-      shortcut: "G M",
     },
 
-    // -------------------------------------------------------------
-    // FEATURED PROJECTS DEEP-LINKS
-    // -------------------------------------------------------------
     {
       id: "proj-heybuddy",
       name: "Project: heyBuddy (AI EdTech)",
-      category: "Projects",
       description: "AI Multilingual Video & Voice Learning Platform",
       keywords: ["heybuddy", "ai", "video", "edtech", "multilingual", "tts", "canvas", "learning"],
       icon: Sparkles,
       badge: "Active",
-      action: () => {
-        scrollToSection("projects");
-      },
+      action: () => scrollToSection("projects"),
     },
     {
       id: "proj-procurehub",
       name: "Project: ProcureHub (Enterprise SaaS)",
-      category: "Projects",
       description: "B2B IT Procurement & Sealed Bid Verification",
       keywords: ["procurehub", "saas", "b2b", "procurement", "crypto", "bidding", "contracts"],
       icon: Layers,
-      badge: "Production",
-      action: () => {
-        scrollToSection("projects");
-      },
+      badge: "Enterprise",
+      action: () => scrollToSection("projects"),
     },
     {
       id: "proj-smartagri",
       name: "Project: Smart Agri (Precision Agritech)",
-      category: "Projects",
       description: "PWA Crop Weather Intelligence & Mandi Analytics",
       keywords: ["smart agri", "agritech", "farming", "pwa", "weather", "iit finalist", "offline"],
       icon: Globe,
       badge: "IIT Finalist",
-      action: () => {
-        scrollToSection("projects");
-      },
+      action: () => scrollToSection("projects"),
     },
     {
       id: "proj-mcaet",
       name: "Project: MCAET College AI Chatbot",
-      category: "Projects",
       description: "RAG Generative Knowledge Index for University Admissions",
       keywords: ["mcaet", "college", "chatbot", "rag", "vector", "admissions", "campus"],
       icon: Code2,
       badge: "Live",
-      action: () => {
-        scrollToSection("projects");
-      },
+      action: () => scrollToSection("projects"),
     },
 
-    // -------------------------------------------------------------
-    // SKILLS & CAPABILITIES SEARCH
-    // -------------------------------------------------------------
+
     {
       id: "skill-react",
       name: "Skill: React & Next.js Architecture",
-      category: "Skills",
       description: "React 19, Server Actions, App Router, Performance Tuning",
       keywords: ["react", "nextjs", "next.js", "frontend", "hooks", "turbopack", "ssr", "components"],
       icon: Code2,
@@ -240,7 +241,6 @@ export default function CommandPalette() {
     {
       id: "skill-typescript",
       name: "Skill: TypeScript & Tooling",
-      category: "Skills",
       description: "Strict Typing, Generics, Zod Validation, Tailwind v4",
       keywords: ["typescript", "ts", "types", "zod", "strict", "tailwind", "tooling"],
       icon: Code2,
@@ -249,7 +249,6 @@ export default function CommandPalette() {
     {
       id: "skill-cpp",
       name: "Skill: C++ & Core Algorithms",
-      category: "Skills",
       description: "Data Structures, STL, Dynamic Programming, Problem Solving",
       keywords: ["cpp", "c++", "dsa", "algorithms", "data structures", "stl", "leetcode", "pointers"],
       icon: Cpu,
@@ -258,20 +257,16 @@ export default function CommandPalette() {
     {
       id: "skill-node",
       name: "Skill: Node.js & API Design",
-      category: "Skills",
       description: "Express, REST APIs, Microservices, Edge Functions",
       keywords: ["node", "nodejs", "backend", "api", "express", "rest", "server", "databases"],
       icon: Layers,
       action: () => scrollToSection("skills"),
     },
 
-    // -------------------------------------------------------------
-    // LINKS, SOCIAL & DIRECT RESUME
-    // -------------------------------------------------------------
+
     {
       id: "link-resume",
       name: "Download Resume / Curriculum Vitae",
-      category: "Links & Social",
       description: "Open and download official PDF resume",
       keywords: ["resume", "cv", "curriculum vitae", "pdf", "download resume", "bio pdf"],
       icon: Download,
@@ -281,7 +276,6 @@ export default function CommandPalette() {
     {
       id: "link-github",
       name: "GitHub Profile (@atulllmishra)",
-      category: "Links & Social",
       description: "Explore open-source repositories and code contributions",
       keywords: ["github", "git", "repos", "repositories", "code", "open source", "commits"],
       icon: Code2,
@@ -290,7 +284,6 @@ export default function CommandPalette() {
     {
       id: "link-linkedin",
       name: "LinkedIn Profile",
-      category: "Links & Social",
       description: "Connect on LinkedIn for professional networking",
       keywords: ["linkedin", "network", "connect", "jobs", "career", "professional"],
       icon: Briefcase,
@@ -298,18 +291,15 @@ export default function CommandPalette() {
     },
     {
       id: "link-instagram",
-      name: "Instagram Profile",
-      category: "Links & Social",
-      description: "Follow on Instagram (@atulllmishra)",
+      name: "Instagram Profile (@atulllmishra)",
+      description: "Follow on Instagram for creative updates",
       keywords: ["instagram", "insta", "social", "photos", "follow"],
       icon: Share2,
       action: () => openUrl("https://www.instagram.com/atulllmishra/"),
     },
-
     {
       id: "link-email",
       name: "Send Direct Email (atulllmishra1@gmail.com)",
-      category: "Links & Social",
       description: "Open mail client to send an email inquiry",
       keywords: ["email", "mail", "gmail", "send email", "inbox", "write"],
       icon: Mail,
@@ -318,41 +308,36 @@ export default function CommandPalette() {
     {
       id: "link-phone",
       name: "Phone / WhatsApp (+91 74588 44711)",
-      category: "Links & Social",
       description: "Initiate direct phone call or message",
       keywords: ["phone", "whatsapp", "call", "mobile", "number", "tel"],
       icon: Phone,
       action: () => openUrl("tel:+917458844711"),
     },
-  ], [isLight]);
 
-  // Default earlier commands shown initially before searching
-  const defaultEarlierCommands = useMemo<PaletteCommand[]>(() => [
     {
       id: "pref-gravity",
       name: "Zero-G Physics Mode",
-      category: "Preferences",
       description: "Interactive zero-gravity floating animation",
-      keywords: ["gravity", "zero-g", "physics"],
+      keywords: ["gravity", "zero-g", "physics", "fun", "easter egg"],
       icon: Cpu,
+      badge: "Interactive",
       action: () => {
         window.dispatchEvent(new CustomEvent("toggle-zero-g"));
         setIsOpen(false);
       },
     },
-    {
-      id: "nav-projects-default",
-      name: "Go to Projects",
-      category: "Navigation",
-      description: "Jump to featured projects and live demos",
-      keywords: ["projects", "work", "portfolio"],
-      icon: Hash,
-      action: () => scrollToSection("projects"),
-      shortcut: "G P",
-    },
-  ], [isLight]);
+  ], []);
 
-  // Fuzzy filter commands: Show default earlier items when query is empty, or search all sections/projects/skills
+  // Default suggestions shown before typing
+  const defaultEarlierCommands = useMemo<PaletteCommand[]>(() => [
+    allCommands[0], 
+    allCommands[2], 
+    allCommands[3], 
+    allCommands[14], 
+    allCommands[allCommands.length - 1], 
+  ], [allCommands]);
+
+  // Fuzzy filter commands
   const filteredCommands = useMemo(() => {
     if (!query.trim()) {
       return defaultEarlierCommands;
@@ -362,15 +347,13 @@ export default function CommandPalette() {
     return allCommands.filter((cmd) => {
       const nameMatch = cmd.name.toLowerCase().includes(cleanQuery);
       const descMatch = cmd.description.toLowerCase().includes(cleanQuery);
-      const categoryMatch = cmd.category.toLowerCase().includes(cleanQuery);
       const keywordMatch = cmd.keywords.some((k) => k.toLowerCase().includes(cleanQuery));
 
-      return nameMatch || descMatch || categoryMatch || keywordMatch;
+      return nameMatch || descMatch || keywordMatch;
     });
   }, [allCommands, defaultEarlierCommands, query]);
 
-
-  // Handle arrow key navigation & Enter trigger
+  // Handle keyboard arrow navigation & Enter trigger
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "ArrowDown") {
       e.preventDefault();
@@ -403,7 +386,7 @@ export default function CommandPalette() {
     if (resultsContainerRef.current) {
       const activeEl = resultsContainerRef.current.querySelector(`[data-index="${selectedIndex}"]`);
       if (activeEl) {
-        activeEl.scrollIntoView({ block: "nearest" });
+        activeEl.scrollIntoView({ block: "nearest", behavior: "smooth" });
       }
     }
   }, [selectedIndex]);
@@ -411,69 +394,88 @@ export default function CommandPalette() {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-start justify-center pt-16 sm:pt-24 px-3 sm:px-6">
-      {/* Backdrop */}
+    <div className="fixed inset-0 z-[100] flex items-start justify-center pt-14 sm:pt-20 px-3 sm:px-6">
+      
+
       <div 
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity animate-in fade-in duration-200"
-        onClick={() => { setIsOpen(false); audioHaptics.playPop(false); }}
+        className="absolute inset-0 bg-black/25 backdrop-blur-sm transition-opacity animate-in fade-in duration-200"
+        onClick={() => {
+          setIsOpen(false);
+          audioHaptics.playPop(false);
+        }}
       />
       
-      {/* Terminal Palette Body */}
-      <div className="relative w-full max-w-2xl bg-card/95 border border-card/80 backdrop-blur-2xl rounded-2xl sm:rounded-3xl shadow-2xl shadow-black/50 flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+
+      <div 
+        className="relative w-full max-w-2xl bg-[#fff9f5]/75 border border-white/70 backdrop-blur-3xl backdrop-saturate-150 rounded-2xl sm:rounded-3xl shadow-2xl shadow-black/10 flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200"
+        onClick={(e) => e.stopPropagation()}
+      >
         
-        {/* Input Header */}
-        <div className="flex items-center gap-3 px-4 sm:px-5 py-4 border-b border-card bg-main/60">
-          <Terminal className="w-5 h-5 shrink-0" style={{ color: accentColor }} />
+        <div className="flex items-center justify-between px-4 sm:px-5 py-3 border-b border-[#f3e2d5]/50 bg-white/35">
+          <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5">
+              <button
+                type="button"
+                onClick={() => { setIsOpen(false); audioHaptics.playPop(false); }}
+                title="Close (Esc)"
+                className="w-3 h-3 rounded-full bg-[#f87171] hover:brightness-95 transition-all cursor-pointer shadow-xs"
+              />
+              <span className="w-3 h-3 rounded-full bg-[#fbbf24] shadow-xs" />
+              <span className="w-3 h-3 rounded-full bg-[#34d399] shadow-xs" />
+            </div>
+
+            <div className="ml-2 flex items-center gap-1.5 text-[11px] font-mono text-[#705B50]">
+              <Terminal className="w-3.5 h-3.5 text-[#C4563A]" />
+              <span className="font-semibold text-[#2e221d]">Give your Input</span>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            {/* Audio Toggle Button */}
+            <button
+              type="button"
+              onClick={toggleSound}
+              title={isMuted ? "Unmute Audio Feedback" : "Mute Audio Feedback"}
+              className="p-1 rounded-md text-[#705B50] hover:text-[#C4563A] hover:bg-white/50 transition-colors cursor-pointer"
+            >
+              {isMuted ? <VolumeX className="w-3.5 h-3.5 text-rose-400" /> : <Volume2 className="w-3.5 h-3.5 text-[#C4563A]" />}
+            </button>
+          </div>
+        </div>
+
+        {/* Translucent Input Bar */}
+        <div className="flex items-center gap-3 px-4 sm:px-5 py-3.5 border-b border-[#f3e2d5]/40 bg-white/20">
+          <span className="text-sm font-bold font-mono text-[#C4563A] select-none">❯</span>
           <input
             ref={inputRef}
             type="text"
             value={query}
             onChange={handleInput}
             onKeyDown={handleKeyDown}
-            placeholder="Type a section, project, skill, or command (e.g. 'projects', 'heybuddy', 'react', 'github', 'cv')..."
-            className="flex-1 bg-transparent border-none outline-none text-primary font-mono text-xs sm:text-sm placeholder:text-secondary/50 min-w-0"
+            placeholder="Search projects, skills, commands, resume ...."
+            className="flex-1 bg-transparent p-2 border-none outline-none text-[#2e221d] font-mono text-xs sm:text-sm placeholder:text-[#a28c83] min-w-0"
             spellCheck={false}
           />
-          {query ? (
+          {query && (
             <button
               type="button"
               onClick={() => { setQuery(""); inputRef.current?.focus(); }}
-              className="p-1 rounded text-secondary hover:text-primary transition-colors cursor-pointer"
+              className="p-1 rounded-md text-[#705B50] hover:text-[#2e221d] hover:bg-white/40 transition-colors cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
-          ) : (
-            <div className="hidden sm:flex items-center gap-1.5 text-[10px] font-mono text-secondary bg-card/80 px-2 py-1 rounded border border-card">
-              <CmdIcon className="w-3 h-3" />
-              <span>K</span>
-            </div>
           )}
         </div>
 
-        {/* Quick Suggestion Pills */}
-        <div className="px-4 py-2 border-b border-card/50 bg-main/30 flex items-center gap-1.5 overflow-x-auto text-[11px] font-mono text-secondary scrollbar-none">
-          <span className="text-[10px] uppercase font-bold text-secondary/70 shrink-0 mr-1">Quick:</span>
-          {["Projects", "Skills", "heyBuddy", "About", "Contact", "Resume", "Theme"].map((pill) => (
-            <button
-              key={pill}
-              type="button"
-              onClick={() => { setQuery(pill); inputRef.current?.focus(); }}
-              className="px-2.5 py-0.5 rounded-full bg-card/70 hover:bg-card border border-card/60 hover:border-accent/40 text-secondary hover:text-primary whitespace-nowrap transition-all cursor-pointer"
-            >
-              {pill}
-            </button>
-          ))}
-        </div>
 
-        {/* Results List */}
         <div ref={resultsContainerRef} className="p-2 sm:p-3 max-h-96 overflow-y-auto space-y-1">
           {filteredCommands.length === 0 ? (
             <div className="px-4 py-12 text-center space-y-2">
-              <p className="text-sm font-mono text-secondary">
-                No commands matching "<span className="text-primary font-bold">{query}</span>"
+              <p className="text-sm font-mono text-[#705B50]">
+                No commands matching "<span className="text-[#2e221d] font-bold">{query}</span>"
               </p>
-              <p className="text-xs text-secondary/70">
-                Try searching for <span className="underline cursor-pointer" onClick={() => setQuery("projects")}>projects</span>, <span className="underline cursor-pointer" onClick={() => setQuery("skills")}>skills</span>, or <span className="underline cursor-pointer" onClick={() => setQuery("contact")}>contact</span>.
+              <p className="text-xs text-[#a28c83]">
+                Try searching for <span className="underline cursor-pointer hover:text-[#C4563A]" onClick={() => setQuery("projects")}>projects</span>, <span className="underline cursor-pointer hover:text-[#C4563A]" onClick={() => setQuery("skills")}>skills</span>, or <span className="underline cursor-pointer hover:text-[#C4563A]" onClick={() => setQuery("contact")}>contact</span>.
               </p>
             </div>
           ) : (
@@ -490,57 +492,53 @@ export default function CommandPalette() {
                     cmd.action();
                   }}
                   onMouseEnter={() => setSelectedIndex(i)}
-                  className={`w-full flex items-center justify-between p-3 rounded-xl transition-all cursor-pointer text-left group ${
+                  className={`w-full flex items-center justify-between p-3 rounded-xl sm:rounded-2xl transition-all duration-150 cursor-pointer text-left group ${
                     isSelected
-                      ? "bg-main/90 border border-card shadow-sm"
-                      : "hover:bg-main/50 border border-transparent"
+                      ? "bg-white/75 border border-[#C4563A]/30 shadow-md shadow-[#C4563A]/8"
+                      : "hover:bg-white/35 border border-transparent"
                   }`}
                 >
                   <div className="flex items-center gap-3.5 min-w-0 pr-2">
                     <div
                       className={`p-2 rounded-xl border shrink-0 transition-colors ${
                         isSelected
-                          ? "bg-accent/15 border-accent/40 text-accent"
-                          : "bg-card/70 border-card text-secondary group-hover:text-primary"
+                          ? "bg-[#C4563A]/15 border-[#C4563A]/30 text-[#C4563A]"
+                          : "bg-white/60 border-white/80 text-[#705B50] group-hover:text-[#2e221d]"
                       }`}
                     >
                       <Icon className="w-4 h-4" style={isSelected ? { color: accentColor } : {}} />
                     </div>
                     <div className="min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className={`text-xs sm:text-sm font-bold font-mono truncate ${
-                          isSelected ? "text-primary" : "text-primary/90"
+                        <span className={`text-xs sm:text-sm font-semibold font-mono truncate ${
+                          isSelected ? "text-[#2e221d]" : "text-[#2e221d]/90"
                         }`}>
                           {cmd.name}
                         </span>
                         {cmd.badge && (
                           <span
-                            className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded uppercase shrink-0"
-                            style={{ backgroundColor: `${accentColor}15`, color: accentColor }}
+                            className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded uppercase shrink-0 border"
+                            style={{ 
+                              backgroundColor: "rgba(196, 86, 58, 0.08)", 
+                              color: accentColor,
+                              borderColor: "rgba(196, 86, 58, 0.2)"
+                            }}
                           >
                             {cmd.badge}
                           </span>
                         )}
-                        <span className="text-[10px] font-mono text-secondary/60 uppercase hidden md:inline-block">
-                          [{cmd.category}]
-                        </span>
                       </div>
-                      <p className="text-[11px] sm:text-xs text-secondary truncate mt-0.5">
+                      <p className="text-[11px] sm:text-xs text-[#705B50] truncate mt-0.5">
                         {cmd.description}
                       </p>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-2 shrink-0">
-                    {cmd.shortcut && (
-                      <span className="text-[10px] font-mono text-secondary/60 bg-card px-1.5 py-0.5 rounded border border-card hidden sm:inline-block">
-                        {cmd.shortcut}
-                      </span>
-                    )}
                     <div className={`p-1 rounded-lg transition-transform ${
                       isSelected ? "translate-x-0.5 opacity-100" : "opacity-0 group-hover:opacity-100"
                     }`}>
-                      <ChevronRight className="w-4 h-4" style={{ color: accentColor }} />
+                      <ChevronRight className="w-4 h-4 text-[#C4563A]" />
                     </div>
                   </div>
                 </button>
@@ -548,25 +546,11 @@ export default function CommandPalette() {
             })
           )}
         </div>
-
-        {/* Terminal Footer Info */}
-        <div className="px-4 py-2.5 border-t border-card bg-main/70 flex items-center justify-between text-[11px] font-mono text-secondary">
-          <div className="flex items-center gap-3">
-            <span className="flex items-center gap-1">
-              <kbd className="px-1.5 py-0.5 rounded bg-card border border-card text-[9px]">↑↓</kbd>
-              <span>navigate</span>
-            </span>
-            <span className="flex items-center gap-1">
-              <kbd className="px-1.5 py-0.5 rounded bg-card border border-card text-[9px]">↵</kbd>
-              <span>select</span>
-            </span>
-            <span className="flex items-center gap-1">
-              <kbd className="px-1.5 py-0.5 rounded bg-card border border-card text-[9px]">esc</kbd>
-              <span>close</span>
-            </span>
-          </div>
-          <div className="text-secondary/70">
-            {filteredCommands.length} {filteredCommands.length === 1 ? "match" : "matches"}
+         
+         {/* result counter */}
+        <div className="px-4 py-2.5 border-t border-[#f3e2d5]/40 bg-white/30 flex items-center justify-between text-[11px] font-mono text-[#705B50]">
+          <div className="text-[#a28c83]">
+            {filteredCommands.length} {filteredCommands.length === 1 ? "result" : "results"}
           </div>
         </div>
 
@@ -574,3 +558,4 @@ export default function CommandPalette() {
     </div>
   );
 }
+
