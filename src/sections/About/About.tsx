@@ -116,10 +116,10 @@ const academicTags = [
 ];
 
 const hobbies = [
-  { name: "Chess", desc: "Tactical vision & endgame strategy", emoji: "" },
-  { name: "Basketball", desc: "Team rhythm & court flow", emoji: "" },
-  { name: "Side Projects", desc: "2 AM prototypes shipped to production", emoji: "" },
-  { name: "C++ Algorithms", desc: "Algorithmic purity & complexity optimization", emoji: "" },
+  { name: "Chess", desc: "", emoji: "" },
+  { name: "Basketball", desc: "", emoji: "" },
+  { name: "Side Projects", desc: "", emoji: "" },
+  { name: "Java Algorithms", desc: "", emoji: "" },
 ];
 
 export default function About() {
@@ -214,15 +214,8 @@ export default function About() {
 
 
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-6 mt-6 border-t border-card">
-                <div className="p-3 rounded-2xl bg-main/50 border border-card">
-                  <span className="text-[10px] text-secondary uppercase block font-semibold">Core Focus</span>
-                  <span className="text-xs font-bold text-primary mt-0.5 block">AI & Full-Stack</span>
-                </div>
-                <div className="p-3 rounded-2xl bg-main/50 border border-card">
-                  <span className="text-[10px] text-secondary uppercase block font-semibold">Location</span>
-                  <span className="text-xs font-bold text-primary mt-0.5 block">Ayodhya, India</span>
-                </div>
-                <div className="p-3 rounded-2xl bg-main/50 border border-card col-span-2 sm:col-span-1">
+                
+                <div className="p-3 rounded-2xl bg-main/50  border-card">
                   <span className="text-[10px] text-secondary uppercase block font-semibold">Availability</span>
                   <span className="text-xs font-bold text-accent mt-0.5 block">Open to Work</span>
                 </div>
@@ -320,21 +313,7 @@ export default function About() {
                     Rigorous academic training in core computer science, algorithmic foundations, database systems, and full-stack software architecture.
                   </p>
 
-                  {/* Interactive Coursework Chips */}
-                  <div className="pt-2">
-                    <div className="flex flex-wrap gap-2">
-                      {academicTags.map((tag, idx) => (
-                        <motion.span
-                          key={idx}
-                          whileHover={{ scale: 1.05, y: -2 }}
-                          transition={{ type: "spring", stiffness: 400, damping: 15 }}
-                          className="px-3 py-1.5 rounded-xl bg-main/90 border border-card hover:border-accent/60 text-xs font-mono text-secondary hover:text-primary transition-colors cursor-default shadow-sm"
-                        >
-                          {tag}
-                        </motion.span>
-                      ))}
-                    </div>
-                  </div>
+                  
                 </div>
               </div>
             </InteractiveTiltCard>
