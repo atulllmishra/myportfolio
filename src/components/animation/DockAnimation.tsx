@@ -113,7 +113,6 @@ function Dock({
           'mx-auto flex w-fit gap-1.5 sm:gap-3.5 rounded-2xl bg-card/40 border border-card/60 backdrop-blur-2xl shadow-2xl shadow-black/25 px-3 sm:px-4 py-1.5',
           className
         )}
-
         style={{ height: panelHeight }}
         role='toolbar'
         aria-label='Application dock'
@@ -201,7 +200,6 @@ function DockLabel({ children, className, ...rest }: DockLabelProps) {
             'absolute -top-7 left-1/2 w-fit whitespace-pre rounded-lg border border-card/60 bg-main/80 backdrop-blur-md px-2.5 py-1 text-[11px] font-mono text-primary shadow-xl',
             className
           )}
-
           role='tooltip'
           style={{ x: '-50%' }}
         >

@@ -77,4 +77,3 @@ export const timelineData: TimelineItem[] = [
     badge: "Undergraduate Degree",
   },
 ];
-

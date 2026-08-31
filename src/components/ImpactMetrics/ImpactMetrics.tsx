@@ -24,28 +24,28 @@ const metrics: MetricItem[] = [
     suffix: "+ Years",
     label: "Industry Experience",
     subtext: "Distributed backends & AI systems",
-    highlightColor: "#FF9A62",
+    highlightColor: "rgb(255, 154, 98)",
   },
   {
     target: 98,
     suffix: "M+ Records",
     label: "Active DB Scale",
     subtext: "High-throughput real-time indexing",
-    highlightColor: "#9C92FF",
+    highlightColor: "rgb(156, 146, 255)",
   },
   {
     target: 400,
     suffix: "M+ Records",
     label: "Migrated Scale",
     subtext: "Zero-downtime enterprise data streams",
-    highlightColor: "#FF9A62",
+    highlightColor: "rgb(255, 154, 98)",
   },
   {
     target: 2,
     suffix: "M+ Users",
     label: "Impacted Globally",
     subtext: "Sub-millisecond latency systems",
-    highlightColor: "#9C92FF",
+    highlightColor: "rgb(156, 146, 255)",
   },
 ];
 
@@ -61,16 +61,14 @@ function CountUpMetric({ metric, index }: { metric: MetricItem; index: number })
       return;
     }
 
-    let start = 0;
     const end = metric.target;
-    const duration = 1600; // ms
+    const duration = 1600;
     const startTime = performance.now();
 
     const updateCounter = (currentTime: number) => {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
       
-      // Smooth ease-out quad
       const easedProgress = 1 - Math.pow(1 - progress, 3);
       const currentVal = Math.floor(easedProgress * end);
       
@@ -94,9 +92,8 @@ function CountUpMetric({ metric, index }: { metric: MetricItem; index: number })
       viewport={{ once: true, amount: 0.4 }}
       transition={{ ...defaultSpring, delay: index * 0.1 }}
       whileHover={{ y: -4, transition: defaultSpring }}
-      className="tactile-card p-6 flex flex-col justify-between relative overflow-hidden group"
+      className="tactile-card p-6 flex flex-col justify-between relative overflow-hidden group rounded-2xl sm:rounded-3xl border border-card bg-card shadow-sm"
     >
-      {/* Subtle organic corner accent */}
       <div
         className="absolute -top-12 -right-12 w-24 h-24 rounded-full opacity-10 blur-xl pointer-events-none group-hover:opacity-20 transition-opacity"
         style={{ backgroundColor: metric.highlightColor }}
@@ -104,7 +101,7 @@ function CountUpMetric({ metric, index }: { metric: MetricItem; index: number })
 
       <div className="space-y-1">
         <div className="flex items-baseline gap-1 font-mono tracking-tight font-black">
-          <span className="text-3xl sm:text-4xl lg:text-5xl text-[#F3F4F6]">
+          <span className="text-3xl sm:text-4xl lg:text-5xl text-primary">
             {metric.prefix}
             {count}
           </span>
@@ -116,12 +113,12 @@ function CountUpMetric({ metric, index }: { metric: MetricItem; index: number })
           </span>
         </div>
 
-        <h4 className="text-sm font-semibold text-[#F3F4F6] tracking-tight pt-1">
+        <h4 className="text-sm font-semibold text-primary tracking-tight pt-1">
           {metric.label}
         </h4>
       </div>
 
-      <p className="text-xs text-[#9CA3AF] mt-3 leading-relaxed border-t border-[#23232C] pt-3">
+      <p className="text-xs text-secondary mt-3 leading-relaxed border-t border-card pt-3">
         {metric.subtext}
       </p>
     </motion.div>
@@ -131,8 +128,8 @@ function CountUpMetric({ metric, index }: { metric: MetricItem; index: number })
 export default function ImpactMetrics() {
   return (
     <section className="w-full py-12 relative z-10">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
           {metrics.map((metric, idx) => (
             <CountUpMetric key={metric.label} metric={metric} index={idx} />
           ))}

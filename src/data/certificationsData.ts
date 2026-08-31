@@ -32,4 +32,3 @@ export const achievementsList: AchievementItem[] = [
     tags: ["C++ STL", "DSA", "Algorithms", "SDE Core"],
   },
 ];
-

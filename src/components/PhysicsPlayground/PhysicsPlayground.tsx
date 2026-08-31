@@ -33,7 +33,6 @@ export default function PhysicsPlayground() {
   useEffect(() => {
     if (!isActive || !sceneRef.current) return;
 
-    // Matter.js setup
     const Engine = Matter.Engine,
       Render = Matter.Render,
       Runner = Matter.Runner,
@@ -49,7 +48,6 @@ export default function PhysicsPlayground() {
     const engine = Engine.create();
     engineRef.current = engine;
     
-    // Zero gravity!
     engine.world.gravity.y = 0;
     engine.world.gravity.x = 0;
 
@@ -61,12 +59,11 @@ export default function PhysicsPlayground() {
         height,
         wireframes: false,
         background: "transparent",
-        pixelRatio: window.devicePixelRatio,
+        pixelRatio: Math.min(window.devicePixelRatio, 2),
       },
     });
     renderRef.current = render;
 
-    // Boundaries
     const wallOptions = { isStatic: true, render: { visible: false } };
     World.add(engine.world, [
       Bodies.rectangle(width / 2, -50, width, 100, wallOptions),
@@ -75,15 +72,13 @@ export default function PhysicsPlayground() {
       Bodies.rectangle(width + 50, height / 2, 100, height, wallOptions),
     ]);
 
-    // Create badges as physics bodies
-    const accentColor = "#C4563A";
-    const cardColor = "#FFFFFF";
-    const textColor = "#352A25";
+    const accentColor = "rgb(196, 86, 58)";
+    const cardColor = "rgb(255, 255, 255)";
+    const textColor = "rgb(53, 42, 37)";
 
-    const badgeBodies = badges.map((text, i) => {
-      // Estimate width based on text
-      const w = text.length * 10 + 40;
-      const h = 40;
+    const badgeBodies = badges.map((text) => {
+      const w = text.length * 10 + 36;
+      const h = 38;
       
       const x = Math.random() * (width - 100) + 50;
       const y = Math.random() * (height - 100) + 50;
@@ -97,13 +92,12 @@ export default function PhysicsPlayground() {
           strokeStyle: accentColor,
           lineWidth: 1,
         },
-        label: text, // Store text in label to render it manually
+        label: text,
       });
     });
 
     World.add(engine.world, badgeBodies);
 
-    // Add mouse control
     const mouse = Mouse.create(render.canvas);
     const mouseConstraint = MouseConstraint.create(engine, {
       mouse: mouse,
@@ -114,14 +108,11 @@ export default function PhysicsPlayground() {
     });
     World.add(engine.world, mouseConstraint);
     
-    // Keep the mouse in sync with rendering
     render.mouse = mouse;
 
-    // Add collision sound
     Events.on(engine, "collisionStart", (event) => {
       const pairs = event.pairs;
       if (pairs.length > 0) {
-        // Calculate velocity magnitude of first pair
         const bodyA = pairs[0].bodyA;
         const speed = Math.sqrt(bodyA.velocity.x ** 2 + bodyA.velocity.y ** 2);
         if (speed > 1) {
@@ -130,7 +121,6 @@ export default function PhysicsPlayground() {
       }
     });
 
-    // Custom render loop for text
     Events.on(render, "afterRender", () => {
       const context = render.context;
       context.font = "bold 13px 'Poppins', system-ui, sans-serif";
@@ -148,10 +138,10 @@ export default function PhysicsPlayground() {
       });
     });
 
-    Runner.run(Runner.create(), engine);
+    const runner = Runner.create();
+    Runner.run(runner, engine);
     Render.run(render);
 
-    // Initial scatter burst
     badgeBodies.forEach(b => {
       const forceMagnitude = 0.02 * b.mass;
       Matter.Body.applyForce(b, b.position, {
@@ -161,10 +151,13 @@ export default function PhysicsPlayground() {
     });
 
     return () => {
+      Runner.stop(runner);
       Render.stop(render);
       World.clear(engine.world, false);
       Engine.clear(engine);
-      render.canvas.remove();
+      if (render.canvas) {
+        render.canvas.remove();
+      }
       render.canvas = null as any;
       render.context = null as any;
       render.textures = {};
@@ -196,34 +189,34 @@ export default function PhysicsPlayground() {
 
   return (
     <div className="fixed inset-0 z-[90] bg-main/80 backdrop-blur-md">
-      {/* Matter.js Canvas Container */}
       <div ref={sceneRef} className="absolute inset-0 cursor-grab active:cursor-grabbing" />
       
-      {/* UI Overlay */}
-      <div className="absolute top-6 left-1/2 -translate-x-1/2 flex items-center gap-3 z-10">
-        <div className="px-4 py-2 rounded-full bg-card border border-accent text-xs font-mono font-bold text-primary shadow-lg flex items-center gap-2 pointer-events-none">
+      <div className="absolute top-4 sm:top-6 left-1/2 -translate-x-1/2 flex items-center gap-2 sm:gap-3 z-10">
+        <div className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-card border border-accent text-[11px] sm:text-xs font-mono font-bold text-primary shadow-lg flex items-center gap-2 pointer-events-none">
           <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
           ZERO-G PHYSICS MODE
         </div>
         
         <button 
           onClick={handleBurst}
-          className="p-2 rounded-full bg-card border border-card hover:border-accent text-secondary hover:text-primary transition-colors shadow-lg"
+          className="p-2 rounded-full bg-card border border-card hover:border-accent text-secondary hover:text-primary transition-colors shadow-lg cursor-pointer"
           title="Apply Random Burst"
+          aria-label="Random Burst"
         >
           <RefreshCw className="w-4 h-4" />
         </button>
 
         <button 
           onClick={handleClose}
-          className="p-2 rounded-full bg-card border border-card hover:border-red-500 hover:text-red-500 transition-colors shadow-lg text-secondary"
+          className="p-2 rounded-full bg-card border border-card hover:border-rose-500 hover:text-rose-500 transition-colors shadow-lg text-secondary cursor-pointer"
           title="Exit Zero-G"
+          aria-label="Exit Zero-G"
         >
           <X className="w-4 h-4" />
         </button>
       </div>
       
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-xs font-mono text-secondary pointer-events-none">
+      <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 text-xs font-mono text-secondary pointer-events-none text-center px-4">
         Grab and toss the badges
       </div>
     </div>

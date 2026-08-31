@@ -1,5 +1,4 @@
 import React from "react";
-import { useTheme } from "@/components/ThemeProvider";
 
 const roles = [
   "Full Stack Web Developer",
@@ -7,7 +6,7 @@ const roles = [
   "React & Next.js Developer",
   "C++ Programmer",
   "CS Undergrad (Class of '28)",
-  "Full Stack Web Developer" // Duplicate the first one at the end for smooth infinite loop
+  "Full Stack Web Developer"
 ];
 
 function TextRotator() {
@@ -21,7 +20,7 @@ function TextRotator() {
               <li 
                 key={index} 
                 className="transition-colors"
-                style={{ color: '#C4563A' }}
+                style={{ color: 'rgb(196, 86, 58)' }}
               >
                 {role}
               </li>

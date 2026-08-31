@@ -20,13 +20,13 @@ export default function ProjectCard3D({ project, theme, onOpenDetails }: Project
     if (!cardRef.current) return;
     
     const rect = cardRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left; // x position within the element
-    const y = e.clientY - rect.top;  // y position within the element
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
     
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
     
-    const rotateX = ((y - centerY) / centerY) * -8; // Max rotation 8deg
+    const rotateX = ((y - centerY) / centerY) * -8;
     const rotateY = ((x - centerX) / centerX) * 8;
     
     setRotation({ x: rotateX, y: rotateY });
@@ -47,8 +47,8 @@ export default function ProjectCard3D({ project, theme, onOpenDetails }: Project
   };
 
   const isLight = theme === "light";
-  const glareColor = isLight ? "rgba(255,255,255,0.8)" : "rgba(255,255,255,0.4)";
-  const accentColor = isLight ? "#C4563A" : "#E07A5F";
+  const glareColor = isLight ? "rgba(255, 255, 255, 0.8)" : "rgba(255, 255, 255, 0.4)";
+  const accentColor = isLight ? "rgb(196, 86, 58)" : "rgb(224, 122, 95)";
 
   return (
     <div className="perspective-1000 w-full h-full">
@@ -61,15 +61,14 @@ export default function ProjectCard3D({ project, theme, onOpenDetails }: Project
           audioHaptics.playPop(true);
           onOpenDetails(project);
         }}
-        className="relative w-full h-full p-6 rounded-2xl bg-card border border-card shadow-xl cursor-pointer transition-all duration-300 ease-out hover:border-accent hover:shadow-2xl flex flex-col"
+        className="relative w-full h-full p-5 sm:p-6 rounded-2xl sm:rounded-3xl bg-card border border-card shadow-xl cursor-pointer transition-all duration-300 ease-out hover:border-accent hover:shadow-2xl flex flex-col justify-between"
         style={{
           transformStyle: "preserve-3d",
           transform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
         }}
       >
-        {/* Specular Glare Overlay */}
         <div 
-          className="absolute inset-0 rounded-2xl pointer-events-none transition-opacity duration-300"
+          className="absolute inset-0 rounded-2xl sm:rounded-3xl pointer-events-none transition-opacity duration-300"
           style={{
             background: `radial-gradient(circle at ${glare.x}% ${glare.y}%, ${glareColor}, transparent 60%)`,
             opacity: glare.opacity,
@@ -78,33 +77,31 @@ export default function ProjectCard3D({ project, theme, onOpenDetails }: Project
         />
 
         <div className="flex justify-between items-start mb-4" style={{ transform: "translateZ(30px)" }}>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-main border border-card text-[11px] font-bold uppercase tracking-wider text-accent">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-main border border-card text-[11px] font-bold uppercase tracking-wider text-accent" style={{ color: accentColor }}>
             <Code2 className="w-3 h-3" />
             <span>{project.categoryLabel}</span>
           </div>
-          <div className="text-xs text-secondary font-medium px-2 py-1 bg-main rounded-md border border-card">
+          <div className="text-xs text-secondary font-medium px-2.5 py-1 bg-main rounded-lg border border-card">
             {project.timeline}
           </div>
         </div>
 
-        <h3 className="text-xl sm:text-2xl font-bold mb-2 tracking-tight" style={{ transform: "translateZ(40px)" }}>
+        <h3 className="text-xl sm:text-2xl font-bold mb-2 tracking-tight text-primary" style={{ transform: "translateZ(40px)" }}>
           {project.title}
         </h3>
         
-        <p className="text-sm text-secondary font-medium leading-relaxed mb-6 flex-grow" style={{ transform: "translateZ(20px)" }}>
+        <p className="text-xs sm:text-sm text-secondary font-medium leading-relaxed mb-5 flex-grow" style={{ transform: "translateZ(20px)" }}>
           {project.description}
         </p>
 
-        {/* Tech Chips */}
-        <div className="flex flex-wrap gap-2 mb-6" style={{ transform: "translateZ(25px)" }}>
+        <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-5" style={{ transform: "translateZ(25px)" }}>
           {project.tech.map((t, i) => (
-            <span key={i} className="px-2.5 py-1 text-[11px] font-medium rounded-md bg-main border border-card text-primary">
+            <span key={i} className="px-2.5 py-1 text-[11px] font-medium rounded-lg bg-main border border-card text-primary">
               {t}
             </span>
           ))}
         </div>
 
-        {/* Footer Actions */}
         <div className="pt-4 mt-auto border-t border-card flex items-center justify-between" style={{ transform: "translateZ(35px)" }}>
           <div className="flex items-center gap-2">
             {project.url && (
@@ -113,7 +110,7 @@ export default function ProjectCard3D({ project, theme, onOpenDetails }: Project
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => { e.stopPropagation(); audioHaptics.playClick(800, 0.05, "sine"); }}
-                className="p-2 rounded-full bg-main border border-card hover:bg-accent hover:text-white transition-colors text-secondary"
+                className="p-2 rounded-full bg-main border border-card hover:bg-accent hover:text-white transition-colors text-secondary cursor-pointer"
                 title="Live App"
               >
                 <ArrowUpRight className="w-4 h-4" />
@@ -125,7 +122,7 @@ export default function ProjectCard3D({ project, theme, onOpenDetails }: Project
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => { e.stopPropagation(); audioHaptics.playClick(800, 0.05, "sine"); }}
-                className="p-2 rounded-full bg-main border border-card hover:bg-accent hover:text-white transition-colors text-secondary"
+                className="p-2 rounded-full bg-main border border-card hover:bg-accent hover:text-white transition-colors text-secondary cursor-pointer"
                 title="Source Code"
               >
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -135,7 +132,7 @@ export default function ProjectCard3D({ project, theme, onOpenDetails }: Project
             )}
           </div>
           
-          <div className="text-[11px] font-bold tracking-wider uppercase flex items-center gap-1 text-accent transition-transform group-hover:translate-x-1" style={{ color: "#C4563A" }}>
+          <div className="text-[11px] font-bold tracking-wider uppercase flex items-center gap-1 transition-transform group-hover:translate-x-1" style={{ color: accentColor }}>
             <span>Examine</span>
             <ArrowUpRight className="w-3.5 h-3.5" />
           </div>

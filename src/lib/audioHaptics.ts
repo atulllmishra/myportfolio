@@ -7,7 +7,6 @@ class AudioHaptics {
   constructor() {
     if (typeof window !== "undefined") {
       this.isMuted = localStorage.getItem("haptics_muted") === "true";
-      // Don't initialize AudioContext immediately to respect browser autoplay policies
     }
   }
 
@@ -35,7 +34,6 @@ class AudioHaptics {
     return this.isMuted;
   }
 
-  // Synthesize a generic UI click/pop
   public playClick(freq = 400, duration = 0.05, type: OscillatorType = "sine") {
     if (this.isMuted) return;
     this.initCtx();
@@ -59,7 +57,6 @@ class AudioHaptics {
     osc.stop(this.ctx.currentTime + duration);
   }
 
-  // Two-tone pop for modal open/close
   public playPop(isOpen = true) {
     if (this.isMuted) return;
     this.initCtx();
@@ -74,7 +71,6 @@ class AudioHaptics {
     }, 40);
   }
 
-  // Subtle mechanical switch for theme toggle
   public playSwitch() {
     if (this.isMuted) return;
     this.initCtx();
@@ -98,7 +94,6 @@ class AudioHaptics {
     osc.stop(this.ctx.currentTime + 0.05);
   }
 
-  // Terminal keystroke (random freq from a minor pentatonic scale)
   public playKey() {
     const scale = [220, 261.63, 293.66, 329.63, 392.00, 440];
     const freq = scale[Math.floor(Math.random() * scale.length)];

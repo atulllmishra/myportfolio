@@ -8,7 +8,6 @@ const HackerBtn = ({ label, onClick, icon: Icon = Download }: { label: string, o
   const charset = "abcdefghijklmnopqrstuvwxyz!@#$%^&*()_+-=[]{}|;:,.<>?";
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Deterministic PRNG for client-side scrambling
   const LCG = (seed: number) => {
     return function() {
       seed = (seed * 1664525 + 1013904223) % 4294967296;
@@ -22,7 +21,7 @@ const HackerBtn = ({ label, onClick, icon: Icon = Download }: { label: string, o
 
     let iteration = 0;
     const maxIterations = label.length;
-    const prng = LCG(Date.now()); // safe client-side seed
+    const prng = LCG(Date.now());
 
     intervalRef.current = setInterval(() => {
       setDisplayText(prev => {
@@ -56,11 +55,11 @@ const HackerBtn = ({ label, onClick, icon: Icon = Download }: { label: string, o
 
   return (
     <button 
-      className="inline-flex items-center justify-center gap-2 px-6 py-3.5 text-sm font-mono font-bold tracking-tight rounded-xl bg-primary text-main shadow-lg hover:-translate-y-0.5 transition-all w-fit cursor-pointer"
+      className="inline-flex items-center justify-center gap-2 px-6 py-3.5 text-sm font-mono font-bold tracking-tight rounded-xl bg-primary text-main shadow-lg hover:-translate-y-0.5 transition-all w-fit cursor-pointer active:scale-98"
       onMouseEnter={startScrambling}
       onClick={handleClick}
     >   
-      <Icon className="w-4 h-4" />
+      <Icon className="w-4 h-4 shrink-0" />
       <span className="min-w-[120px] text-center">{displayText}</span>
     </button>
   );

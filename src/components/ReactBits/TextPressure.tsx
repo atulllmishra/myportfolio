@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 interface TextPressureProps {
   text?: string;
@@ -15,8 +15,8 @@ export default function TextPressure({
   text = "ATUL KUMAR MISHRA",
   fontFamily = "'Roboto Flex', 'Inter', sans-serif",
   className = "",
-  textColor = "rgba(255, 255, 255, 0.95)",
-  strokeColor = "#E07A5F", // Warm analog terracotta
+  textColor = "rgba(46, 34, 29, 0.95)",
+  strokeColor = "rgb(224, 122, 95)",
   minFontSize = 32,
 }: TextPressureProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -130,7 +130,7 @@ export default function TextPressure({
         {words.map((word, wIdx) => (
           <div key={wIdx} className="flex items-center tracking-tight">
             {word.split("").map((char, cIdx) => {
-              const globalIdx = wIdx * 100 + cIdx; // Simple unique index
+              const globalIdx = wIdx * 100 + cIdx;
               return (
                 <span
                   key={cIdx}

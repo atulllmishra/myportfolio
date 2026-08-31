@@ -26,21 +26,21 @@ export default function LoadingScreen() {
 
   return (
     <div
-      className={`fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#fff9f5] text-[#2e221d] transition-opacity duration-700 ${
+      className={`fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[rgb(255,249,245)] text-[rgb(46,34,29)] transition-opacity duration-700 ${
         progress >= 100 ? "opacity-0 pointer-events-none" : "opacity-100"
       }`}
     >
       <div className="flex flex-col items-center space-y-6 max-w-sm px-6">
-        <span className="text-6xl md:text-7xl font-bold tracking-tighter text-[#C4563A]">
+        <span className="text-6xl md:text-7xl font-bold tracking-tighter text-[rgb(196,86,58)]">
           {progress}%
         </span>
-        <div className="w-48 h-1.5 bg-[#f3e2d5] rounded-full overflow-hidden">
+        <div className="w-48 h-1.5 bg-[rgb(243,226,213)] rounded-full overflow-hidden">
           <div
-            className="h-full bg-gradient-to-r from-[#E07A5F] to-[#C4563A] transition-all duration-200 ease-out"
+            className="h-full bg-gradient-to-r from-[rgb(224,122,95)] to-[rgb(196,86,58)] transition-all duration-200 ease-out"
             style={{ width: `${progress}%` }}
           />
         </div>
-        <span className="text-xs tracking-[0.3em] uppercase text-[#705B50] font-semibold">
+        <span className="text-xs tracking-[0.3em] uppercase text-[rgb(112,91,80)] font-semibold">
           ATUL KUMAR MISHRA
         </span>
       </div>

@@ -9,24 +9,24 @@
 
 @layer base {
   :root {
-    --bg-main: #fff9f5;
-    --bg-card: #FFFFFF;
-    --border-card: #f3e2d5;
-    --text-primary: #2e221d;
-    --text-secondary: #705B50;
-    --accent-primary: #C4563A;
+    --bg-main: rgb(255, 249, 245);
+    --bg-card: rgb(255, 255, 255);
+    --border-card: rgb(243, 226, 213);
+    --text-primary: rgb(46, 34, 29);
+    --text-secondary: rgb(112, 91, 80);
+    --accent-primary: rgb(196, 86, 58);
     --font-poppins: 'Poppins', system-ui, -apple-system, sans-serif;
   }
 
   html.light,
   [data-theme="light"],
   html {
-    --bg-main: #fff9f5;
-    --bg-card: #FFFFFF;
-    --border-card: #f3e2d5;
-    --text-primary: #2e221d;
-    --text-secondary: #705B50;
-    --accent-primary: #C4563A;
+    --bg-main: rgb(255, 249, 245);
+    --bg-card: rgb(255, 255, 255);
+    --border-card: rgb(243, 226, 213);
+    --text-primary: rgb(46, 34, 29);
+    --text-secondary: rgb(112, 91, 80);
+    --accent-primary: rgb(196, 86, 58);
     --font-poppins: 'Poppins', system-ui, -apple-system, sans-serif;
   }
 
@@ -34,6 +34,13 @@
   *::before,
   *::after {
     font-family: var(--font-poppins), 'Poppins', system-ui, -apple-system, sans-serif !important;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
   }
 
   body {
@@ -41,8 +48,11 @@
     color: var(--text-primary);
     font-family: var(--font-poppins), 'Poppins', system-ui, -apple-system, sans-serif !important;
     overflow-x: hidden;
+    width: 100%;
+    min-width: 320px;
     letter-spacing: -0.01em;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     transition: background-color 0.25s ease, color 0.25s ease;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
@@ -54,135 +64,85 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* Custom Scrollbar */
   ::-webkit-scrollbar {
     width: 6px;
+    height: 6px;
   }
 
   ::-webkit-scrollbar-track {
-    background: #fff9f5;
+    background: rgb(255, 249, 245);
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #f0dbce;
+    background: rgb(240, 219, 206);
     border-radius: 3px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #e07a5f;
+    background: rgb(224, 122, 95);
   }
 }
 
-/* Minimal Academic Card Utility */
 .academic-card {
   background-color: var(--bg-card);
   border: 1px solid var(--border-card);
-  border-radius: 12px;
-  transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  border-radius: 16px;
+  transition: border-color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
 }
 
 .academic-card:hover {
   border-color: var(--accent-primary);
 }
 
-/* =========================================================
-   PREMIUM ELEGANT PEACH LIGHT THEME SYSTEM
-   ========================================================= */
 html.light,
 html.light body,
 [data-theme="light"],
 [data-theme="light"] body {
-  background-color: #fff9f5 !important;
-  color: #2e221d !important;
+  background-color: rgb(255, 249, 245) !important;
+  color: rgb(46, 34, 29) !important;
 }
 
 html.light main,
 html.light section,
 html.light footer,
-html.light .bg-\[\#0b0f19\],
 [data-theme="light"] main,
 [data-theme="light"] section,
-[data-theme="light"] footer,
-[data-theme="light"] .bg-\[\#0b0f19\] {
-  background-color: #fff9f5 !important;
-  border-color: #f3e2d5 !important;
+[data-theme="light"] footer {
+  background-color: rgb(255, 249, 245) !important;
+  border-color: rgb(243, 226, 213) !important;
 }
 
-/* Glassmorphic Navbar in Light Mode */
 html.light header,
 [data-theme="light"] header {
   background-color: rgba(255, 249, 245, 0.88) !important;
-  border-color: #f3e2d5 !important;
+  border-color: rgb(243, 226, 213) !important;
   backdrop-filter: blur(16px) !important;
   box-shadow: 0 4px 20px rgba(224, 122, 95, 0.06) !important;
 }
 
 html.light nav a,
 [data-theme="light"] nav a {
-  color: #56443c !important;
+  color: rgb(86, 68, 60) !important;
 }
 
 html.light nav a:hover,
 [data-theme="light"] nav a:hover {
-  color: #e07a5f !important;
+  color: rgb(224, 122, 95) !important;
 }
 
-/* Academic Card & Containers in Light Mode */
 html.light .academic-card,
-html.light .bg-\[\#121824\],
-html.light .bg-\[\#131c2e\],
-[data-theme="light"] .academic-card,
-[data-theme="light"] .bg-\[\#121824\],
-[data-theme="light"] .bg-\[\#131c2e\] {
-  background-color: #ffffff !important;
-  border-color: #f3e2d5 !important;
+[data-theme="light"] .academic-card {
+  background-color: rgb(255, 255, 255) !important;
+  border-color: rgb(243, 226, 213) !important;
   box-shadow: 0 4px 20px -2px rgba(224, 122, 95, 0.08), 0 1px 4px -1px rgba(46, 34, 29, 0.03) !important;
 }
 
 html.light .academic-card:hover,
 [data-theme="light"] .academic-card:hover {
-  border-color: #e07a5f !important;
+  border-color: rgb(224, 122, 95) !important;
   box-shadow: 0 12px 30px -4px rgba(224, 122, 95, 0.2), 0 4px 10px -2px rgba(46, 34, 29, 0.04) !important;
 }
 
-/* Sub-element, Pill & Tag Backgrounds */
-html.light .bg-\[\#0b0f17\],
-html.light .bg-\[\#0a0e17\],
-html.light .bg-\[\#080a0f\],
-html.light .bg-\[\#1e2638\],
-html.light .bg-\[\#1a2334\],
-html.light .bg-\[\#1e293b\],
-[data-theme="light"] .bg-\[\#0b0f17\],
-[data-theme="light"] .bg-\[\#0a0e17\],
-[data-theme="light"] .bg-\[\#080a0f\],
-[data-theme="light"] .bg-\[\#1e2638\],
-[data-theme="light"] .bg-\[\#1a2334\],
-[data-theme="light"] .bg-\[\#1e293b\] {
-  background-color: #fdf4ed !important;
-  border-color: #f3e2d5 !important;
-  color: #56443c !important;
-}
-
-/* Progress Bars & Skill Level Fill */
-html.light .bg-\[\#2563eb\],
-[data-theme="light"] .bg-\[\#2563eb\] {
-  background: linear-gradient(90deg, #e07a5f 0%, #d96b43 100%) !important;
-}
-
-/* Timeline Vertical Line & Borders */
-html.light .border-l,
-[data-theme="light"] .border-l {
-  border-color: #f3e2d5 !important;
-}
-
-html.light .border-\[\#1e2638\],
-html.light .border-\[\#1e293b\],
-[data-theme="light"] .border-\[\#1e2638\],
-[data-theme="light"] .border-\[\#1e293b\] {
-  border-color: #f3e2d5 !important;
-}
-
-/* Typography in Light Mode */
 html.light h1,
 html.light h2,
 html.light h3,
@@ -195,7 +155,7 @@ html.light h6,
 [data-theme="light"] h4,
 [data-theme="light"] h5,
 [data-theme="light"] h6 {
-  color: #2e221d !important;
+  color: rgb(46, 34, 29) !important;
 }
 
 html.light .text-white,
@@ -204,25 +164,24 @@ html.light .text-slate-200,
 [data-theme="light"] .text-white,
 [data-theme="light"] .text-slate-100,
 [data-theme="light"] .text-slate-200 {
-  color: #2e221d !important;
+  color: rgb(46, 34, 29) !important;
 }
 
 html.light .text-slate-300,
 [data-theme="light"] .text-slate-300 {
-  color: #56443c !important;
+  color: rgb(86, 68, 60) !important;
 }
 
 html.light .text-slate-400,
 [data-theme="light"] .text-slate-400 {
-  color: #7e685f !important;
+  color: rgb(126, 104, 95) !important;
 }
 
 html.light .text-slate-500,
 [data-theme="light"] .text-slate-500 {
-  color: #a28c83 !important;
+  color: rgb(162, 140, 131) !important;
 }
 
-/* Accent Colors & Links in Light Mode */
 html.light .text-blue-400,
 html.light .text-blue-500,
 html.light .text-blue-600,
@@ -237,120 +196,43 @@ html.light .text-sky-400,
 [data-theme="light"] .text-indigo-400,
 [data-theme="light"] .text-indigo-500,
 [data-theme="light"] .text-sky-400 {
-  color: #e07a5f !important;
+  color: rgb(224, 122, 95) !important;
 }
 
 html.light a.text-blue-400:hover,
 html.light a.text-blue-500:hover,
 [data-theme="light"] a.text-blue-400:hover,
 [data-theme="light"] a.text-blue-500:hover {
-  color: #c8553d !important;
+  color: rgb(200, 85, 61) !important;
 }
 
-/* Soft Peach Badges & Tag Pills */
-html.light .bg-blue-500\/10,
-html.light .bg-blue-600\/10,
-[data-theme="light"] .bg-blue-500\/10,
-[data-theme="light"] .bg-blue-600\/10 {
-  background-color: #fdeee6 !important;
-  border-color: #f7d5c5 !important;
-  color: #c8553d !important;
-}
-
-html.light .border-blue-500\/20,
-[data-theme="light"] .border-blue-500\/20 {
-  border-color: #f7d5c5 !important;
-}
-
-/* Primary Action Buttons */
-html.light .bg-blue-600,
-[data-theme="light"] .bg-blue-600 {
-  background: linear-gradient(135deg, #e07a5f 0%, #d96b43 100%) !important;
-  color: #ffffff !important;
-  border: none !important;
-  box-shadow: 0 4px 15px rgba(224, 122, 95, 0.32) !important;
-}
-
-html.light .bg-blue-600:hover,
-[data-theme="light"] .bg-blue-600:hover,
-html.light .hover\:bg-blue-500:hover,
-[data-theme="light"] .hover\:bg-blue-500:hover {
-  background: linear-gradient(135deg, #d96b43 0%, #c8553d 100%) !important;
-  box-shadow: 0 6px 22px rgba(224, 122, 95, 0.42) !important;
-}
-
-html.light .bg-blue-600 span,
-html.light .bg-blue-600 svg,
-[data-theme="light"] .bg-blue-600 span,
-[data-theme="light"] .bg-blue-600 svg {
-  color: #ffffff !important;
-}
-
-/* Secondary Button & Border Overrides */
-html.light .border-slate-700,
-[data-theme="light"] .border-slate-700 {
-  border-color: #f3e2d5 !important;
-}
-
-html.light .hover\:border-slate-500:hover,
-[data-theme="light"] .hover\:border-slate-500:hover {
-  border-color: #e07a5f !important;
-  color: #e07a5f !important;
-}
-
-/* Chatbot Bubbles & Widget in Light Mode */
-html.light #ai-assistant .bg-\[\#0b0f17\],
-[data-theme="light"] #ai-assistant .bg-\[\#0b0f17\] {
-  background-color: #fdf4ed !important;
-}
-
-html.light #ai-assistant .bg-\[\#121824\],
-[data-theme="light"] #ai-assistant .bg-\[\#121824\] {
-  background-color: #ffffff !important;
-  color: #2e221d !important;
-  border-color: #f3e2d5 !important;
-  box-shadow: 0 12px 32px rgba(224, 122, 95, 0.12) !important;
-}
-
-/* Modals & Popups in Light Mode */
 html.light .fixed.inset-0,
 [data-theme="light"] .fixed.inset-0 {
   background-color: rgba(46, 34, 29, 0.35) !important;
   backdrop-filter: blur(4px) !important;
 }
 
-html.light .fixed .bg-\[\#121824\],
-html.light .fixed .bg-\[\#0b0f17\],
-[data-theme="light"] .fixed .bg-\[\#121824\],
-[data-theme="light"] .fixed .bg-\[\#0b0f17\] {
-  background-color: #ffffff !important;
-  border-color: #f3e2d5 !important;
-  box-shadow: 0 20px 40px -10px rgba(224, 122, 95, 0.2) !important;
-}
-
-/* Code Pre Blocks in Light Mode */
 html.light pre,
 [data-theme="light"] pre {
-  background-color: #fcf1e8 !important;
-  color: #2e221d !important;
-  border-color: #f3e2d5 !important;
+  background-color: rgb(252, 241, 232) !important;
+  color: rgb(46, 34, 29) !important;
+  border-color: rgb(243, 226, 213) !important;
 }
 
-/* Inputs & Form Fields in Light Mode */
 html.light input,
 html.light textarea,
 [data-theme="light"] input,
 [data-theme="light"] textarea {
-  background-color: #ffffff !important;
-  color: #2e221d !important;
-  border-color: #f3e2d5 !important;
+  background-color: rgb(255, 255, 255) !important;
+  color: rgb(46, 34, 29) !important;
+  border-color: rgb(243, 226, 213) !important;
 }
 
 html.light input:focus,
 html.light textarea:focus,
 [data-theme="light"] input:focus,
 [data-theme="light"] textarea:focus {
-  border-color: #e07a5f !important;
+  border-color: rgb(224, 122, 95) !important;
   outline: none !important;
   box-shadow: 0 0 0 3px rgba(224, 122, 95, 0.15) !important;
 }
@@ -359,53 +241,40 @@ html.light input::placeholder,
 html.light textarea::placeholder,
 [data-theme="light"] input::placeholder,
 [data-theme="light"] textarea::placeholder {
-  color: #a28c83 !important;
+  color: rgb(162, 140, 131) !important;
 }
 
-/* Selection Highlight */
 html.light ::selection,
 [data-theme="light"] ::selection {
-  background-color: #f7d5c5 !important;
-  color: #2e221d !important;
+  background-color: rgb(247, 213, 197) !important;
+  color: rgb(46, 34, 29) !important;
 }
 
-/* Smooth Scroll */
-html {
-  scroll-behavior: smooth;
-}
-
-/* TEXT ROTATOR STYLES  */
 .animate-text-slide {
   animation: text-slide 12.5s cubic-bezier(0.83, 0, 0.17, 1) infinite;
 }
 
 @keyframes text-slide {
-
   0%,
   16% {
     transform: translateY(0%);
   }
-
   20%,
   36% {
     transform: translateY(-16.66%);
   }
-
   40%,
   56% {
     transform: translateY(-33.33%);
   }
-
   60%,
   76% {
     transform: translateY(-50%);
   }
-
   80%,
   96% {
     transform: translateY(-66.66%);
   }
-
   100% {
     transform: translateY(-83.33%);
   }

@@ -42,12 +42,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${poppins.variable} scroll-smooth light`} data-theme="light">
-      <body className="antialiased font-sans flex flex-col min-h-screen transition-colors duration-200">
+      <body className="antialiased font-sans flex flex-col min-h-screen transition-colors duration-200 overflow-x-hidden">
         <ThemeProvider>
-          {/* Global Interactive Overlays */}
           <CommandPalette />
           <PhysicsPlayground />
-          
           {children}
         </ThemeProvider>
       </body>

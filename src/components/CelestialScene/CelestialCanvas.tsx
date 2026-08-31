@@ -29,14 +29,10 @@ export default function CelestialCanvas() {
         gl={{ antialias: true, alpha: true }}
         className="w-full h-full"
       >
-        {/* Galaxy background component from ReactBits passing dynamic hueShift prop */}
         <Galaxy hueShift={hueShift} count={2200} speed={0.35} theme="light" />
-
-        {/* Conditionally rendered 3D meshes for Sun, Earth */}
         <CelestialMeshes theme="light" />
       </Canvas>
 
-      {/* Subtle overlay vignette gradient tailored to light theme */}
       <div
         className="absolute inset-0 transition-opacity duration-700 pointer-events-none"
         style={{

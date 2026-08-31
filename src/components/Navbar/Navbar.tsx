@@ -68,7 +68,6 @@ export default function Navbar() {
     return () => observer.disconnect();
   }, []);
 
-  // Desktop auto-hide timer when mouse is away from bottom
   useEffect(() => {
     let timeout: NodeJS.Timeout;
     
@@ -122,19 +121,15 @@ export default function Navbar() {
     }
   };
 
-  const isLight = theme === "light";
-  const accentColor = "#C4563A";
+  const accentColor = "rgb(196, 86, 58)";
 
   return (
     <>
-      {/* ------------------------------------------------------------- */}
-      {/* 1. DESKTOP DOCK (Hidden on Mobile screens, visible on sm+)       */}
-      {/* ------------------------------------------------------------- */}
       <div className={cn(
         "hidden sm:block fixed bottom-6 right-0 left-0 px-5 m-auto w-fit bg-transparent z-[99] transition-transform duration-300 ease-in-out",
         !isVisible && "translate-y-[200%]"
       )}>
-        <Dock className='items-end pb-3'>
+        <Dock className="items-end pb-3">
           {navLinks.map((item) => (
             <a
               href={item.href}
@@ -161,10 +156,8 @@ export default function Navbar() {
             </a>
           ))}
           
-          {/* Separator */}
           <div className="w-[1px] h-8 bg-card/60 mx-1.5 hidden sm:block" />
 
-          {/* Controls */}
           <DockItem onClick={handleToggleMute} className="aspect-square rounded-full bg-main/50 hover:bg-main/80 border border-card/60 backdrop-blur-md">
             <DockLabel>{isMuted ? "Unmute" : "Mute"}</DockLabel>
             <DockIcon className="text-secondary">
@@ -183,52 +176,44 @@ export default function Navbar() {
         </Dock>
       </div>
 
-      {/* ------------------------------------------------------------- */}
-      {/* 2. ANDROID / MOBILE TRANSLUCENT BOTTOM PILL & MENU TRIGGER     */}
-      {/* ------------------------------------------------------------- */}
       <div className="block sm:hidden fixed bottom-4 inset-x-3 z-[99] max-w-md mx-auto pointer-events-auto">
-        <div className="flex items-center justify-between p-1.5 rounded-2xl bg-card/75 border border-card/80 backdrop-blur-2xl shadow-2xl shadow-black/40">
-          
-          {/* Quick Home Link */}
+        <div className="flex items-center justify-between p-1.5 rounded-2xl bg-card/85 border border-card/90 backdrop-blur-2xl shadow-2xl shadow-black/20">
           <button
             type="button"
             onClick={() => handleNavClick("#hero")}
             className={cn(
               "flex items-center justify-center p-2.5 rounded-xl transition-all cursor-pointer",
-              activeSection === "hero" ? "bg-main/80 text-accent border border-card" : "text-secondary hover:text-primary"
+              activeSection === "hero" ? "bg-main/90 text-accent border border-card" : "text-secondary hover:text-primary"
             )}
             aria-label="Navigate Home"
           >
             <HomeIcon className="w-5 h-5" style={activeSection === "hero" ? { color: accentColor } : {}} />
           </button>
 
-          {/* Quick Projects Link */}
           <button
             type="button"
             onClick={() => handleNavClick("#projects")}
             className={cn(
               "flex items-center justify-center p-2.5 rounded-xl transition-all cursor-pointer",
-              activeSection === "projects" ? "bg-main/80 text-accent border border-card" : "text-secondary hover:text-primary"
+              activeSection === "projects" ? "bg-main/90 text-accent border border-card" : "text-secondary hover:text-primary"
             )}
             aria-label="Navigate Projects"
           >
             <FolderGit2 className="w-5 h-5" style={activeSection === "projects" ? { color: accentColor } : {}} />
           </button>
 
-          {/* Quick Contact Link */}
           <button
             type="button"
             onClick={() => handleNavClick("#contact")}
             className={cn(
               "flex items-center justify-center p-2.5 rounded-xl transition-all cursor-pointer",
-              activeSection === "contact" ? "bg-main/80 text-accent border border-card" : "text-secondary hover:text-primary"
+              activeSection === "contact" ? "bg-main/90 text-accent border border-card" : "text-secondary hover:text-primary"
             )}
             aria-label="Navigate Contact"
           >
             <Mail className="w-5 h-5" style={activeSection === "contact" ? { color: accentColor } : {}} />
           </button>
 
-          {/* Quick Audio Mute Switch */}
           <button
             type="button"
             onClick={handleToggleMute}
@@ -238,7 +223,6 @@ export default function Navbar() {
             {isMuted ? <VolumeX className="w-5 h-5 text-rose-500" /> : <Volume2 className="w-5 h-5 text-emerald-600" />}
           </button>
 
-          {/* Primary Mobile Menu Drawer Button */}
           <button
             type="button"
             onClick={() => {
@@ -254,13 +238,9 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* ------------------------------------------------------------- */}
-      {/* 3. ANDROID SLIDE-UP TRANSLUCENT MENU DRAWER                     */}
-      {/* ------------------------------------------------------------- */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <>
-            {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -270,18 +250,15 @@ export default function Navbar() {
               className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm sm:hidden"
             />
 
-            {/* Slide-Up Bottom Sheet */}
             <motion.div
               initial={{ y: "100%", opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: "100%", opacity: 0 }}
               transition={{ type: "spring", damping: 28, stiffness: 300 }}
-              className="fixed bottom-0 inset-x-0 z-[101] max-h-[88vh] overflow-y-auto rounded-t-3xl bg-card/90 border-t border-card backdrop-blur-2xl p-5 pb-8 shadow-2xl shadow-black sm:hidden"
+              className="fixed bottom-0 inset-x-0 z-[101] max-h-[88vh] overflow-y-auto rounded-t-3xl bg-card/95 border-t border-card backdrop-blur-2xl p-5 pb-8 shadow-2xl shadow-black sm:hidden"
             >
-              {/* Android Top Grab Bar */}
               <div className="w-12 h-1.5 bg-secondary/30 rounded-full mx-auto mb-4" />
 
-              {/* Sheet Header */}
               <div className="flex items-center justify-between mb-5 pb-3 border-b border-card">
                 <div className="flex items-center gap-2">
                   <Sparkles className="w-4 h-4" style={{ color: accentColor }} />
@@ -299,7 +276,6 @@ export default function Navbar() {
                 </button>
               </div>
 
-              {/* Section Links Grid */}
               <div className="grid grid-cols-2 gap-2.5 mb-5">
                 {navLinks.map((link) => {
                   const isActive = activeSection === link.id;
@@ -329,7 +305,7 @@ export default function Navbar() {
                         {isActive && (
                           <span
                             className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded-md uppercase"
-                            style={{ backgroundColor: `${accentColor}20`, color: accentColor }}
+                            style={{ backgroundColor: "rgba(196, 86, 58, 0.12)", color: accentColor }}
                           >
                             Active
                           </span>
@@ -342,10 +318,7 @@ export default function Navbar() {
                 })}
               </div>
 
-              {/* Quick Actions Footer Card */}
               <div className="space-y-2 pt-2 border-t border-card">
-                
-                {/* Secondary Controls Row */}
                 <div className="grid grid-cols-2 gap-2">
                   <button
                     type="button"
@@ -374,7 +347,6 @@ export default function Navbar() {
                   </button>
                 </div>
 
-                {/* Download Resume Full Button */}
                 <a
                   href="/resume.pdf"
                   target="_blank"
@@ -393,5 +365,3 @@ export default function Navbar() {
     </>
   );
 }
-
-

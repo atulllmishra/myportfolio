@@ -33,7 +33,6 @@ export interface PortfolioDatabase {
 const DB_FILE_PATH = path.join(process.cwd(), "data", "portfolio_db.json");
 const TMP_DB_FILE_PATH = path.join("/tmp", "portfolio_db.json");
 
-// Default initial state
 const DEFAULT_DB: PortfolioDatabase = {
   visitorCount: 10,
   updatedAt: new Date().toISOString(),
@@ -41,7 +40,6 @@ const DEFAULT_DB: PortfolioDatabase = {
   visitorLogs: [],
 };
 
-// In-memory cache for fast response times
 let memoryDb: PortfolioDatabase | null = null;
 
 function ensureDirExists(filePath: string) {
@@ -51,9 +49,6 @@ function ensureDirExists(filePath: string) {
   }
 }
 
-/**
- * Loads the current database from disk or memory cache.
- */
 export function getDatabase(): PortfolioDatabase {
   if (memoryDb) {
     return memoryDb;
@@ -83,9 +78,6 @@ export function getDatabase(): PortfolioDatabase {
   return memoryDb;
 }
 
-/**
- * Persists database updates to disk (supports both local filesystem and serverless /tmp).
- */
 export function saveDatabase(db: PortfolioDatabase): boolean {
   memoryDb = db;
   let saved = false;
@@ -95,7 +87,6 @@ export function saveDatabase(db: PortfolioDatabase): boolean {
     fs.writeFileSync(DB_FILE_PATH, JSON.stringify(db, null, 2), "utf8");
     saved = true;
   } catch {
-    // Primary DB directory may be read-only in serverless deployments like Vercel
   }
 
   try {
@@ -103,15 +94,11 @@ export function saveDatabase(db: PortfolioDatabase): boolean {
     fs.writeFileSync(TMP_DB_FILE_PATH, JSON.stringify(db, null, 2), "utf8");
     saved = true;
   } catch {
-    // Ignore /tmp write errors
   }
 
   return saved;
 }
 
-/**
- * Collects a new visitor log & updates the total visitor count.
- */
 export function recordVisitor(metadata: {
   userAgent?: string;
   referrer?: string;
@@ -135,7 +122,6 @@ export function recordVisitor(metadata: {
   db.updatedAt = log.timestamp;
   db.visitorLogs.unshift(log);
 
-  // Keep last 500 visitor logs to avoid unconstrained file growth
   if (db.visitorLogs.length > 500) {
     db.visitorLogs = db.visitorLogs.slice(0, 500);
   }
@@ -144,10 +130,6 @@ export function recordVisitor(metadata: {
   return { count: newCount, log };
 }
 
-
-/**
- * Adds a new contact form message submission to the database.
- */
 export function addContactSubmission(data: {
   name: string;
   email: string;
@@ -179,9 +161,6 @@ export function addContactSubmission(data: {
   return record;
 }
 
-/**
- * Utility to hash IP addresses for user  privacy.
- */
 function simpleHash(str: string): string {
   let hash = 0;
   for (let i = 0; i < str.length; i++) {

@@ -24,6 +24,7 @@ export default function MagneticButton({
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!buttonRef.current) return;
+    if (window.matchMedia("(pointer: coarse)").matches) return;
     const rect = buttonRef.current.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
@@ -67,5 +68,3 @@ export default function MagneticButton({
 
   return <div onClick={onClick} className="inline-flex">{content}</div>;
 }
-
-

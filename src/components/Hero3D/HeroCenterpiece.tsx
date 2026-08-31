@@ -10,10 +10,9 @@ interface HeroCenterpieceProps {
   theme?: "light" | "dark";
 }
 
-// Particle Dust System
 function OrbitalDust({ theme }: { theme: "light" | "dark" }) {
   const pointsRef = useRef<THREE.Points>(null!);
-  const count = 300; // Low count for performance
+  const count = 300;
   
   const { positions, scales } = useMemo(() => {
     const positions = new Float32Array(count * 3);
@@ -47,7 +46,7 @@ function OrbitalDust({ theme }: { theme: "light" | "dark" }) {
       </bufferGeometry>
       <pointsMaterial
         size={0.035}
-        color={theme === "light" ? "#C4563A" : "#E07A5F"}
+        color={theme === "light" ? "rgb(196, 86, 58)" : "rgb(224, 122, 95)"}
         transparent
         opacity={0.6}
         sizeAttenuation
@@ -64,13 +63,11 @@ function CoreMechanism({ theme }: { theme: "light" | "dark" }) {
   const [pulse, setPulse] = useState(1);
   const [hovered, setHovered] = useState(false);
 
-  // Colors based on theme
-  const coreColor = theme === "light" ? "#C4563A" : "#E07A5F";
-  const ringColor = theme === "light" ? "#D4A853" : "#F2CC8F";
-  const wireColor = theme === "light" ? "#2e221d" : "#FFFFFF";
+  const coreColor = theme === "light" ? "rgb(196, 86, 58)" : "rgb(224, 122, 95)";
+  const ringColor = theme === "light" ? "rgb(212, 168, 83)" : "rgb(242, 204, 143)";
+  const wireColor = theme === "light" ? "rgb(46, 34, 29)" : "rgb(255, 255, 255)";
 
   useFrame((state, delta) => {
-    // Smooth cursor tracking rotation
     if (groupRef.current) {
       const targetX = (state.pointer.x * Math.PI) / 4;
       const targetY = (state.pointer.y * Math.PI) / 4;
@@ -78,11 +75,9 @@ function CoreMechanism({ theme }: { theme: "light" | "dark" }) {
       groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, targetX, 0.05);
       groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, -targetY, 0.05);
       
-      // Auto-spin base
       groupRef.current.rotation.z += delta * 0.2;
     }
 
-    // Pulse decay mechanism
     if (icosaRef.current) {
       setPulse((p) => THREE.MathUtils.lerp(p, hovered ? 1.08 : 1, 0.1));
       icosaRef.current.scale.set(pulse, pulse, pulse);
@@ -108,7 +103,6 @@ function CoreMechanism({ theme }: { theme: "light" | "dark" }) {
   return (
     <group ref={groupRef}>
       <Float speed={2} rotationIntensity={1} floatIntensity={1}>
-        {/* Inner Solid Core */}
         <Sphere args={[0.6, 32, 32]}>
           <meshStandardMaterial 
             color={coreColor} 
@@ -119,7 +113,6 @@ function CoreMechanism({ theme }: { theme: "light" | "dark" }) {
           />
         </Sphere>
 
-        {/* Outer Wireframe Icosahedron */}
         <Icosahedron 
           ref={icosaRef}
           args={[1.1, 1]} 
@@ -130,7 +123,6 @@ function CoreMechanism({ theme }: { theme: "light" | "dark" }) {
           <meshBasicMaterial color={wireColor} wireframe transparent opacity={hovered ? 0.8 : 0.3} />
         </Icosahedron>
 
-        {/* Gyroscopic Torus Rings */}
         <Torus args={[1.6, 0.02, 16, 100]} rotation={[Math.PI / 3, 0, 0]}>
           <meshStandardMaterial color={ringColor} roughness={0.1} metalness={0.9} />
         </Torus>
@@ -142,18 +134,17 @@ function CoreMechanism({ theme }: { theme: "light" | "dark" }) {
   );
 }
 
-// Main Component
 export default function HeroCenterpiece({ theme = "light" }: HeroCenterpieceProps) {
   return (
     <div className="w-full h-full absolute inset-0 z-0">
       <Canvas
         camera={{ position: [0, 0, 5], fov: 45 }}
         gl={{ antialias: true, alpha: true }}
-        dpr={[1, 2]} // Clamp pixel ratio for performance
+        dpr={[1, 2]}
       >
         <ambientLight intensity={1.2} />
-        <pointLight position={[5, 5, 5]} intensity={2} color="#ffffff" />
-        <pointLight position={[-5, -5, -5]} intensity={1} color="#C4563A" />
+        <pointLight position={[5, 5, 5]} intensity={2} color="rgb(255, 255, 255)" />
+        <pointLight position={[-5, -5, -5]} intensity={1} color="rgb(196, 86, 58)" />
         
         <CoreMechanism theme="light" />
         <OrbitalDust theme="light" />

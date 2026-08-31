@@ -5,8 +5,6 @@ import {
   Terminal, 
   X, 
   ChevronRight, 
-  Hash, 
-  Command as CmdIcon, 
   Cpu, 
   HomeIcon, 
   User, 
@@ -17,14 +15,11 @@ import {
   Volume2, 
   VolumeX, 
   Download, 
-  ExternalLink, 
   Code2, 
   Layers, 
-  FileText, 
   Phone, 
   Sparkles, 
   Globe, 
-  ArrowRight,
   Share2
 } from "lucide-react";
 
@@ -34,13 +29,11 @@ import { useTheme } from "@/components/ThemeProvider";
 export interface PaletteCommand {
   id: string;
   name: string;
-
   description: string;
   keywords: string[];
   icon: any;
   action: () => void;
   badge?: string;
-
 }
 
 export default function CommandPalette() {
@@ -53,18 +46,14 @@ export default function CommandPalette() {
   const resultsContainerRef = useRef<HTMLDivElement>(null);
   const { theme } = useTheme();
 
-  const isLight = theme === "light";
-  const accentColor = "#C4563A";
-  const accentHover = "#E07A5F";
+  const accentColor = "rgb(196, 86, 58)";
 
-  // Initialize sound mute state
   useEffect(() => {
     if (typeof window !== "undefined") {
       setIsMuted(audioHaptics.getMuted());
     }
   }, []);
 
-  // Lock background scrolling when open to prevent interference
   useEffect(() => {
     if (isOpen) {
       const originalOverflow = document.body.style.overflow;
@@ -75,10 +64,8 @@ export default function CommandPalette() {
     }
   }, [isOpen]);
 
-  // Keyboard shortcut listener for Cmd+K / Ctrl+K / Ctrl+`
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Toggle palette on Cmd+K or Ctrl+K or Ctrl+`
       if ((e.metaKey && e.key === "k") || (e.ctrlKey && (e.key === "k" || e.key === "`"))) {
         e.preventDefault();
         setIsOpen((prev) => {
@@ -88,7 +75,6 @@ export default function CommandPalette() {
         });
       }
       
-      // Close on Escape
       if (e.key === "Escape" && isOpen) {
         setIsOpen(false);
         audioHaptics.playPop(false);
@@ -146,11 +132,7 @@ export default function CommandPalette() {
     }
   };
 
-  // Comprehensive command navigation library
   const allCommands: PaletteCommand[] = useMemo(() => [
-    // -------------------------------------------------------------
-    // SECTIONS & PAGES NAVIGATION
-    // -------------------------------------------------------------
     {
       id: "nav-home",
       name: "Navigate to Home",
@@ -191,7 +173,6 @@ export default function CommandPalette() {
       icon: Mail,
       action: () => scrollToSection("contact"),
     },
-
     {
       id: "proj-heybuddy",
       name: "Project: heyBuddy (AI EdTech)",
@@ -228,8 +209,6 @@ export default function CommandPalette() {
       badge: "Live",
       action: () => scrollToSection("projects"),
     },
-
-
     {
       id: "skill-react",
       name: "Skill: React & Next.js Architecture",
@@ -262,8 +241,6 @@ export default function CommandPalette() {
       icon: Layers,
       action: () => scrollToSection("skills"),
     },
-
-
     {
       id: "link-resume",
       name: "Download Resume / Curriculum Vitae",
@@ -313,7 +290,6 @@ export default function CommandPalette() {
       icon: Phone,
       action: () => openUrl("tel:+917458844711"),
     },
-
     {
       id: "pref-gravity",
       name: "Zero-G Physics Mode",
@@ -328,7 +304,6 @@ export default function CommandPalette() {
     },
   ], []);
 
-  // Default suggestions shown before typing
   const defaultEarlierCommands = useMemo<PaletteCommand[]>(() => [
     allCommands[0], 
     allCommands[2], 
@@ -337,7 +312,6 @@ export default function CommandPalette() {
     allCommands[allCommands.length - 1], 
   ], [allCommands]);
 
-  // Fuzzy filter commands
   const filteredCommands = useMemo(() => {
     if (!query.trim()) {
       return defaultEarlierCommands;
@@ -353,7 +327,6 @@ export default function CommandPalette() {
     });
   }, [allCommands, defaultEarlierCommands, query]);
 
-  // Handle keyboard arrow navigation & Enter trigger
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "ArrowDown") {
       e.preventDefault();
@@ -381,7 +354,6 @@ export default function CommandPalette() {
     }
   };
 
-  // Scroll active item into view
   useEffect(() => {
     if (resultsContainerRef.current) {
       const activeEl = resultsContainerRef.current.querySelector(`[data-index="${selectedIndex}"]`);
@@ -394,58 +366,54 @@ export default function CommandPalette() {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-start justify-center pt-14 sm:pt-20 px-3 sm:px-6">
+    <div className="fixed inset-0 z-[100] flex items-start justify-center pt-10 sm:pt-20 px-3 sm:px-6">
       
-
       <div 
-        className="absolute inset-0 bg-black/25 backdrop-blur-sm transition-opacity animate-in fade-in duration-200"
+        className="absolute inset-0 bg-black/30 backdrop-blur-sm transition-opacity animate-in fade-in duration-200"
         onClick={() => {
           setIsOpen(false);
           audioHaptics.playPop(false);
         }}
       />
       
-
       <div 
-        className="relative w-full max-w-2xl bg-[#fff9f5]/75 border border-white/70 backdrop-blur-3xl backdrop-saturate-150 rounded-2xl sm:rounded-3xl shadow-2xl shadow-black/10 flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200"
+        className="relative w-full max-w-2xl bg-card/95 border border-card backdrop-blur-3xl rounded-2xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200"
         onClick={(e) => e.stopPropagation()}
       >
         
-        <div className="flex items-center justify-between px-4 sm:px-5 py-3 border-b border-[#f3e2d5]/50 bg-white/35">
+        <div className="flex items-center justify-between px-4 sm:px-5 py-3 border-b border-card bg-main/40">
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-1.5">
               <button
                 type="button"
                 onClick={() => { setIsOpen(false); audioHaptics.playPop(false); }}
                 title="Close (Esc)"
-                className="w-3 h-3 rounded-full bg-[#f87171] hover:brightness-95 transition-all cursor-pointer shadow-xs"
+                className="w-3 h-3 rounded-full bg-rose-500 hover:brightness-95 transition-all cursor-pointer shadow-xs"
               />
-              <span className="w-3 h-3 rounded-full bg-[#fbbf24] shadow-xs" />
-              <span className="w-3 h-3 rounded-full bg-[#34d399] shadow-xs" />
+              <span className="w-3 h-3 rounded-full bg-amber-400 shadow-xs" />
+              <span className="w-3 h-3 rounded-full bg-emerald-400 shadow-xs" />
             </div>
 
-            <div className="ml-2 flex items-center gap-1.5 text-[11px] font-mono text-[#705B50]">
-              <Terminal className="w-3.5 h-3.5 text-[#C4563A]" />
-              <span className="font-semibold text-[#2e221d]">Give your Input</span>
+            <div className="ml-2 flex items-center gap-1.5 text-[11px] font-mono text-secondary">
+              <Terminal className="w-3.5 h-3.5" style={{ color: accentColor }} />
+              <span className="font-semibold text-primary">Give your Input</span>
             </div>
           </div>
 
           <div className="flex items-center gap-2">
-            {/* Audio Toggle Button */}
             <button
               type="button"
               onClick={toggleSound}
               title={isMuted ? "Unmute Audio Feedback" : "Mute Audio Feedback"}
-              className="p-1 rounded-md text-[#705B50] hover:text-[#C4563A] hover:bg-white/50 transition-colors cursor-pointer"
+              className="p-1 rounded-md text-secondary hover:text-primary hover:bg-main/60 transition-colors cursor-pointer"
             >
-              {isMuted ? <VolumeX className="w-3.5 h-3.5 text-rose-400" /> : <Volume2 className="w-3.5 h-3.5 text-[#C4563A]" />}
+              {isMuted ? <VolumeX className="w-3.5 h-3.5 text-rose-400" /> : <Volume2 className="w-3.5 h-3.5" style={{ color: accentColor }} />}
             </button>
           </div>
         </div>
 
-        {/* Translucent Input Bar */}
-        <div className="flex items-center gap-3 px-4 sm:px-5 py-3.5 border-b border-[#f3e2d5]/40 bg-white/20">
-          <span className="text-sm font-bold font-mono text-[#C4563A] select-none">❯</span>
+        <div className="flex items-center gap-3 px-4 sm:px-5 py-3.5 border-b border-card bg-main/20">
+          <span className="text-sm font-bold font-mono select-none" style={{ color: accentColor }}>❯</span>
           <input
             ref={inputRef}
             type="text"
@@ -453,29 +421,28 @@ export default function CommandPalette() {
             onChange={handleInput}
             onKeyDown={handleKeyDown}
             placeholder="Search projects, skills, commands, resume ...."
-            className="flex-1 bg-transparent p-2 border-none outline-none text-[#2e221d] font-mono text-xs sm:text-sm placeholder:text-[#a28c83] min-w-0"
+            className="flex-1 bg-transparent p-1.5 border-none outline-none text-primary font-mono text-xs sm:text-sm placeholder:text-secondary/60 min-w-0"
             spellCheck={false}
           />
           {query && (
             <button
               type="button"
               onClick={() => { setQuery(""); inputRef.current?.focus(); }}
-              className="p-1 rounded-md text-[#705B50] hover:text-[#2e221d] hover:bg-white/40 transition-colors cursor-pointer"
+              className="p-1 rounded-md text-secondary hover:text-primary hover:bg-main/40 transition-colors cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
           )}
         </div>
 
-
-        <div ref={resultsContainerRef} className="p-2 sm:p-3 max-h-96 overflow-y-auto space-y-1">
+        <div ref={resultsContainerRef} className="p-2 sm:p-3 max-h-[60vh] sm:max-h-96 overflow-y-auto space-y-1">
           {filteredCommands.length === 0 ? (
             <div className="px-4 py-12 text-center space-y-2">
-              <p className="text-sm font-mono text-[#705B50]">
-                No commands matching "<span className="text-[#2e221d] font-bold">{query}</span>"
+              <p className="text-sm font-mono text-secondary">
+                No commands matching &quot;<span className="text-primary font-bold">{query}</span>&quot;
               </p>
-              <p className="text-xs text-[#a28c83]">
-                Try searching for <span className="underline cursor-pointer hover:text-[#C4563A]" onClick={() => setQuery("projects")}>projects</span>, <span className="underline cursor-pointer hover:text-[#C4563A]" onClick={() => setQuery("skills")}>skills</span>, or <span className="underline cursor-pointer hover:text-[#C4563A]" onClick={() => setQuery("contact")}>contact</span>.
+              <p className="text-xs text-secondary/70">
+                Try searching for <span className="underline cursor-pointer" style={{ color: accentColor }} onClick={() => setQuery("projects")}>projects</span>, <span className="underline cursor-pointer" style={{ color: accentColor }} onClick={() => setQuery("skills")}>skills</span>, or <span className="underline cursor-pointer" style={{ color: accentColor }} onClick={() => setQuery("contact")}>contact</span>.
               </p>
             </div>
           ) : (
@@ -492,43 +459,41 @@ export default function CommandPalette() {
                     cmd.action();
                   }}
                   onMouseEnter={() => setSelectedIndex(i)}
-                  className={`w-full flex items-center justify-between p-3 rounded-xl sm:rounded-2xl transition-all duration-150 cursor-pointer text-left group ${
+                  className={`w-full flex items-center justify-between p-2.5 sm:p-3 rounded-xl sm:rounded-2xl transition-all duration-150 cursor-pointer text-left group ${
                     isSelected
-                      ? "bg-white/75 border border-[#C4563A]/30 shadow-md shadow-[#C4563A]/8"
-                      : "hover:bg-white/35 border border-transparent"
+                      ? "bg-card border border-accent/40 shadow-sm"
+                      : "hover:bg-main/50 border border-transparent"
                   }`}
                 >
-                  <div className="flex items-center gap-3.5 min-w-0 pr-2">
+                  <div className="flex items-center gap-3 min-w-0 pr-2">
                     <div
                       className={`p-2 rounded-xl border shrink-0 transition-colors ${
                         isSelected
-                          ? "bg-[#C4563A]/15 border-[#C4563A]/30 text-[#C4563A]"
-                          : "bg-white/60 border-white/80 text-[#705B50] group-hover:text-[#2e221d]"
+                          ? "bg-accent/15 border-accent/30 text-accent"
+                          : "bg-main border-card text-secondary group-hover:text-primary"
                       }`}
                     >
                       <Icon className="w-4 h-4" style={isSelected ? { color: accentColor } : {}} />
                     </div>
                     <div className="min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className={`text-xs sm:text-sm font-semibold font-mono truncate ${
-                          isSelected ? "text-[#2e221d]" : "text-[#2e221d]/90"
-                        }`}>
+                        <span className="text-xs sm:text-sm font-semibold font-mono truncate text-primary">
                           {cmd.name}
                         </span>
                         {cmd.badge && (
                           <span
-                            className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded uppercase shrink-0 border"
+                            className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded-md uppercase shrink-0"
                             style={{ 
                               backgroundColor: "rgba(196, 86, 58, 0.08)", 
                               color: accentColor,
-                              borderColor: "rgba(196, 86, 58, 0.2)"
+                              border: "1px solid rgba(196, 86, 58, 0.2)"
                             }}
                           >
                             {cmd.badge}
                           </span>
                         )}
                       </div>
-                      <p className="text-[11px] sm:text-xs text-[#705B50] truncate mt-0.5">
+                      <p className="text-[11px] sm:text-xs text-secondary truncate mt-0.5">
                         {cmd.description}
                       </p>
                     </div>
@@ -538,7 +503,7 @@ export default function CommandPalette() {
                     <div className={`p-1 rounded-lg transition-transform ${
                       isSelected ? "translate-x-0.5 opacity-100" : "opacity-0 group-hover:opacity-100"
                     }`}>
-                      <ChevronRight className="w-4 h-4 text-[#C4563A]" />
+                      <ChevronRight className="w-4 h-4" style={{ color: accentColor }} />
                     </div>
                   </div>
                 </button>
@@ -547,9 +512,8 @@ export default function CommandPalette() {
           )}
         </div>
          
-         {/* result counter */}
-        <div className="px-4 py-2.5 border-t border-[#f3e2d5]/40 bg-white/30 flex items-center justify-between text-[11px] font-mono text-[#705B50]">
-          <div className="text-[#a28c83]">
+        <div className="px-4 py-2.5 border-t border-card bg-main/30 flex items-center justify-between text-[11px] font-mono text-secondary">
+          <div>
             {filteredCommands.length} {filteredCommands.length === 1 ? "result" : "results"}
           </div>
         </div>
@@ -558,4 +522,3 @@ export default function CommandPalette() {
     </div>
   );
 }
-

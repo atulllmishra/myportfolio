@@ -35,7 +35,7 @@ export default function AIChatbotWidget() {
   const { theme } = useTheme();
 
   const isLight = theme === "light";
-  const accentColor = isLight ? "#C4563A" : "#E07A5F";
+  const accentColor = isLight ? "rgb(196, 86, 58)" : "rgb(224, 122, 95)";
 
   const scrollToBottom = () => {
     if (chatContainerRef.current) {
@@ -106,30 +106,27 @@ export default function AIChatbotWidget() {
   };
 
   return (
-    <section id="ai-assistant" className="py-24 relative border-t border-card scroll-mt-24">
-      <div className="max-w-4xl mx-auto px-6">
+    <section id="ai-assistant" className="py-20 sm:py-24 relative border-t border-card scroll-mt-24">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6">
 
-        {/* Section Header */}
         <div className="max-w-2xl mb-8 space-y-2">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-main border border-card text-xs font-mono font-bold uppercase" style={{ color: accentColor }}>
             <Zap className="w-3.5 h-3.5" />
             <span>Interactive Chatroom</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
+          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-primary">
             VIRTUAL <span style={{ color: accentColor }}>CLONE</span>
           </h2>
-          <p className="text-secondary text-sm font-medium">
+          <p className="text-secondary text-xs sm:text-sm font-medium">
             Ask anything about the stack, the projects, or the background.
           </p>
         </div>
 
-        {/* Chat Window */}
-        <div className="overflow-hidden flex flex-col h-[520px] bg-card border border-card shadow-2xl rounded-2xl">
+        <div className="overflow-hidden flex flex-col h-[460px] sm:h-[520px] bg-card border border-card shadow-2xl rounded-2xl sm:rounded-3xl">
 
-          {/* Header Bar */}
-          <div className="px-5 py-3.5 bg-main border-b border-card flex items-center justify-between">
+          <div className="px-4 sm:px-5 py-3.5 bg-main border-b border-card flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="p-2 rounded-lg bg-card border border-card" style={{ color: accentColor }}>
+              <div className="p-2 rounded-xl bg-card border border-card" style={{ color: accentColor }}>
                 <Sparkles className="w-4 h-4" />
               </div>
               <div>
@@ -146,15 +143,14 @@ export default function AIChatbotWidget() {
                 setMessages([initialBotMessage]);
                 audioHaptics.playSwitch();
               }}
-              className="flex items-center gap-1 px-2.5 py-1 rounded bg-card hover:bg-main text-xs font-mono text-secondary hover:text-primary transition-colors border border-card cursor-pointer"
+              className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-card hover:bg-main text-xs font-mono text-secondary hover:text-primary transition-colors border border-card cursor-pointer"
             >
               <RefreshCw className="w-3 h-3" />
               <span>Reset</span>
             </button>
           </div>
 
-          {/* Messages Container */}
-          <div ref={chatContainerRef} className="flex-1 p-5 overflow-y-auto space-y-3.5 bg-card">
+          <div ref={chatContainerRef} className="flex-1 p-4 sm:p-5 overflow-y-auto space-y-3.5 bg-card">
             {messages.map((msg) => (
               <div
                 key={msg.id}
@@ -165,7 +161,7 @@ export default function AIChatbotWidget() {
                 </span>
 
                 <div
-                  className={`max-w-[88%] rounded-xl px-4 py-3 text-xs leading-relaxed font-medium ${
+                  className={`max-w-[92%] sm:max-w-[88%] rounded-2xl px-3.5 sm:px-4 py-2.5 sm:py-3 text-xs leading-relaxed font-medium ${
                     msg.sender === "user"
                       ? "text-white shadow-md"
                       : "bg-main border border-card text-primary whitespace-pre-line shadow-sm"
@@ -180,21 +176,20 @@ export default function AIChatbotWidget() {
             {isTyping && (
               <div className="flex flex-col items-start space-y-1">
                 <span className="text-[10px] font-mono text-secondary">Virtual Clone</span>
-                <div className="px-4 py-2 rounded-xl bg-main border border-card text-secondary text-xs font-mono">
+                <div className="px-3.5 py-2 rounded-xl bg-main border border-card text-secondary text-xs font-mono">
                   Synthesizing response...
                 </div>
               </div>
             )}
           </div>
 
-          {/* Suggested Chips */}
-          <div className="px-3.5 py-2.5 bg-main border-t border-card overflow-x-auto flex items-center gap-2">
+          <div className="px-3 sm:px-3.5 py-2 sm:py-2.5 bg-main border-t border-card overflow-x-auto flex items-center gap-2">
             <span className="text-[10px] font-mono text-secondary shrink-0 font-bold">Prompts:</span>
             {suggestedPrompts.map((prompt) => (
               <button
                 key={prompt}
                 onClick={() => handleSend(prompt)}
-                className="shrink-0 text-[11px] font-mono px-3 py-1 rounded-full bg-card hover:bg-main border border-card text-secondary hover:text-primary transition-colors flex items-center gap-1 cursor-pointer"
+                className="shrink-0 text-[10px] sm:text-[11px] font-mono px-2.5 sm:px-3 py-1 rounded-full bg-card hover:bg-main border border-card text-secondary hover:text-primary transition-colors flex items-center gap-1 cursor-pointer"
               >
                 <span>{prompt}</span>
                 <ChevronRight className="w-3 h-3" />
@@ -202,7 +197,6 @@ export default function AIChatbotWidget() {
             ))}
           </div>
 
-          {/* Input Form */}
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -218,12 +212,12 @@ export default function AIChatbotWidget() {
                 if (e.target.value.length > inputValue.length) audioHaptics.playKey();
               }}
               placeholder="Ask anything..."
-              className="flex-1 bg-card border border-card rounded-xl px-4 py-2.5 text-xs text-primary placeholder:text-secondary focus:outline-none focus:border-accent transition-colors font-mono"
+              className="flex-1 bg-card border border-card rounded-xl px-3.5 sm:px-4 py-2.5 text-xs text-primary placeholder:text-secondary focus:outline-none focus:border-accent transition-colors font-mono"
             />
             <button
               type="submit"
               disabled={!inputValue.trim() || isTyping}
-              className="px-4 py-2.5 rounded-xl disabled:opacity-40 text-white font-bold text-xs flex items-center gap-1.5 transition-all shadow-md cursor-pointer hover:-translate-y-0.5"
+              className="px-3.5 sm:px-4 py-2.5 rounded-xl disabled:opacity-40 text-white font-bold text-xs flex items-center gap-1.5 transition-all shadow-md cursor-pointer hover:-translate-y-0.5 shrink-0"
               style={{ backgroundColor: accentColor }}
             >
               <span>SEND</span>

@@ -13,14 +13,13 @@ import Contact from "@/sections/Contact";
 
 export default function Home() {
   useEffect(() => {
-    // If opening page without a specific section hash, scroll to top
     if (typeof window !== "undefined" && !window.location.hash) {
       window.scrollTo({ top: 0, left: 0, behavior: "instant" });
     }
   }, []);
 
   return (
-    <main className="relative min-h-screen text-primary selection:bg-accent selection:text-white transition-colors duration-200 bg-[radial-gradient(var(--border-card)_1.5px,transparent_1.5px)] [background-size:20px_20px]">
+    <main className="relative min-h-screen text-primary selection:bg-accent selection:text-white transition-colors duration-200 bg-[radial-gradient(var(--border-card)_1.5px,transparent_1.5px)] [background-size:20px_20px] overflow-x-hidden">
       <LoadingScreen />
       <Navbar />
       <Hero />
@@ -32,5 +31,3 @@ export default function Home() {
     </main>
   );
 }
-
-

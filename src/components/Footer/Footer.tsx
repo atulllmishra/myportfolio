@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { ArrowUp, MapPin, Mail, Download, Clock, Calendar, Heart, Users } from "lucide-react";
+import { useState, useEffect } from "react";
+import { ArrowUp, MapPin, Mail, Download, Clock, Calendar, Heart } from "lucide-react";
 
 export default function Footer() {
   const [time, setTime] = useState<Date | null>(null);
@@ -27,14 +27,14 @@ export default function Footer() {
   const formattedDate = time ? time.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : "";
   const formattedTime = time ? time.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: true }) : "";
 
-  return (
-    <footer className="bg-main border-t border-card pt-14 pb-8 relative overflow-hidden">
-      <div className="max-w-6xl mx-auto px-6 relative z-10">
+  const accentColor = "rgb(196, 86, 58)";
 
-        {/* Top Sweet Gesture & Live Time (Left Accent Bar Visual) */}
-        <div className="mb-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-8 border-b border-card">
+  return (
+    <footer className="bg-main border-t border-card pt-12 sm:pt-14 pb-8 relative overflow-hidden">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+
+        <div className="mb-8 sm:mb-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-6 sm:pb-8 border-b border-card">
           
-          {/* Sweet Gesture Message with Left Accent Line */}
           <div className="pl-4 border-l-2 border-accent space-y-1 max-w-xl">
             <h4 className="text-sm font-bold text-primary flex items-center gap-1.5">
               <span>Thank you for visiting!</span>
@@ -45,10 +45,9 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Live Date, Day & Time Data */}
           <div className="flex items-center gap-3 text-xs text-secondary shrink-0">
             <div className="flex items-center gap-2">
-              <Clock className="w-3.5 h-3.5 text-accent animate-pulse" />
+              <Clock className="w-3.5 h-3.5 text-accent animate-pulse" style={{ color: accentColor }} />
               <span className="font-bold text-primary tracking-wide">{formattedTime || "--:--:--"}</span>
             </div>
             <span className="text-secondary/40">/</span>
@@ -60,13 +59,11 @@ export default function Footer() {
 
         </div>
         
-        {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pb-10 border-b border-card">
           
-          {/* Brand Column */}
           <div className="md:col-span-5 space-y-3">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-full bg-card text-accent font-bold text-xs flex items-center justify-center border border-card shadow-sm">
+              <div className="w-8 h-8 rounded-full bg-card text-accent font-bold text-xs flex items-center justify-center border border-card shadow-sm" style={{ color: accentColor }}>
                 AM
               </div>
               <div className="flex flex-col">
@@ -80,18 +77,17 @@ export default function Footer() {
             </div>
 
             <p className="text-secondary text-xs leading-relaxed max-w-sm">
-              Computer Science & Engineering (CSE) student at Mahamaya College of Agricultural Engineering and Technology (MCAET, ANDUAT)
+              Computer Science &amp; Engineering (CSE) student at Mahamaya College of Agricultural Engineering and Technology (MCAET, ANDUAT)
             </p>
 
             <div className="flex items-center gap-4 text-xs text-secondary pt-0.5">
               <a href="mailto:atulllmishra1@gmail.com" className="hover:text-accent flex items-center gap-1.5 transition-colors">
-                <Mail className="w-3.5 h-3.5 text-accent" />
+                <Mail className="w-3.5 h-3.5" style={{ color: accentColor }} />
                 <span>atulllmishra1@gmail.com</span>
               </a>
             </div>
           </div>
 
-          {/* Quick Links */}
           <div className="md:col-span-3 space-y-2.5">
             <h4 className="text-xs text-secondary uppercase tracking-wider font-bold">
               Links
@@ -121,17 +117,16 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Location & Map */}
           <div className="md:col-span-4 space-y-2.5">
             <h4 className="text-xs text-secondary uppercase tracking-wider font-bold flex items-center gap-1.5">
-              <MapPin className="w-3.5 h-3.5 text-accent" />
+              <MapPin className="w-3.5 h-3.5" style={{ color: accentColor }} />
               <span>Campus Affiliation</span>
             </h4>
             <p className="text-xs text-secondary">
               Mahamaya College of Agricultural Engineering and Technology (MCAET, ANDUAT), UP, India
             </p>
 
-            <div className="w-full h-28 rounded-lg border border-card overflow-hidden bg-card shadow-sm">
+            <div className="w-full h-28 rounded-xl border border-card overflow-hidden bg-card shadow-sm">
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3571.8933414157373!2d82.49057987615164!3d26.459166779433033!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399093cbf6ffffff%3A0xe886e928b8f0a1e7!2sMahamaya%20College%20of%20Agricultural%20Engineering%20And%20Technology!5e0!3m2!1sen!2sin!4v1739541546497!5m2!1sen!2sin"
                 width="100%"
@@ -147,7 +142,6 @@ export default function Footer() {
 
         </div>
 
-        {/* Bottom Bar: All Rights Reserved & Visitor Count & Developed By */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-secondary text-center sm:text-left">
           <div className="flex items-center gap-3">
             <p>© {new Date().getFullYear()}. All Rights Reserved.</p>
@@ -155,11 +149,11 @@ export default function Footer() {
 
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-1 text-secondary">
-              Designed & Developed with <Heart className="w-3 h-3 text-rose-500 fill-rose-500 inline" /> by <span className="text-primary font-bold">Atul Kumar Mishra</span>
+              Designed &amp; Developed with <Heart className="w-3 h-3 text-rose-500 fill-rose-500 inline" /> by <span className="text-primary font-bold">Atul Kumar Mishra</span>
             </span>
             <button
               onClick={scrollToTop}
-              className="p-1.5 rounded bg-card border border-card text-secondary hover:text-accent hover:border-accent transition-colors"
+              className="p-1.5 rounded-lg bg-card border border-card text-secondary hover:text-accent hover:border-accent transition-colors cursor-pointer"
               aria-label="Back to top"
               title="Back to top"
             >
@@ -172,4 +166,3 @@ export default function Footer() {
     </footer>
   );
 }
-

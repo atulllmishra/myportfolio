@@ -5,7 +5,7 @@ import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
 interface GalaxyProps {
-  hueShift?: number; // 0 to 1 color hue shift
+  hueShift?: number;
   count?: number;
   speed?: number;
   theme?: "light" | "dark";
@@ -18,7 +18,6 @@ const galaxyVertexShader = `
   attribute vec3 aRandomness;
   varying vec3 vColor;
 
-  // HSL to RGB helper
   vec3 hsl2rgb(vec3 c) {
     vec3 rgb = clamp(abs(mod(c.x * 6.0 + vec3(0.0, 4.0, 2.0), 6.0) - 3.0) - 1.0, 0.0, 1.0);
     return c.z + c.y * (rgb - 0.5) * (1.0 - abs(2.0 * c.z - 1.0));
@@ -27,7 +26,6 @@ const galaxyVertexShader = `
   void main() {
     vec4 modelPosition = modelMatrix * vec4(position, 1.0);
     
-    // Rotation animation
     float angle = atan(modelPosition.x, modelPosition.z);
     float distanceToCenter = length(modelPosition.xz);
     float angleOffset = (1.0 / (distanceToCenter + 0.1)) * uTime * 0.15;
@@ -43,7 +41,6 @@ const galaxyVertexShader = `
     gl_Position = projectedPosition;
     gl_PointSize = aScale * (140.0 / -viewPosition.z);
 
-    // Color based on distance & hueShift
     float hue = mod(uHueShift + distanceToCenter * 0.03, 1.0);
     float sat = 0.85;
     float light = 0.7;
@@ -55,7 +52,6 @@ const galaxyFragmentShader = `
   varying vec3 vColor;
 
   void main() {
-    // Disc shape with soft edge
     float strength = distance(gl_PointCoord, vec2(0.5));
     strength = 1.0 - strength;
     strength = pow(strength, 2.5);
@@ -107,7 +103,6 @@ export default function Galaxy({
       uTime: { value: 0 },
       uHueShift: { value: hueShift },
     }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 

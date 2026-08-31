@@ -13,7 +13,6 @@ import {
   CheckCircle2,
   Eye,
   EyeOff,
-  ShieldCheck,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import FramerWrapper from "@/components/animation/FramerWrapper";
@@ -43,7 +42,7 @@ const SOCIAL_LINKS = [
 export default function Contact() {
   const { theme } = useTheme();
   const isLight = theme === "light";
-  const accentColor = isLight ? "#C4563A" : "#E07A5F";
+  const accentColor = isLight ? "rgb(196, 86, 58)" : "rgb(224, 122, 95)";
 
   const [revealedEmail, setRevealedEmail] = useState(false);
   const [revealedPhone, setRevealedPhone] = useState(false);
@@ -126,11 +125,10 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-24 relative border-t border-card scroll-mt-24">
-      <div className="max-w-6xl mx-auto px-6">
+    <section id="contact" className="py-20 sm:py-24 relative border-t border-card scroll-mt-24">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         
-        {/* Section Header */}
-        <FramerWrapper y={20} className="mb-14 space-y-3">
+        <FramerWrapper y={20} className="mb-10 sm:mb-14 space-y-3">
           <div
             className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-main border border-card text-xs font-bold uppercase tracking-wider"
             style={{ color: accentColor }}
@@ -138,19 +136,16 @@ export default function Contact() {
             <Mail className="w-3.5 h-3.5" />
             <span>GET IN TOUCH</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-primary">
             LET&apos;S <span style={{ color: accentColor }}>CONNECT !</span>
           </h2>
         </FramerWrapper>
 
-        {/* 2-Column Responsive Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
           
-          {/* Left Column: Direct Info & Availability */}
           <FramerWrapper y={20} delay={0.1} className="lg:col-span-5 space-y-4">
             
-            {/* Status Card */}
-            <div className="p-5 rounded-2xl bg-card border border-card shadow-sm hover:border-accent/40 transition-all duration-300">
+            <div className="p-4 sm:p-5 rounded-2xl bg-card border border-card shadow-sm hover:border-accent/40 transition-all duration-300">
               <div className="flex items-center gap-3">
                 <span className="relative flex h-3 w-3">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
@@ -162,14 +157,13 @@ export default function Contact() {
               </div>
             </div>
 
-            {/* Email Card with Click-to-Reveal */}
             <div
               className="p-4 rounded-2xl bg-card border border-card shadow-sm hover:border-accent/50 transition-all duration-300 flex items-center justify-between gap-3 group"
               onMouseEnter={() => audioHaptics.playClick(600, 0.02, "sine")}
             >
-              <div className="flex items-center gap-3.5 min-w-0">
+              <div className="flex items-center gap-3 min-w-0">
                 <div
-                  className="p-3 rounded-xl bg-main border border-card transition-colors shrink-0"
+                  className="p-2.5 sm:p-3 rounded-xl bg-main border border-card transition-colors shrink-0"
                   style={{ color: accentColor }}
                 >
                   <Mail className="w-4 h-4" />
@@ -179,7 +173,6 @@ export default function Contact() {
                     <span className="text-[10px] font-mono text-secondary uppercase font-bold tracking-wider">
                       Direct Email
                     </span>
-
                   </div>
                   <AnimatePresence mode="wait">
                     {!revealedEmail ? (
@@ -254,14 +247,13 @@ export default function Contact() {
               </div>
             </div>
 
-            {/* Phone Card with Click-to-Reveal */}
             <div
               className="p-4 rounded-2xl bg-card border border-card shadow-sm hover:border-accent/50 transition-all duration-300 flex items-center justify-between gap-3 group"
               onMouseEnter={() => audioHaptics.playClick(600, 0.02, "sine")}
             >
-              <div className="flex items-center gap-3.5 min-w-0">
+              <div className="flex items-center gap-3 min-w-0">
                 <div
-                  className="p-3 rounded-xl bg-main border border-card transition-colors shrink-0"
+                  className="p-2.5 sm:p-3 rounded-xl bg-main border border-card transition-colors shrink-0"
                   style={{ color: accentColor }}
                 >
                   <Phone className="w-4 h-4" />
@@ -345,10 +337,9 @@ export default function Contact() {
               </div>
             </div>
 
-            {/* Location & Affiliation */}
             <div className="p-4 rounded-2xl bg-card border border-card shadow-sm flex items-center gap-3.5">
               <div
-                className="p-3 rounded-xl bg-main border border-card shrink-0"
+                className="p-2.5 sm:p-3 rounded-xl bg-main border border-card shrink-0"
                 style={{ color: accentColor }}
               >
                 <MapPin className="w-4 h-4" />
@@ -363,8 +354,7 @@ export default function Contact() {
               </div>
             </div>
 
-            {/* Resume & Social Links Grid */}
-            <div className="p-5 rounded-2xl bg-card border border-card shadow-sm space-y-3.5">
+            <div className="p-4 sm:p-5 rounded-2xl bg-card border border-card shadow-sm space-y-3.5">
               <div className="flex items-center justify-between">
                 <span className="text-[10px] font-mono text-secondary uppercase font-bold tracking-wider">
                   Social &amp; Profiles
@@ -380,7 +370,7 @@ export default function Contact() {
                 </a>
               </div>
 
-              <div className="grid grid-cols-2 gap-2.5">
+              <div className="grid grid-cols-2 gap-2 sm:gap-2.5">
                 {SOCIAL_LINKS.map((item) => (
                   <a
                     key={item.name}
@@ -399,12 +389,10 @@ export default function Contact() {
 
           </FramerWrapper>
 
-          {/* Right Column: Direct Message Form Card */}
-          <FramerWrapper y={20} delay={0.2} className="lg:col-span-7">
-            <div className="p-6 sm:p-8 rounded-3xl bg-card border border-card shadow-lg backdrop-blur-sm">
-              <div className="flex items-center gap-2 mb-2">
-
-                <h3 className="text-xl font-bold tracking-tight text-primary">
+          <FramerWrapper y={20} delay={0.2} className="lg:col-span-7 w-full">
+            <div className="p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-card border border-card shadow-lg backdrop-blur-sm">
+              <div className="flex items-center gap-2 mb-4">
+                <h3 className="text-lg sm:text-xl font-bold tracking-tight text-primary">
                   Get In Touch
                 </h3>
               </div>
@@ -413,19 +401,19 @@ export default function Contact() {
                 <motion.div
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="py-12 text-center space-y-4"
+                  className="py-10 sm:py-12 text-center space-y-4"
                 >
                   <div
-                    className="w-14 h-14 rounded-2xl bg-main border border-card flex items-center justify-center mx-auto"
+                    className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-main border border-card flex items-center justify-center mx-auto"
                     style={{ color: accentColor }}
                   >
-                    <CheckCircle2 className="w-7 h-7" />
+                    <CheckCircle2 className="w-6 h-6 sm:w-7 sm:h-7" />
                   </div>
-                  <h4 className="text-xl font-bold text-primary">
+                  <h4 className="text-lg sm:text-xl font-bold text-primary">
                     Message Sent Successfully!
                   </h4>
                   <p className="text-secondary text-xs sm:text-sm max-w-md mx-auto leading-relaxed">
-                    Thank you for reaching out,I will get back to you shortly.
+                    Thank you for reaching out. I will get back to you shortly.
                   </p>
                   <div className="pt-2">
                     <button
@@ -439,7 +427,6 @@ export default function Contact() {
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
-                  {/* Honeypot field (hidden from real users, traps automated spam bots) */}
                   <input
                     type="text"
                     name="website_hp"
@@ -464,7 +451,6 @@ export default function Contact() {
                     </div>
                   )}
 
-                  {/* Name & Email Row */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
                       <label className="text-xs font-mono font-bold text-secondary flex items-center gap-1">
@@ -497,7 +483,6 @@ export default function Contact() {
                     </div>
                   </div>
 
-                  {/* Phone (Optional) */}
                   <div className="space-y-1.5">
                     <div className="flex items-center justify-between text-xs font-mono">
                       <label className="font-bold text-secondary">
@@ -513,7 +498,6 @@ export default function Contact() {
                     />
                   </div>
 
-                  {/* Message Field */}
                   <div className="space-y-1.5 pt-1">
                     <label className="text-xs font-mono font-bold text-secondary flex items-center gap-1">
                       <span>Message</span>
@@ -529,13 +513,12 @@ export default function Contact() {
                     />
                   </div>
 
-                  {/* Submit Button */}
                   <div className="pt-2 flex items-center justify-start">
                     <MagneticButton>
                       <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="inline-flex items-center justify-center gap-2 px-7 py-3 rounded-xl font-mono text-xs sm:text-sm font-bold tracking-wider text-white shadow-md hover:opacity-90 active:scale-95 transition-all cursor-pointer"
+                        className="inline-flex items-center justify-center gap-2 px-6 sm:px-7 py-3 rounded-xl font-mono text-xs sm:text-sm font-bold tracking-wider text-white shadow-md hover:opacity-90 active:scale-95 transition-all cursor-pointer"
                         style={{ backgroundColor: accentColor }}
                       >
                         {isSubmitting ? (
@@ -560,8 +543,7 @@ export default function Contact() {
 
         </div>
 
-        {/* Clean, Decent, and Normal Site Conclusion */}
-        <FramerWrapper y={15} delay={0.3} className="mt-20 pt-8 border-t border-card flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-secondary">
+        <FramerWrapper y={15} delay={0.3} className="mt-16 sm:mt-20 pt-6 sm:pt-8 border-t border-card flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-secondary">
           <div className="flex items-center gap-2 text-center sm:text-left">
             <span>© {new Date().getFullYear()} Atul Kumar Mishra.</span>
             <span className="hidden sm:inline text-secondary/40">•</span>
