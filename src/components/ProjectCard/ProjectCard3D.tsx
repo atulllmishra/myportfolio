@@ -132,10 +132,20 @@ export default function ProjectCard3D({ project, theme, onOpenDetails }: Project
             )}
           </div>
           
-          <div className="text-[11px] font-bold tracking-wider uppercase flex items-center gap-1 transition-transform group-hover:translate-x-1" style={{ color: accentColor }}>
-            <span>Examine</span>
-            <ArrowUpRight className="w-3.5 h-3.5" />
-          </div>
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              audioHaptics.playPop(true);
+              onOpenDetails(project);
+            }}
+            className="text-[11px] font-bold tracking-wider uppercase flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#fdeee6] hover:bg-[#c4563a] hover:text-white border border-[#f7d5c5] hover:border-[#c4563a] transition-all cursor-pointer shadow-xs active:scale-95 group/btn"
+            style={{ color: accentColor }}
+            title={`Examine ${project.title}`}
+          >
+            <span className="transition-colors group-hover/btn:text-white">Examine</span>
+            <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 group-hover/btn:text-white" />
+          </button>
         </div>
       </div>
     </div>

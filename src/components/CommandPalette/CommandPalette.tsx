@@ -291,6 +291,17 @@ export default function CommandPalette() {
       action: () => openUrl("tel:+917458844711"),
     },
     {
+      id: "pref-theme",
+      name: "Portfolio Theme: Academic Peach",
+      description: "Handcrafted terracotta, cream canvas, & deep espresso typography",
+      keywords: ["theme", "light", "peach", "academic", "color", "style", "mode", "appearance"],
+      icon: Sparkles,
+      badge: "Active",
+      action: () => {
+        audioHaptics.playClick(600, 0.05);
+      },
+    },
+    {
       id: "pref-gravity",
       name: "Zero-G Physics Mode",
       description: "Interactive zero-gravity floating animation",
@@ -309,6 +320,7 @@ export default function CommandPalette() {
     allCommands[2], 
     allCommands[3], 
     allCommands[14], 
+    allCommands[allCommands.length - 2], 
     allCommands[allCommands.length - 1], 
   ], [allCommands]);
 
@@ -368,35 +380,46 @@ export default function CommandPalette() {
   return (
     <div className="fixed inset-0 z-[100] flex items-start justify-center pt-10 sm:pt-20 px-3 sm:px-6">
       
+      {/* Dimmed Clean Backdrop */}
       <div 
-        className="absolute inset-0 bg-black/30 backdrop-blur-sm transition-opacity animate-in fade-in duration-200"
+        className="absolute inset-0 bg-stone-900/40 backdrop-blur-md transition-opacity animate-in fade-in duration-200"
         onClick={() => {
           setIsOpen(false);
           audioHaptics.playPop(false);
         }}
       />
       
+      {/* Terminal Palette Body */}
       <div 
-        className="relative w-full max-w-2xl bg-card/95 border border-card backdrop-blur-3xl rounded-2xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200"
+        className="relative w-full max-w-2xl bg-white border border-[#f3e2d5] rounded-2xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200 z-10 terminal-palette-card"
+        style={{
+          backgroundColor: '#ffffff',
+          borderColor: 'rgb(243, 226, 213)',
+          boxShadow: '0 25px 60px -15px rgba(46, 34, 29, 0.22), 0 0 0 1px rgba(243, 226, 213, 0.8)'
+        }}
         onClick={(e) => e.stopPropagation()}
       >
         
-        <div className="flex items-center justify-between px-4 sm:px-5 py-3 border-b border-card bg-main/40">
+        {/* Terminal Titlebar */}
+        <div 
+          className="flex items-center justify-between px-4 sm:px-5 py-3 border-b border-[#f3e2d5] bg-[#fff9f5]"
+          style={{ backgroundColor: 'rgb(255, 249, 245)', borderColor: 'rgb(243, 226, 213)' }}
+        >
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-1.5">
               <button
                 type="button"
                 onClick={() => { setIsOpen(false); audioHaptics.playPop(false); }}
                 title="Close (Esc)"
-                className="w-3 h-3 rounded-full bg-rose-500 hover:brightness-95 transition-all cursor-pointer shadow-xs"
+                className="w-3 h-3 rounded-full bg-rose-500 hover:brightness-90 transition-all cursor-pointer shadow-xs"
               />
               <span className="w-3 h-3 rounded-full bg-amber-400 shadow-xs" />
               <span className="w-3 h-3 rounded-full bg-emerald-400 shadow-xs" />
             </div>
 
-            <div className="ml-2 flex items-center gap-1.5 text-[11px] font-mono text-secondary">
+            <div className="ml-2 flex items-center gap-1.5 text-[11px] font-mono text-[#705b50]">
               <Terminal className="w-3.5 h-3.5" style={{ color: accentColor }} />
-              <span className="font-semibold text-primary">Give your Input</span>
+              <span className="font-bold text-[#2e221d] tracking-wide">Terminal Command Palette</span>
             </div>
           </div>
 
@@ -405,14 +428,18 @@ export default function CommandPalette() {
               type="button"
               onClick={toggleSound}
               title={isMuted ? "Unmute Audio Feedback" : "Mute Audio Feedback"}
-              className="p-1 rounded-md text-secondary hover:text-primary hover:bg-main/60 transition-colors cursor-pointer"
+              className="p-1 rounded-md text-[#705b50] hover:text-[#2e221d] hover:bg-[#fdeee6] transition-colors cursor-pointer"
             >
-              {isMuted ? <VolumeX className="w-3.5 h-3.5 text-rose-400" /> : <Volume2 className="w-3.5 h-3.5" style={{ color: accentColor }} />}
+              {isMuted ? <VolumeX className="w-3.5 h-3.5 text-rose-500" /> : <Volume2 className="w-3.5 h-3.5" style={{ color: accentColor }} />}
             </button>
           </div>
         </div>
 
-        <div className="flex items-center gap-3 px-4 sm:px-5 py-3.5 border-b border-card bg-main/20">
+        {/* Input Bar */}
+        <div 
+          className="flex items-center gap-3 px-4 sm:px-5 py-3.5 border-b border-[#f3e2d5] bg-white"
+          style={{ backgroundColor: '#ffffff', borderColor: 'rgb(243, 226, 213)' }}
+        >
           <span className="text-sm font-bold font-mono select-none" style={{ color: accentColor }}>❯</span>
           <input
             ref={inputRef}
@@ -421,27 +448,38 @@ export default function CommandPalette() {
             onChange={handleInput}
             onKeyDown={handleKeyDown}
             placeholder="Search projects, skills, commands, resume ...."
-            className="flex-1 bg-transparent p-1.5 border-none outline-none text-primary font-mono text-xs sm:text-sm placeholder:text-secondary/60 min-w-0"
+            className="palette-input flex-1 bg-transparent p-0 border-none outline-none text-[#2e221d] font-mono text-xs sm:text-sm placeholder:text-[#a28c83] min-w-0"
+            style={{
+              backgroundColor: 'transparent',
+              border: 'none',
+              outline: 'none',
+              boxShadow: 'none',
+              color: 'rgb(46, 34, 29)'
+            }}
             spellCheck={false}
           />
-          {query && (
+          {query ? (
             <button
               type="button"
               onClick={() => { setQuery(""); inputRef.current?.focus(); }}
-              className="p-1 rounded-md text-secondary hover:text-primary hover:bg-main/40 transition-colors cursor-pointer"
+              className="p-1 rounded-md text-[#705b50] hover:text-[#2e221d] hover:bg-[#fff9f5] transition-colors cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
+          ) : (
+            <div className="hidden sm:flex items-center gap-1 text-[10px] font-mono text-[#705b50] bg-[#fff9f5] px-2 py-0.5 rounded border border-[#f3e2d5]">
+              <span>ESC</span>
+            </div>
           )}
         </div>
-
-        <div ref={resultsContainerRef} className="p-2 sm:p-3 max-h-[60vh] sm:max-h-96 overflow-y-auto space-y-1">
+        {/* Results List */}
+        <div ref={resultsContainerRef} className="p-2 sm:p-3 max-h-[60vh] sm:max-h-96 overflow-y-auto space-y-1 bg-white">
           {filteredCommands.length === 0 ? (
             <div className="px-4 py-12 text-center space-y-2">
-              <p className="text-sm font-mono text-secondary">
-                No commands matching &quot;<span className="text-primary font-bold">{query}</span>&quot;
+              <p className="text-sm font-mono text-[#705b50]">
+                No commands matching &quot;<span className="text-[#2e221d] font-bold">{query}</span>&quot;
               </p>
-              <p className="text-xs text-secondary/70">
+              <p className="text-xs text-[#a28c83]">
                 Try searching for <span className="underline cursor-pointer" style={{ color: accentColor }} onClick={() => setQuery("projects")}>projects</span>, <span className="underline cursor-pointer" style={{ color: accentColor }} onClick={() => setQuery("skills")}>skills</span>, or <span className="underline cursor-pointer" style={{ color: accentColor }} onClick={() => setQuery("contact")}>contact</span>.
               </p>
             </div>
@@ -461,39 +499,41 @@ export default function CommandPalette() {
                   onMouseEnter={() => setSelectedIndex(i)}
                   className={`w-full flex items-center justify-between p-2.5 sm:p-3 rounded-xl sm:rounded-2xl transition-all duration-150 cursor-pointer text-left group ${
                     isSelected
-                      ? "bg-card border border-accent/40 shadow-sm"
-                      : "hover:bg-main/50 border border-transparent"
+                      ? "bg-[#fff9f5] border border-[#f3e2d5] shadow-xs"
+                      : "hover:bg-[#fff9f5]/60 border border-transparent"
                   }`}
+                  style={isSelected ? { backgroundColor: 'rgb(255, 249, 245)', borderColor: 'rgb(243, 226, 213)' } : {}}
                 >
                   <div className="flex items-center gap-3 min-w-0 pr-2">
                     <div
                       className={`p-2 rounded-xl border shrink-0 transition-colors ${
                         isSelected
-                          ? "bg-accent/15 border-accent/30 text-accent"
-                          : "bg-main border-card text-secondary group-hover:text-primary"
+                          ? "bg-[#fdeee6] border-[#f7d5c5]"
+                          : "bg-[#fff9f5] border-[#f3e2d5] text-[#705b50] group-hover:text-[#2e221d]"
                       }`}
+                      style={isSelected ? { backgroundColor: '#fdeee6', borderColor: '#f7d5c5', color: accentColor } : { color: '#705b50' }}
                     >
-                      <Icon className="w-4 h-4" style={isSelected ? { color: accentColor } : {}} />
+                      <Icon className="w-4 h-4" style={{ color: isSelected ? accentColor : '#705b50' }} />
                     </div>
                     <div className="min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className="text-xs sm:text-sm font-semibold font-mono truncate text-primary">
+                        <span className="text-xs sm:text-sm font-semibold font-mono truncate text-[#2e221d]">
                           {cmd.name}
                         </span>
                         {cmd.badge && (
                           <span
                             className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded-md uppercase shrink-0"
                             style={{ 
-                              backgroundColor: "rgba(196, 86, 58, 0.08)", 
+                              backgroundColor: "rgba(196, 86, 58, 0.1)", 
                               color: accentColor,
-                              border: "1px solid rgba(196, 86, 58, 0.2)"
+                              border: "1px solid rgba(196, 86, 58, 0.25)"
                             }}
                           >
                             {cmd.badge}
                           </span>
                         )}
                       </div>
-                      <p className="text-[11px] sm:text-xs text-secondary truncate mt-0.5">
+                      <p className="text-[11px] sm:text-xs text-[#705b50] truncate mt-0.5">
                         {cmd.description}
                       </p>
                     </div>
@@ -512,9 +552,13 @@ export default function CommandPalette() {
           )}
         </div>
          
-        <div className="px-4 py-2.5 border-t border-card bg-main/30 flex items-center justify-between text-[11px] font-mono text-secondary">
+        {/* Terminal Footer Info */}
+        <div 
+          className="px-4 py-2.5 border-t border-[#f3e2d5] bg-[#fff9f5] flex items-center justify-between text-[11px] font-mono text-[#705b50]"
+          style={{ backgroundColor: 'rgb(255, 249, 245)', borderColor: 'rgb(243, 226, 213)' }}
+        >
           <div>
-            {filteredCommands.length} {filteredCommands.length === 1 ? "result" : "results"}
+            {filteredCommands.length} {filteredCommands.length === 1 ? "command" : "commands"}
           </div>
         </div>
 
